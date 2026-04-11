@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>きいちゃん コンサルティングサマリー</title>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fefefe;
+      --bg-soft: #faf8f5;
+      --bg-warm: #fff8f0;
+      --card: #ffffff;
+      --card-border: #f0e8e0;
+      --pink: #e8839b;
+      --pink-light: #fdf0f3;
+      --pink-soft: #f9dce3;
+      --orange: #f0a868;
+      --orange-light: #fff5eb;
+      --mint: #7bc8b8;
+      --mint-light: #ecf8f5;
+      --lavender: #a8a0d8;
+      --lavender-light: #f3f0fa;
+      --text: #3a3535;
+      --text-muted: #8a8080;
+      --text-dark: #2a2525;
+      --accent: #e8839b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.9;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 70px 24px 50px;
+      background: linear-gradient(170deg, #fff8f0 0%, #fdf0f3 40%, #f3f0fa 100%);
+      border-bottom: 2px solid var(--card-border);
+      position: relative;
+    }
+    .header .paw { font-size: 2rem; margin-bottom: 12px; }
+    .header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+      letter-spacing: 0.05em;
+    }
+    .header .subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .header .date-badge {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 6px 20px;
+      background: white;
+      border: 1.5px solid var(--pink-soft);
+      border-radius: 100px;
+      font-size: 0.78rem;
+      color: var(--pink);
+      font-weight: 500;
+    }
+
+    /* Section */
+    .section {
+      padding: 52px 0;
+      border-bottom: 1.5px dashed var(--card-border);
+    }
+    .section:last-child { border-bottom: none; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: white;
+      background: var(--pink);
+      padding: 3px 12px;
+      border-radius: 100px;
+      margin-bottom: 10px;
+    }
+    .section-label.orange { background: var(--orange); }
+    .section-label.mint { background: var(--mint); }
+    .section-label.lavender { background: var(--lavender); }
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 28px;
+    }
+    .sub-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 28px 0 14px;
+      padding-left: 14px;
+      border-left: 3px solid var(--pink);
+    }
+    .sub-title.orange { border-color: var(--orange); }
+    .sub-title.mint { border-color: var(--mint); }
+    .sub-title.lavender { border-color: var(--lavender); }
+
+    /* Quote */
+    .quote-block {
+      background: var(--pink-light);
+      border-radius: 16px;
+      padding: 26px 28px;
+      margin-bottom: 18px;
+      font-size: 0.9rem;
+      line-height: 2;
+      color: var(--text);
+      position: relative;
+    }
+    .quote-block::before {
+      content: '🐾';
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      font-size: 1.2rem;
+    }
+    .quote-block .hl {
+      color: var(--pink);
+      font-weight: 700;
+    }
+    .quote-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      line-height: 1.8;
+    }
+    .quote-note strong { color: var(--text-dark); }
+
+    /* Value grid */
+    .value-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 640px) {
+      .value-grid { grid-template-columns: 1fr; }
+    }
+    .value-card {
+      background: var(--card);
+      border: 1.5px solid var(--card-border);
+      border-radius: 14px;
+      padding: 20px 22px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .value-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(232,131,155,0.1); }
+    .value-card .emoji { font-size: 1.3rem; margin-bottom: 8px; }
+    .value-card h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 5px;
+    }
+    .value-card p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .value-card.full { grid-column: 1 / -1; }
+
+    /* Strength list */
+    .strength-list { list-style: none; }
+    .strength-item {
+      background: var(--card);
+      border: 1.5px solid var(--card-border);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 10px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: transform 0.2s;
+    }
+    .strength-item:hover { transform: translateX(4px); }
+    .strength-num {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      background: var(--pink-light);
+      color: var(--pink);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .strength-content h4 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 3px;
+    }
+    .strength-content p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Block items */
+    .block-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .block-item:last-child { border-bottom: none; }
+    .block-icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: var(--orange-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+    }
+    .block-text { font-size: 0.82rem; line-height: 1.7; }
+    .block-text strong { color: var(--text-dark); }
+
+    /* Positioning map */
+    .pos-map {
+      background: var(--bg-soft);
+      border: 1.5px solid var(--card-border);
+      border-radius: 18px;
+      padding: 40px;
+      margin-bottom: 20px;
+      position: relative;
+      min-height: 320px;
+      overflow: hidden;
+    }
+    .pos-axis-v {
+      position: absolute;
+      left: 50%;
+      top: 40px;
+      bottom: 40px;
+      width: 1px;
+      background: #e0d8d0;
+    }
+    .pos-axis-h {
+      position: absolute;
+      left: 40px;
+      right: 40px;
+      top: 50%;
+      height: 1px;
+      background: #e0d8d0;
+    }
+    .pos-label {
+      position: absolute;
+      font-size: 0.6rem;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .pos-label.top { top: 14px; left: 50%; transform: translateX(-50%); }
+    .pos-label.bottom { bottom: 14px; left: 50%; transform: translateX(-50%); }
+    .pos-label.left { left: 14px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
+    .pos-label.right { right: 14px; top: 50%; transform: translateY(-50%) rotate(90deg); }
+    .pos-dot {
+      position: absolute;
+      border-radius: 12px;
+      padding: 7px 13px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transform: translate(-50%, -50%);
+    }
+    .pos-dot.star {
+      background: var(--pink-light);
+      border: 2px solid var(--pink);
+      color: var(--pink);
+      box-shadow: 0 2px 12px rgba(232,131,155,0.18);
+    }
+    .pos-dot.other {
+      background: white;
+      border: 1.5px solid var(--card-border);
+      color: var(--text-muted);
+    }
+    .pos-dot .sub {
+      display: block;
+      font-size: 0.58rem;
+      font-weight: 400;
+      opacity: 0.7;
+      margin-top: 1px;
+    }
+    .pos-summary {
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      background: var(--pink-light);
+      border-radius: 12px;
+      padding: 18px 22px;
+    }
+    .pos-summary strong { color: var(--pink); }
+
+    /* Vision cards */
+    .vision-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    @media (max-width: 640px) {
+      .vision-grid { grid-template-columns: 1fr; }
+    }
+    .vision-card {
+      background: var(--card);
+      border: 1.5px solid var(--card-border);
+      border-radius: 14px;
+      padding: 18px 22px;
+    }
+    .vision-card.full { grid-column: 1 / -1; }
+    .tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .tag.pink { background: var(--pink-light); color: var(--pink); }
+    .tag.orange { background: var(--orange-light); color: var(--orange); }
+    .tag.mint { background: var(--mint-light); color: var(--mint); }
+    .tag.lavender { background: var(--lavender-light); color: var(--lavender); }
+    .vision-card h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 3px;
+    }
+    .vision-card p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--pink), var(--lavender), var(--orange), var(--mint));
+      border-radius: 2px;
+    }
+    .tl-phase { margin-bottom: 32px; position: relative; }
+    .tl-phase::before {
+      content: '🌸';
+      position: absolute;
+      left: -28px;
+      top: 4px;
+      font-size: 0.7rem;
+    }
+    .tl-phase:nth-child(2)::before { content: '🌿'; }
+    .tl-phase:nth-child(3)::before { content: '🌻'; }
+    .tl-phase:nth-child(4)::before { content: '⭐'; }
+    .tl-phase-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .tl-phase:nth-child(1) .tl-phase-title { color: var(--pink); }
+    .tl-phase:nth-child(2) .tl-phase-title { color: var(--lavender); }
+    .tl-phase:nth-child(3) .tl-phase-title { color: var(--orange); }
+    .tl-phase:nth-child(4) .tl-phase-title { color: var(--mint); }
+    .tl-item {
+      background: var(--card);
+      border: 1.5px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 8px;
+      display: flex;
+      gap: 14px;
+      align-items: baseline;
+    }
+    .tl-date {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      min-width: 60px;
+    }
+    .tl-content { font-size: 0.82rem; }
+    .tl-content strong { color: var(--text-dark); }
+    .tl-purpose {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Checklist */
+    .checklist-section { margin-bottom: 28px; }
+    .checklist-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px dashed var(--card-border);
+    }
+    .check-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 8px 0;
+    }
+    .check-box {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--pink-soft);
+      border-radius: 5px;
+      margin-top: 3px;
+    }
+    .check-text { font-size: 0.82rem; }
+    .check-text strong { color: var(--text-dark); }
+
+    /* Closing */
+    .closing {
+      text-align: center;
+      padding: 56px 24px;
+      background: linear-gradient(170deg, #fff8f0 0%, #fdf0f3 40%, #f3f0fa 100%);
+      border-top: 2px solid var(--card-border);
+    }
+    .closing p {
+      font-size: 0.92rem;
+      line-height: 2.2;
+      color: var(--text);
+      max-width: 600px;
+      margin: 0 auto 14px;
+    }
+    .closing .cta {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--pink);
+      margin-top: 20px;
+    }
+    .closing .paw-end { font-size: 1.5rem; margin-top: 20px; }
+
+    @media print {
+      .header, .closing { break-inside: avoid; }
+      .section { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="paw">🐾</div>
+    <h1>きいちゃん<br>コンサルティングサマリー</h1>
+    <p class="subtitle">コンサルタント：野村光恵</p>
+    <span class="date-badge">🌸 初回セッション 2026年3月17日</span>
+  </header>
+
+  <div class="container">
+
+    <!-- Section 1: 本質 -->
+    <section class="section">
+      <span class="section-label">CORE IDENTITY</span>
+      <h2 class="section-title">🌟 きいちゃんの本質</h2>
+
+      <h3 class="sub-title">原体験 — すべてはここから始まった</h3>
+
+      <div class="quote-block">
+        愛犬が命の危機に陥った時、心配で心配でそばを離れられなかった。<br>
+        でも「この子はこの子の人生。死ぬ時も決めて生まれてきたはず」と、<br>
+        <span class="hl">犬から気持ちを切り離した瞬間、犬が自分で水を飲みに行き、回復が始まった。</span>
+      </div>
+
+      <p class="quote-note">
+        これは単なるエピソードではなく、きいちゃんのビジネスの<strong>核心的な原理</strong>。<br>
+        「飼い主のマインドが犬の健康に直結する」—— この確信が、すべての出発点。
+      </p>
+
+      <h3 class="sub-title">価値観マップ</h3>
+
+      <div class="value-grid">
+        <div class="value-card">
+          <div class="emoji">🌱</div>
+          <h4>人の可能性に立ち会いたい</h4>
+          <p>「自分ってまだまだすごく可能性があるっていう瞬間に立ち会いたい」</p>
+        </div>
+        <div class="value-card">
+          <div class="emoji">🤝</div>
+          <h4>誠実さ</h4>
+          <p>「命に関わることだから怖い。責任を持つ自分の選択に責任を持つ」</p>
+        </div>
+        <div class="value-card">
+          <div class="emoji">📢</div>
+          <h4>伝えることへの情熱</h4>
+          <p>「新しい知識があったら"聞いて聞いて"ってなる」</p>
+        </div>
+        <div class="value-card">
+          <div class="emoji">💎</div>
+          <h4>深い関係性</h4>
+          <p>「少人数でいい。お互いのことが分かっていく関係性を作りたい」</p>
+        </div>
+        <div class="value-card full">
+          <div class="emoji">🔥</div>
+          <h4>仕事＝自己実現</h4>
+          <p>「仕事の満足が自分の満足にイコール」</p>
+        </div>
+      </div>
+
+      <h3 class="sub-title" style="margin-top:32px;">5つの武器</h3>
+
+      <ul class="strength-list">
+        <li class="strength-item">
+          <span class="strength-num">①</span>
+          <div class="strength-content">
+            <h4>圧倒的な専門性</h4>
+            <p>管理栄養士 × 分子栄養学 × 南イリノイ大学修了 × ペット栄養管理士 × 栄養心理カウンセラー</p>
+          </div>
+        </li>
+        <li class="strength-item">
+          <span class="strength-num">②</span>
+          <div class="strength-content">
+            <h4>実体験に基づく確信</h4>
+            <p>自分の犬で「飼い主マインド → 犬の回復」を証明した原体験</p>
+          </div>
+        </li>
+        <li class="strength-item">
+          <span class="strength-num">③</span>
+          <div class="strength-content">
+            <h4>情報収集＆発信のエネルギー</h4>
+            <p>学会情報を追い続け、伝えることに喜びを感じる。分子栄養医学研究会に現在も所属</p>
+          </div>
+        </li>
+        <li class="strength-item">
+          <span class="strength-num">④</span>
+          <div class="strength-content">
+            <h4>制作スキル</h4>
+            <p>LP制作・画像編集（Canva）・WordPress・YouTube運営 → 自走できるITリテラシー</p>
+          </div>
+        </li>
+        <li class="strength-item">
+          <span class="strength-num">⑤</span>
+          <div class="strength-content">
+            <h4>教育実績</h4>
+            <p>栄養講座 累計1,000名受講・動物看護師700名指導</p>
+          </div>
+        </li>
+      </ul>
+
+      <h3 class="sub-title orange" style="margin-top:32px;">乗り越えるべき壁</h3>
+
+      <div class="block-item">
+        <div class="block-icon">⚡</div>
+        <div class="block-text">
+          「命に関わることだから、自分が言ったことで後悔に変わったら…」<br>
+          → <strong>責任感の強さの裏返し</strong>。「決めるのはあなた自身」というスタンスで解消可能。
+        </div>
+      </div>
+      <div class="block-item">
+        <div class="block-icon">📦</div>
+        <div class="block-text">
+          知識が豊富すぎて「ひな鳥に注射器」になりがち<br>
+          → <strong>一口サイズに分解する仕組み</strong>（階段型コンテンツ設計）が必要。
+        </div>
+      </div>
+      <div class="block-item">
+        <div class="block-icon">🔀</div>
+        <div class="block-text">
+          ブランドが分散（犬の腸活アカデミー / Animal Nutrition Program / 個別相談）<br>
+          → <strong>統一コンセプト名</strong>を作り、1つのブランドにまとめる。
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: ポジショニング -->
+    <section class="section">
+      <span class="section-label orange">POSITIONING</span>
+      <h2 class="section-title">⚔️ 市場ポジショニング</h2>
+
+      <div class="pos-map">
+        <div class="pos-axis-v"></div>
+        <div class="pos-axis-h"></div>
+        <span class="pos-label top">心理・マインド重視</span>
+        <span class="pos-label bottom">栄養・食事重視</span>
+        <span class="pos-label left">東洋医学</span>
+        <span class="pos-label right">西洋科学</span>
+        <div class="pos-dot star" style="top: 28%; right: 16%;">
+          ★ きいちゃん
+          <span class="sub">科学 + 心理 + 実体験</span>
+        </div>
+        <div class="pos-dot other" style="top: 30%; right: 42%; transform: translate(50%, -50%);">
+          サニーズ
+          <span class="sub">獣医 ¥100万〜</span>
+        </div>
+        <div class="pos-dot other" style="top: 40%; left: 14%;">
+          飯村かおり
+          <span class="sub">NLP + 養生 ¥3,300〜</span>
+        </div>
+        <div class="pos-dot other" style="bottom: 28%; left: 20%;">
+          犬猫の食と自然医療の学校
+          <span class="sub">食事療法のみ</span>
+        </div>
+      </div>
+
+      <div class="pos-summary">
+        <strong>きいちゃんだけのポジション：「西洋科学の根拠」×「飼い主マインド」の交差点。</strong><br>
+        飯村さんは「寄り添い型」（NLP・養生）、サニーズは「獣医の権威」、食と自然医療の学校は「栄養のみ」。<br>
+        この交差点に立てるのは、分子栄養学の専門性と飼い主マインドの実体験を持つきいちゃんだけ。
+      </div>
+    </section>
+
+    <!-- Section 3: ビジョン -->
+    <section class="section">
+      <span class="section-label lavender">VISION</span>
+      <h2 class="section-title">🎯 3年後のビジョン ＆ 1年後のゴール</h2>
+
+      <h3 class="sub-title lavender">3年後のイメージ（きいちゃん自身の言葉から）</h3>
+
+      <div class="vision-grid">
+        <div class="vision-card">
+          <span class="tag lavender">働き方</span>
+          <h4>労働時間は少なく、安定した収入</h4>
+        </div>
+        <div class="vision-card">
+          <span class="tag lavender">コミュニティ</span>
+          <h4>約30名の講師コミュニティ</h4>
+        </div>
+        <div class="vision-card">
+          <span class="tag lavender">リトリート</span>
+          <h4>沖縄で15〜20人規模</h4>
+          <p>思考の学校の先生方をゲストに招く</p>
+        </div>
+        <div class="vision-card">
+          <span class="tag lavender">収入の柱</span>
+          <h4>養成講座 + コミュニティ + 発信</h4>
+        </div>
+      </div>
+
+      <h3 class="sub-title orange" style="margin-top:28px;">1年後の状態（2027年3月）</h3>
+
+      <div class="vision-grid">
+        <div class="vision-card">
+          <span class="tag orange">ゼロ期</span>
+          <h4>修了間近（5名が受講中）</h4>
+        </div>
+        <div class="vision-card">
+          <span class="tag orange">1期</span>
+          <h4>開始済み（10名が受講中）</h4>
+        </div>
+        <div class="vision-card">
+          <span class="tag orange">YouTube</span>
+          <h4>再開済み、定期投稿中</h4>
+        </div>
+        <div class="vision-card">
+          <span class="tag orange">LINE登録者</span>
+          <h4>300〜500名</h4>
+          <p>診断クイズ + YouTube経由</p>
+        </div>
+        <div class="vision-card full">
+          <span class="tag orange">講座体系</span>
+          <h4>栄養コース（3ヶ月）＋ 心理コース（追加3ヶ月）が確立</h4>
+          <p>累計15名育成 → 3年後の30名に向けて順調な軌道</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: マイルストーン -->
+    <section class="section">
+      <span class="section-label mint">MILESTONES</span>
+      <h2 class="section-title">📅 1年後までのロードマップ</h2>
+
+      <div class="timeline">
+        <div class="tl-phase">
+          <div class="tl-phase-title">Phase 1：準備期間（3〜4月）</div>
+          <div class="tl-item">
+            <span class="tl-date">3月末</span>
+            <div>
+              <div class="tl-content"><strong>ストレングスファインダー診断</strong>を受ける</div>
+              <div class="tl-purpose">強みの言語化、成功パターンの発見</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">4月上旬</span>
+            <div>
+              <div class="tl-content"><strong>強み開発セッション</strong></div>
+              <div class="tl-purpose">強みに基づいたビジネス設計</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">4月26日</span>
+            <div>
+              <div class="tl-content"><strong>ペットショップ閉店</strong> 🎉</div>
+              <div class="tl-purpose">時間とエネルギーの解放</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-phase">
+          <div class="tl-phase-title">Phase 2：基盤構築（5〜6月）</div>
+          <div class="tl-item">
+            <span class="tl-date">5月</span>
+            <div>
+              <div class="tl-content"><strong>ブランド統一</strong> — コンセプト名を決める</div>
+              <div class="tl-purpose">「犬の腸活」「ANP」→ 1つの名前へ</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">5月</span>
+            <div>
+              <div class="tl-content"><strong>YouTube再開</strong></div>
+              <div class="tl-purpose">認知拡大＆信頼構築</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">5月</span>
+            <div>
+              <div class="tl-content"><strong>犬の気持ち診断クイズ</strong> 設計 &amp; 公開</div>
+              <div class="tl-purpose">LINE登録の入口</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">6月</span>
+            <div>
+              <div class="tl-content"><strong>公式LINE構築</strong> + <strong>Lv.1講座リニューアル</strong></div>
+              <div class="tl-purpose">教育の自動化 + 入口商品として再設計</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-phase">
+          <div class="tl-phase-title">Phase 3：コンテンツ確立（7〜9月）</div>
+          <div class="tl-item">
+            <span class="tl-date">7月</span>
+            <div>
+              <div class="tl-content"><strong>飼い主マインド実践コース</strong> 設計（Lv.2）</div>
+              <div class="tl-purpose">本命商品の設計（3ヶ月コース）</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">7〜8月</span>
+            <div>
+              <div class="tl-content">Lv.1講座を<strong>2〜3回実施</strong></div>
+              <div class="tl-purpose">受講生の声を集める、内容ブラッシュアップ</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">8〜9月</span>
+            <div>
+              <div class="tl-content"><strong>ビフォーアフター収集</strong> + Lv.2教材完成</div>
+              <div class="tl-purpose">社会的証明 + ゼロ期教材の確定</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-phase">
+          <div class="tl-phase-title">Phase 4：ゼロ期 → 1期（9月〜翌3月）</div>
+          <div class="tl-item">
+            <span class="tl-date">9月</span>
+            <div>
+              <div class="tl-content"><strong>ゼロ期開始</strong>（5名）</div>
+              <div class="tl-purpose">知人＋αで開始、特別価格で</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">12月</span>
+            <div>
+              <div class="tl-content">ゼロ期折り返し → <strong>中間振り返り</strong></div>
+              <div class="tl-purpose">内容ブラッシュアップ、受講生の声を収集</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">2月</span>
+            <div>
+              <div class="tl-content"><strong>ゼロ期修了</strong> + <strong>1期募集開始</strong></div>
+              <div class="tl-purpose">修了生の声を活用、LP・YouTube・LINE連動</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">3月</span>
+            <div>
+              <div class="tl-content"><strong>1期スタート</strong>（10名）🎉</div>
+              <div class="tl-purpose">本格運営開始、3年後に向けた軌道確認</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: ネクストステップ -->
+    <section class="section">
+      <span class="section-label">NEXT STEPS</span>
+      <h2 class="section-title">✅ 次回セッションまでのアクション</h2>
+
+      <div class="checklist-section">
+        <h3 class="checklist-title">🐾 きいちゃんがやること</h3>
+        <div class="check-item">
+          <div class="check-box"></div>
+          <div class="check-text"><strong>ストレングスファインダー診断</strong>を受ける（野村からアカウント送付後）</div>
+        </div>
+        <div class="check-item">
+          <div class="check-box"></div>
+          <div class="check-text">ゼロ期候補の<strong>2名に軽く声かけ</strong>（反応を見る程度でOK）</div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-box"></div>
+          <div class="check-text">自分の事業の<strong>流れを整理</strong>してみる</div>
+        </div>
+        <div class="check-item">
+          <div class="check-box"></div>
+          <div class="check-text"><strong>ブランド名の候補</strong>を3つ考えてみる（統一コンセプト名）</div>
+        </div>
+      </div>
+
+
+    </section>
+  </div>
+
+  <!-- Closing -->
+  <div class="closing">
+    <p>
+      きいちゃんは「何をやりたいか」も「誰のためにやりたいか」も<br>
+      「どういう未来にしたいか」も、全て明確に持っている。<br>
+      足りないのは<strong style="color:var(--pink);">見せ方と仕組みだけ</strong>。
+    </p>
+    <p>
+      専門性・実績・情熱・ITスキル——全部揃っている稀有な方。<br>
+      あとは、この「知識の注射器」を<br>
+      <strong style="color:var(--lavender);">一口サイズの階段に変換する設計</strong>と、<br>
+      それを<strong style="color:var(--lavender);">自動で届ける仕組み</strong>を作ること。
+    </p>
+    <p class="cta">
+      次回の強み開発セッションで「きいちゃんらしい届け方」を見つけて、<br>
+      5月から一気に動き出しましょう 🐾
+    </p>
+    <div class="paw-end">🐶🌸</div>
+  </div>
+
+</body>
+</html>
