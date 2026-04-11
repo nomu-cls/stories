@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF9E6"/>
+      <stop offset="50%" stop-color="#FFF5F0"/>
+      <stop offset="100%" stop-color="#F0F7FC"/>
+    </linearGradient>
+    <linearGradient id="yG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F5C542"/><stop offset="100%" stop-color="#F29880"/></linearGradient>
+    <linearGradient id="oG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFAD5E"/><stop offset="100%" stop-color="#F5943A"/></linearGradient>
+    <linearGradient id="gG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#8CB88A"/><stop offset="100%" stop-color="#6BAF69"/></linearGradient>
+    <linearGradient id="bG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#87CEEB"/><stop offset="100%" stop-color="#6BB3D9"/></linearGradient>
+    <linearGradient id="pG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#B89FD8"/><stop offset="100%" stop-color="#9B7FC4"/></linearGradient>
+    <linearGradient id="cG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F29880"/><stop offset="100%" stop-color="#E87461"/></linearGradient>
+    <filter id="sh" x="-3%" y="-3%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-opacity="0.08" flood-color="#000"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="1100" fill="url(#bgG)"/>
+
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" font-size="10" fill="#C4A24E" letter-spacing="5" font-weight="700">🐾 FUNNEL DESIGN</text>
+  <text x="450" y="70" text-anchor="middle" font-size="22" fill="#3D3226" font-weight="900">きいちゃん ファネル全体設計</text>
+  <text x="450" y="94" text-anchor="middle" font-size="12" fill="#8C7B6B">栄養 × 飼い主マインド ── 集客から講座までの流れ</text>
+  <line x1="350" y1="108" x2="550" y2="108" stroke="url(#yG)" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Step 1: SNS -->
+  <g transform="translate(150, 130)">
+    <rect width="600" height="80" rx="16" fill="#fff" filter="url(#sh)" opacity="0.95"/>
+    <rect width="600" height="5" rx="3" fill="url(#yG)"/>
+    <circle cx="40" cy="45" r="20" fill="url(#yG)"/>
+    <text x="40" y="50" text-anchor="middle" font-size="14" fill="#fff" font-weight="900">1</text>
+    <text x="72" y="38" font-size="16" fill="#3D3226" font-weight="900">📺 YouTube / Instagram / SNS</text>
+    <text x="72" y="60" font-size="12" fill="#8C7B6B">「ワンちゃん、心の栄養足りてる？」→ 診断リンクを誘導</text>
+  </g>
+
+  <!-- Arrow -->
+  <polygon points="445,218 445,230 440,230 450,242 460,230 455,230 455,218" fill="url(#yG)" opacity="0.6"/>
+
+  <!-- Step 2: Diagnosis -->
+  <g transform="translate(150, 248)">
+    <rect width="600" height="100" rx="16" fill="#fff" filter="url(#sh)" opacity="0.95"/>
+    <rect width="600" height="5" rx="3" fill="url(#oG)"/>
+    <circle cx="40" cy="55" r="20" fill="url(#oG)"/>
+    <text x="40" y="60" text-anchor="middle" font-size="14" fill="#fff" font-weight="900">2</text>
+    <text x="72" y="38" font-size="16" fill="#3D3226" font-weight="900">🧩 心の栄養診断（チャットLP）</text>
+    <text x="72" y="58" font-size="12" fill="#3D3226">10問・3分のチャット形式。レーダーチャートで5つの栄養素を可視化</text>
+    <rect x="72" y="68" width="280" height="22" rx="11" fill="#FFF0E0"/>
+    <text x="82" y="84" font-size="11" fill="#F5943A" font-weight="700">💡 入口が「診断」だから軽い＆楽しい → 完走率が高い</text>
+  </g>
+
+  <!-- Arrow -->
+  <polygon points="445,356 445,368 440,368 450,380 460,368 455,368 455,356" fill="url(#oG)" opacity="0.6"/>
+
+  <!-- Step 3: LINE -->
+  <g transform="translate(150, 386)">
+    <rect width="600" height="100" rx="16" fill="#fff" filter="url(#sh)" opacity="0.95"/>
+    <rect width="600" height="5" rx="3" fill="url(#gG)"/>
+    <circle cx="40" cy="55" r="20" fill="url(#gG)"/>
+    <text x="40" y="60" text-anchor="middle" font-size="14" fill="#fff" font-weight="900">3</text>
+    <text x="72" y="38" font-size="16" fill="#3D3226" font-weight="900">🎁 LINE登録 ＋ 特典プレゼント</text>
+    <text x="72" y="58" font-size="12" fill="#3D3226">不足栄養素に合わせた「心の栄養レシピ」を無料プレゼント</text>
+    <rect x="72" y="68" width="340" height="22" rx="11" fill="#E8F5E8"/>
+    <text x="82" y="84" font-size="11" fill="#6BAF69" font-weight="700">💡 タイプ別特典で「あなた専用」感 → LINE登録率アップ</text>
+  </g>
+
+  <!-- Arrow -->
+  <polygon points="445,494 445,506 440,506 450,518 460,506 455,506 455,494" fill="url(#gG)" opacity="0.6"/>
+
+  <!-- Step 4: Education -->
+  <g transform="translate(150, 524)">
+    <rect width="600" height="100" rx="16" fill="#fff" filter="url(#sh)" opacity="0.95"/>
+    <rect width="600" height="5" rx="3" fill="url(#bG)"/>
+    <circle cx="40" cy="55" r="20" fill="url(#bG)"/>
+    <text x="40" y="60" text-anchor="middle" font-size="14" fill="#fff" font-weight="900">4</text>
+    <text x="72" y="38" font-size="16" fill="#3D3226" font-weight="900">📹 教育配信（LINE内）</text>
+    <text x="72" y="58" font-size="12" fill="#3D3226">飼い主マインドの重要性を伝える動画・配信コンテンツ</text>
+    <rect x="72" y="68" width="400" height="22" rx="11" fill="#E6F4FA"/>
+    <text x="82" y="84" font-size="11" fill="#6BB3D9" font-weight="700">💡 「栄養だけじゃダメだった」→ 科学的根拠でマインドの必要性を教育</text>
+  </g>
+
+  <!-- Arrow -->
+  <polygon points="445,632 445,644 440,644 450,656 460,644 455,644 455,632" fill="url(#bG)" opacity="0.6"/>
+
+  <!-- Step 5: Individual Session -->
+  <g transform="translate(150, 662)">
+    <rect width="600" height="100" rx="16" fill="#fff" filter="url(#sh)" opacity="0.95"/>
+    <rect width="600" height="5" rx="3" fill="url(#pG)"/>
+    <circle cx="40" cy="55" r="20" fill="url(#pG)"/>
+    <text x="40" y="60" text-anchor="middle" font-size="14" fill="#fff" font-weight="900">5</text>
+    <text x="72" y="38" font-size="16" fill="#3D3226" font-weight="900">🔥 個別セッション</text>
+    <text x="72" y="58" font-size="12" fill="#3D3226">1対1で飼い主マインドを実践。結果を出す＆実績を作る</text>
+    <rect x="72" y="68" width="440" height="22" rx="11" fill="#F0E6FF"/>
+    <text x="82" y="84" font-size="11" fill="#9B7FC4" font-weight="700">💡 1回のセッション = コンテンツ素材 + 発信ネタ + 実績（3つの資産）</text>
+  </g>
+
+  <!-- Arrow -->
+  <polygon points="445,770 445,782 440,782 450,794 460,782 455,782 455,770" fill="url(#pG)" opacity="0.6"/>
+
+  <!-- Step 6: Course -->
+  <g transform="translate(150, 800)">
+    <rect width="600" height="120" rx="16" fill="#fff" filter="url(#sh)" opacity="0.95"/>
+    <rect width="600" height="5" rx="3" fill="url(#cG)"/>
+    <circle cx="40" cy="55" r="20" fill="url(#cG)"/>
+    <text x="40" y="60" text-anchor="middle" font-size="14" fill="#fff" font-weight="900">6</text>
+    <text x="72" y="38" font-size="16" fill="#3D3226" font-weight="900">🎓 飼い主マインド講座（0期 → 1期）</text>
+    <text x="72" y="58" font-size="12" fill="#3D3226">マインド講座（4ヶ月） → マスターコース（希望者）</text>
+
+    <rect x="72" y="72" width="240" height="28" rx="8" fill="#FFF0EC"/>
+    <text x="82" y="91" font-size="11" fill="#E87461" font-weight="700">0期：個別声がけ（3〜5人）</text>
+    <rect x="330" y="72" width="240" height="28" rx="8" fill="#FFF0EC"/>
+    <text x="340" y="91" font-size="11" fill="#E87461" font-weight="700">1期：仕組みで集客（10人〜）</text>
+  </g>
+
+  <!-- Bottom summary -->
+  <g transform="translate(100, 950)">
+    <rect width="700" height="120" rx="20" fill="#fff" filter="url(#sh)" opacity="0.97"/>
+    <rect width="700" height="5" rx="3" fill="url(#yG)"/>
+    <text x="350" y="34" text-anchor="middle" font-size="14" fill="#3D3226" font-weight="900">🌟 きいちゃんのファネルが強い理由</text>
+    <g transform="translate(30, 50)">
+      <rect width="200" height="52" rx="10" fill="#FFF9E6"/>
+      <text x="100" y="22" text-anchor="middle" font-size="11" fill="#C4A24E" font-weight="700">入口が軽い</text>
+      <text x="100" y="40" text-anchor="middle" font-size="10" fill="#3D3226">3分の診断で気軽に開始</text>
+    </g>
+    <g transform="translate(250, 50)">
+      <rect width="200" height="52" rx="10" fill="#FFF9E6"/>
+      <text x="100" y="22" text-anchor="middle" font-size="11" fill="#C4A24E" font-weight="700">科学で信頼</text>
+      <text x="100" y="40" text-anchor="middle" font-size="10" fill="#3D3226">コルチゾール研究で裏付け</text>
+    </g>
+    <g transform="translate(470, 50)">
+      <rect width="200" height="52" rx="10" fill="#FFF9E6"/>
+      <text x="100" y="22" text-anchor="middle" font-size="11" fill="#C4A24E" font-weight="700">栄養×マインド</text>
+      <text x="100" y="40" text-anchor="middle" font-size="10" fill="#3D3226">他にない2本柱の強み</text>
+    </g>
+  </g>
+</svg>

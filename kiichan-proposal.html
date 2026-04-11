@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>きいちゃん 事業設計 ご提案書 — Inside Story</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: linear-gradient(180deg, #FFF9E6 0%, #FFF5F0 40%, #F0F7FC 70%, #F0E6FF 100%);
+    color: #3D3226;
+    min-height: 100vh;
+    line-height: 1.8;
+  }
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+  /* Cover */
+  .cover {
+    text-align: center;
+    padding: 80px 40px;
+    margin-bottom: 60px;
+  }
+  .cover-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #F5C542, #F29880);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    padding: 6px 24px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .cover h1 {
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    color: #3D3226;
+  }
+  .cover .sub {
+    font-size: 16px;
+    color: #8C7B6B;
+    margin-bottom: 24px;
+  }
+  .cover .line {
+    width: 120px;
+    height: 3px;
+    background: linear-gradient(90deg, #F5C542, #F29880);
+    border-radius: 2px;
+    margin: 0 auto 24px;
+  }
+  .cover .meta {
+    font-size: 13px;
+    color: #B0A090;
+  }
+
+  /* Cards */
+  .card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    border-radius: 20px 20px 0 0;
+  }
+  .card.honey::before { background: linear-gradient(90deg, #F5C542, #F29880); }
+  .card.orange::before { background: linear-gradient(90deg, #FFAD5E, #F5943A); }
+  .card.green::before { background: linear-gradient(90deg, #8CB88A, #6BAF69); }
+  .card.blue::before { background: linear-gradient(90deg, #87CEEB, #6BB3D9); }
+  .card.purple::before { background: linear-gradient(90deg, #B89FD8, #9B7FC4); }
+  .card.coral::before { background: linear-gradient(90deg, #F29880, #E87461); }
+
+  .card h2 {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card h2 .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    padding: 4px 14px;
+    border-radius: 12px;
+  }
+  .badge-honey { background: linear-gradient(135deg, #F5C542, #F29880); }
+  .badge-orange { background: linear-gradient(135deg, #FFAD5E, #F5943A); }
+  .badge-green { background: linear-gradient(135deg, #8CB88A, #6BAF69); }
+  .badge-blue { background: linear-gradient(135deg, #87CEEB, #6BB3D9); }
+  .badge-purple { background: linear-gradient(135deg, #B89FD8, #9B7FC4); }
+  .badge-coral { background: linear-gradient(135deg, #F29880, #E87461); }
+
+  .card p { font-size: 14px; color: #5A4D40; margin-bottom: 12px; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  th {
+    background: #FFF9E6;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+    color: #8C6B3D;
+    border-bottom: 2px solid #F5E6D0;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #F5F0E8;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+
+  /* Price table */
+  .price-table th { background: linear-gradient(135deg, #F5C542, #F29880); color: #fff; }
+  .price-table .total { background: #FFF9E6; font-weight: 900; font-size: 16px; }
+  .price-table .price { font-weight: 900; font-size: 18px; color: #E87461; }
+
+  /* Highlight box */
+  .highlight {
+    background: #FFF9E6;
+    border-left: 4px solid #F5C542;
+    padding: 16px 20px;
+    border-radius: 0 12px 12px 0;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  .highlight.green { background: #E8F5E8; border-color: #8CB88A; }
+  .highlight.blue { background: #E6F4FA; border-color: #87CEEB; }
+  .highlight.purple { background: #F0E6FF; border-color: #B89FD8; }
+
+  /* Funnel step */
+  .funnel-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin: 12px 0;
+    padding: 14px 18px;
+    background: #FAFAF5;
+    border-radius: 12px;
+  }
+  .funnel-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .funnel-step .title { font-weight: 700; font-size: 14px; }
+  .funnel-step .desc { font-size: 12px; color: #8C7B6B; }
+
+  /* Arrow */
+  .arrow {
+    text-align: center;
+    font-size: 18px;
+    color: #D4C4A0;
+    margin: 4px 0;
+  }
+
+  /* Timeline row */
+  .tl-row {
+    display: flex;
+    gap: 12px;
+    margin: 10px 0;
+  }
+  .tl-month {
+    width: 70px;
+    text-align: center;
+    padding: 8px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .tl-content {
+    flex: 1;
+    font-size: 13px;
+    padding: 8px 0;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px;
+    color: #B0A090;
+    font-size: 12px;
+  }
+
+  /* Scope grid */
+  .scope-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .scope-item {
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 13px;
+  }
+  .scope-item .label { font-weight: 700; font-size: 12px; margin-bottom: 4px; }
+
+  @media print {
+    body { background: #fff; }
+    .card { box-shadow: none; border: 1px solid #eee; }
+    .page { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Cover -->
+  <div class="cover">
+    <div class="cover-badge">🐾 PROPOSAL</div>
+    <h1>事業設計 ご提案書</h1>
+    <p class="sub">栄養 × 飼い主マインド トレーナー</p>
+    <div class="line"></div>
+    <p class="meta">Presented by Inside Story｜2026年4月</p>
+  </div>
+
+  <!-- 1. ご提案の概要 -->
+  <div class="card honey">
+    <h2><span class="badge badge-honey">01</span> ご提案の概要</h2>
+    <p>きいちゃんの強み「分子栄養学 × 飼い主マインド × 科学的根拠」を最大限に活かし、<br>
+    ペットショップ閉店後の新しい事業を段階的に構築するための設計・コンサルティングをご提案します。</p>
+
+    <div class="highlight">
+      <strong>🌟 きいちゃんの強み</strong><br>
+      ストレングスTOP資質に「活発性（1位）」「着想」「自我」「個別化（9位）」。<br>
+      1対1で相手に合わせた対応が最も得意で、決めたらすぐ動ける人。<br>
+      <strong>だから最初は「個別セッション」をたくさんやることで、講座が自然にできあがります。</strong>
+    </div>
+
+    <p style="font-size:13px; color:#8C7B6B;">
+      ▸ 1回の個別セッション = 📦 コンテンツ素材 + 📺 発信ネタ + ⭐ 実績（3つの資産）
+    </p>
+  </div>
+
+  <!-- 2. ファネル全体設計 -->
+  <div class="card orange">
+    <h2><span class="badge badge-orange">02</span> ファネル全体設計</h2>
+    <p>SNSから講座までの一貫した集客動線を設計します。</p>
+
+    <div class="funnel-step">
+      <div class="funnel-num" style="background:linear-gradient(135deg,#F5C542,#F29880)">1</div>
+      <div><div class="title">📺 YouTube / Instagram / SNS</div><div class="desc">「ワンちゃん、心の栄養足りてる？」→ 診断リンクへ誘導</div></div>
+    </div>
+    <div class="arrow">▼</div>
+    <div class="funnel-step">
+      <div class="funnel-num" style="background:linear-gradient(135deg,#FFAD5E,#F5943A)">2</div>
+      <div><div class="title">🧩 心の栄養診断（チャットLP）</div><div class="desc">10問・3分のチャット形式。5つの栄養素をレーダーチャートで可視化</div></div>
+    </div>
+    <div class="arrow">▼</div>
+    <div class="funnel-step">
+      <div class="funnel-num" style="background:linear-gradient(135deg,#8CB88A,#6BAF69)">3</div>
+      <div><div class="title">🎁 LINE登録 ＋ 特典プレゼント</div><div class="desc">不足栄養素に合わせた「心の栄養レシピ」を無料プレゼント</div></div>
+    </div>
+    <div class="arrow">▼</div>
+    <div class="funnel-step">
+      <div class="funnel-num" style="background:linear-gradient(135deg,#87CEEB,#6BB3D9)">4</div>
+      <div><div class="title">📹 教育配信（LINE内）</div><div class="desc">飼い主マインドの重要性を伝える動画・配信コンテンツ</div></div>
+    </div>
+    <div class="arrow">▼</div>
+    <div class="funnel-step">
+      <div class="funnel-num" style="background:linear-gradient(135deg,#B89FD8,#9B7FC4)">5</div>
+      <div><div class="title">🔥 個別セッション</div><div class="desc">1対1で飼い主マインドを実践。結果を出す＆実績を作る</div></div>
+    </div>
+    <div class="arrow">▼</div>
+    <div class="funnel-step">
+      <div class="funnel-num" style="background:linear-gradient(135deg,#F29880,#E87461)">6</div>
+      <div><div class="title">🎓 飼い主マインド講座（0期 → 1期）</div><div class="desc">マインド講座（4ヶ月） → マスターコース（希望者のみ）</div></div>
+    </div>
+  </div>
+
+  <!-- 3. ロードマップ -->
+  <div class="card green">
+    <h2><span class="badge badge-green">03</span> 事業ロードマップ</h2>
+    <p>2026年4月〜2029年にかけて、段階的に事業を拡大します。</p>
+
+    <div class="tl-row">
+      <div class="tl-month" style="background:#FFF9E6; color:#C4A24E;">4月</div>
+      <div class="tl-content"><strong>Phase 0｜閉店・発表</strong><br>ペットショップ閉店、チャットLP制作、LINE開設</div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-month" style="background:#FFF0E0; color:#F5943A;">5〜6月</div>
+      <div class="tl-content"><strong>Phase 1｜個別セッション期（2ヶ月）</strong><br>1対1セッションで結果を出す。栄養講座も並行開催→コンテンツ化<br><span style="font-size:12px;color:#8C7B6B">※ 0期が固まったら、個別の頻度は落としてOK</span></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-month" style="background:#E8F5E8; color:#6BAF69;">7〜10月</div>
+      <div class="tl-content"><strong>Phase 2｜0期 開催（4ヶ月）</strong><br>マインド講座＋マスターコース（セット構成）。3〜5人の共創メンバー</div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-month" style="background:#E6F4FA; color:#6BB3D9;">11〜12月</div>
+      <div class="tl-content"><strong>Phase 3｜1期準備・体験会</strong><br>0期の成果をまとめ、体験会開催。1期の10名募集</div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-month" style="background:#F0E6FF; color:#9B7FC4;">2027年〜</div>
+      <div class="tl-content"><strong>Phase 4〜｜マインド講座1期 → 養成 → コミュニティ</strong><br>講座を本格開催。養成講座でマスターを育成。沖縄リトリートも</div>
+    </div>
+
+    <div class="highlight green">
+      <strong>✅ コンサル1回目（5〜7月）で0期スタートまで持っていく設計</strong>
+    </div>
+  </div>
+
+  <!-- 4. サポート内容 -->
+  <div class="card blue">
+    <h2><span class="badge badge-blue">04</span> サポート内容</h2>
+
+    <h3 style="font-size:15px; font-weight:700; margin:16px 0 10px;">💬 コンサルティング（月2回、最大4回）</h3>
+    <div class="scope-grid">
+      <div class="scope-item" style="background:#E6F4FA;">
+        <div class="label" style="color:#6BB3D9;">個別セッション動線の設計</div>
+        チャットLP→LINE→個別申込の流れ
+      </div>
+      <div class="scope-item" style="background:#E6F4FA;">
+        <div class="label" style="color:#6BB3D9;">個別相談までの流れ</div>
+        どういう順序で話すか、どう誘うか
+      </div>
+      <div class="scope-item" style="background:#E6F4FA;">
+        <div class="label" style="color:#6BB3D9;">0期→1期の戦略設計</div>
+        募集・価格・構成のアドバイス
+      </div>
+      <div class="scope-item" style="background:#E6F4FA;">
+        <div class="label" style="color:#6BB3D9;">コンテンツ化のお手伝い</div>
+        セッション→講座素材・発信ネタへの変換
+      </div>
+    </div>
+
+    <h3 style="font-size:15px; font-weight:700; margin:16px 0 10px;">🔧 制作（別途見積もり）</h3>
+    <div class="scope-grid">
+      <div class="scope-item" style="background:#FFF9E6;">
+        <div class="label" style="color:#C4A24E;">栄養オンラインコース動線</div>
+        販売→決済→動画視聴の仕組み
+      </div>
+      <div class="scope-item" style="background:#FFF9E6;">
+        <div class="label" style="color:#C4A24E;">1期の仕組み化</div>
+        オプトイン→体験会→個別→申込
+      </div>
+    </div>
+
+    <div class="highlight purple">
+      <strong>💡 おすすめはコンサル契約</strong><br>
+      きいちゃんは自分で作ってブラッシュアップできる人。<br>
+      「丸投げ」より、方向を一緒に決めて自分で動く方が合っています。
+    </div>
+  </div>
+
+  <!-- 5. お見積もり -->
+  <div class="card coral">
+    <h2><span class="badge badge-coral">05</span> お見積もり</h2>
+
+    <table class="price-table">
+      <thead>
+        <tr><th>項目</th><th>内容</th><th style="text-align:right">金額（税込）</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>チャットLP制作</strong></td>
+          <td>心の栄養診断チャットLP（HTML）の制作・納品<br><span style="font-size:12px;color:#8C7B6B;">4月末まで</span></td>
+          <td style="text-align:right" class="price">¥98,000</td>
+        </tr>
+        <tr>
+          <td><strong>コンサル契約</strong></td>
+          <td>月2回のセッション（最大4回）<br><span style="font-size:12px;color:#8C7B6B;">5月〜7月（3ヶ月間）</span></td>
+          <td style="text-align:right" class="price">¥360,000</td>
+        </tr>
+        <tr>
+          <td><strong>制作</strong></td>
+          <td>LP・動線・システム構築など<br><span style="font-size:12px;color:#8C7B6B;">必要に応じて都度お見積もり</span></td>
+          <td style="text-align:right" class="price">別途</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight">
+      <strong>📌 チャットLP制作とコンサル契約は別料金です</strong><br>
+      4月にチャットLPを納品 → 5月からコンサル契約は別途（ご希望の場合）
+    </div>
+
+    <h3 style="font-size:14px; font-weight:700; margin:16px 0 8px;">タイムライン</h3>
+    <div style="display:flex; gap:4px; margin:8px 0;">
+      <div style="flex:1; height:32px; background:linear-gradient(90deg,#F5C542,#F29880); border-radius:8px 0 0 8px; display:flex; align-items:center; padding:0 12px;">
+        <span style="font-size:11px; color:#fff; font-weight:700;">4月 チャットLP ¥98,000</span>
+      </div>
+      <div style="flex:3; height:32px; background:linear-gradient(90deg,#87CEEB,#9B7FC4); border-radius:0 8px 8px 0; display:flex; align-items:center; padding:0 12px;">
+        <span style="font-size:11px; color:#fff; font-weight:700;">5月 ─── 6月 ─── 7月　コンサル ¥360,000</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. ネクストアクション -->
+  <div class="card purple">
+    <h2><span class="badge badge-purple">06</span> ネクストアクション</h2>
+
+    <table>
+      <thead><tr><th>#</th><th>アクション</th><th>期限</th><th>担当</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>ヒアリングシートを埋める</td><td>4/18まで</td><td>きいちゃん</td></tr>
+        <tr><td>2</td><td>診断チャット最終仕上げ</td><td>4/21まで</td><td>野村</td></tr>
+        <tr><td>3</td><td>LINE公式アカウント開設確認</td><td>4/18まで</td><td>きいちゃん</td></tr>
+        <tr><td>4</td><td>特典動画の制作</td><td>4月中</td><td>きいちゃん</td></tr>
+        <tr><td>5</td><td>閉店アナウンス文ドラフト</td><td>4/21まで</td><td>きいちゃん+野村</td></tr>
+        <tr><td>6</td><td>個別セッションへの動線設計</td><td>5月頭</td><td>きいちゃん+野村</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    Inside Story｜Presented by 野村<br>
+    お問い合わせ・ご不明点はお気軽にご連絡ください
+  </div>
+
+</div>
+
+</body>
+</html>

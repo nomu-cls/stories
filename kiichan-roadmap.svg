@@ -1,0 +1,425 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 2900" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF9E6"/>
+      <stop offset="40%" stop-color="#FFF5F0"/>
+      <stop offset="70%" stop-color="#F0F7FC"/>
+      <stop offset="100%" stop-color="#F0E6FF"/>
+    </linearGradient>
+    <linearGradient id="honeyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F5C542"/>
+      <stop offset="100%" stop-color="#F29880"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFAD5E"/>
+      <stop offset="100%" stop-color="#F5943A"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8CB88A"/>
+      <stop offset="100%" stop-color="#6BAF69"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#87CEEB"/>
+      <stop offset="100%" stop-color="#6BB3D9"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#B89FD8"/>
+      <stop offset="100%" stop-color="#9B7FC4"/>
+    </linearGradient>
+    <linearGradient id="coralGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F29880"/>
+      <stop offset="100%" stop-color="#E87461"/>
+    </linearGradient>
+    <linearGradient id="pinkGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F2A0C0"/>
+      <stop offset="100%" stop-color="#E8789A"/>
+    </linearGradient>
+    <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5C542"/>
+      <stop offset="15%" stop-color="#FFAD5E"/>
+      <stop offset="30%" stop-color="#8CB88A"/>
+      <stop offset="50%" stop-color="#87CEEB"/>
+      <stop offset="65%" stop-color="#B89FD8"/>
+      <stop offset="80%" stop-color="#F29880"/>
+      <stop offset="100%" stop-color="#F2A0C0"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.08" flood-color="#000"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="2900" fill="url(#bgGrad)"/>
+
+  <!-- Header -->
+  <text x="600" y="50" text-anchor="middle" font-size="11" fill="#C4A24E" letter-spacing="6" font-weight="700">🐾 BUSINESS ROADMAP</text>
+  <text x="600" y="88" text-anchor="middle" font-size="28" fill="#3D3226" font-weight="900">きいちゃん 事業ロードマップ</text>
+  <text x="600" y="116" text-anchor="middle" font-size="14" fill="#8C7B6B" font-weight="500">栄養 × 飼い主マインド トレーナー ── 2026〜2029</text>
+  <line x1="500" y1="132" x2="700" y2="132" stroke="url(#honeyGrad)" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Central Timeline Line -->
+  <line x1="600" y1="170" x2="600" y2="2750" stroke="url(#lineGrad)" stroke-width="4" stroke-linecap="round" opacity="0.25"/>
+
+  <!-- ===== PHASE 0: 閉店・発表 ===== -->
+  <g filter="url(#glow)">
+    <circle cx="600" cy="195" r="14" fill="url(#honeyGrad)"/>
+    <circle cx="600" cy="195" r="8" fill="#fff"/>
+    <circle cx="600" cy="195" r="5" fill="url(#honeyGrad)"/>
+  </g>
+  <text x="548" y="200" text-anchor="end" font-size="13" fill="#C4A24E" font-weight="800">NOW ▸</text>
+
+  <g transform="translate(640, 170)">
+    <rect width="480" height="250" rx="20" fill="#fff" filter="url(#shadow)" opacity="0.95"/>
+    <rect width="480" height="6" rx="3" fill="url(#honeyGrad)"/>
+    <rect x="20" y="22" width="120" height="28" rx="14" fill="url(#honeyGrad)"/>
+    <text x="80" y="41" text-anchor="middle" font-size="12" fill="#fff" font-weight="800">Phase 0</text>
+    <text x="152" y="42" font-size="18" fill="#3D3226" font-weight="900">閉店・発表</text>
+    <text x="20" y="68" font-size="12" fill="#8C7B6B">2026年4月（〜月末）</text>
+
+    <g transform="translate(20, 86)">
+      <rect width="440" height="34" rx="10" fill="#FFF9E6"/>
+      <text x="14" y="22" font-size="13" fill="#3D3226">🏪 ペットショップ閉店・在庫整理</text>
+    </g>
+    <g transform="translate(20, 126)">
+      <rect width="440" height="34" rx="10" fill="#FFF9E6"/>
+      <text x="14" y="22" font-size="13" fill="#3D3226">🐾 心の栄養診断チャット 最終仕上げ</text>
+      <rect x="340" y="7" width="60" height="20" rx="10" fill="url(#honeyGrad)" opacity="0.8"/>
+      <text x="370" y="22" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">進行中</text>
+    </g>
+    <g transform="translate(20, 166)">
+      <rect width="440" height="34" rx="10" fill="#FFF9E6"/>
+      <text x="14" y="22" font-size="13" fill="#3D3226">📱 LINE公式アカウント＋登録特典の準備</text>
+    </g>
+    <g transform="translate(20, 206)">
+      <rect width="210" height="30" rx="10" fill="#F5E6D0"/>
+      <text x="14" y="20" font-size="12" fill="#8C6B3D" font-weight="700">📢 閉店アナウンス</text>
+      <rect x="230" y="0" width="210" height="30" rx="10" fill="#F5E6D0"/>
+      <text x="244" y="20" font-size="12" fill="#8C6B3D" font-weight="700">🌻 新活動の発表</text>
+    </g>
+  </g>
+
+  <!-- Dot -->
+  <circle cx="600" cy="310" r="6" fill="url(#honeyGrad)" opacity="0.4"/>
+
+  <!-- ===== PHASE 1: 個別セッション期 ===== -->
+  <circle cx="600" cy="490" r="12" fill="url(#orangeGrad)"/>
+  <circle cx="600" cy="490" r="6" fill="#fff"/>
+
+  <g transform="translate(80, 440)">
+    <rect width="480" height="400" rx="20" fill="#fff" filter="url(#shadow)" opacity="0.95"/>
+    <rect width="480" height="6" rx="3" fill="url(#orangeGrad)"/>
+    <rect x="20" y="22" width="120" height="28" rx="14" fill="url(#orangeGrad)"/>
+    <text x="80" y="41" text-anchor="middle" font-size="12" fill="#fff" font-weight="800">Phase 1</text>
+    <text x="152" y="42" font-size="18" fill="#3D3226" font-weight="900">個別セッション期</text>
+    <text x="20" y="68" font-size="12" fill="#8C7B6B">2026年5月〜6月（2ヶ月間）</text>
+
+    <rect x="360" y="22" width="100" height="28" rx="14" fill="#FFF0E0"/>
+    <text x="410" y="41" text-anchor="middle" font-size="12" fill="#F5943A" font-weight="800">1対1 特化</text>
+
+    <!-- Core strategy -->
+    <g transform="translate(20, 86)">
+      <rect width="440" height="58" rx="12" fill="#FFF5EB" stroke="#FFAD5E" stroke-width="1.5"/>
+      <text x="220" y="22" text-anchor="middle" font-size="13" fill="#F5943A" font-weight="800">💡 この期間の目的</text>
+      <text x="220" y="44" text-anchor="middle" font-size="12" fill="#3D3226">結果を出すためにとにかく1対1をたくさんやる</text>
+    </g>
+
+    <!-- Flow diagram -->
+    <g transform="translate(20, 158)">
+      <rect width="440" height="52" rx="10" fill="#FFF8F0"/>
+      <text x="12" y="18" font-size="11" fill="#F5943A" font-weight="700">ファネル（この時期の流れ）</text>
+      <text x="12" y="40" font-size="12" fill="#3D3226">診断チャット → LINE → 教育配信 → 🔥 個別セッション申込</text>
+    </g>
+
+    <!-- Two tracks -->
+    <g transform="translate(20, 222)">
+      <rect width="215" height="70" rx="10" fill="#FFF8F0" stroke="#FFAD5E" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="107" y="20" text-anchor="middle" font-size="11" fill="#F5943A" font-weight="700">🔥 マインドセッション</text>
+      <text x="107" y="40" text-anchor="middle" font-size="11" fill="#3D3226">個別で飼い主マインド実践</text>
+      <text x="107" y="58" text-anchor="middle" font-size="10" fill="#8C7B6B">→ メイン。0期候補を発掘</text>
+    </g>
+    <g transform="translate(245, 222)">
+      <rect width="215" height="70" rx="10" fill="#FFF8F0" stroke="#D4C4A0" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="107" y="20" text-anchor="middle" font-size="11" fill="#8C7B6B" font-weight="700">🍚 栄養講座（並行）</text>
+      <text x="107" y="40" text-anchor="middle" font-size="11" fill="#3D3226">何回か開催したら</text>
+      <text x="107" y="58" text-anchor="middle" font-size="10" fill="#8C7B6B">→ オンラインコンテンツ化</text>
+    </g>
+
+    <g transform="translate(20, 304)">
+      <rect width="440" height="34" rx="10" fill="#FFF8F0"/>
+      <text x="14" y="22" font-size="13" fill="#3D3226">📺 YouTube再開（週1 → 飼い主マインド系）</text>
+    </g>
+
+    <text x="20" y="370" font-size="11" fill="#F5943A" font-style="italic">💬 「個別で結果が出た人 → 0期にお誘い」の流れを作る</text>
+    <text x="20" y="390" font-size="11" fill="#8C7B6B" font-style="italic">💬 0期が固まったら、個別の頻度は落としてOK</text>
+  </g>
+
+  <!-- Dot -->
+  <circle cx="600" cy="680" r="6" fill="url(#orangeGrad)" opacity="0.4"/>
+
+  <!-- ===== PHASE 2: 0期 ===== -->
+  <circle cx="600" cy="910" r="12" fill="url(#greenGrad)"/>
+  <circle cx="600" cy="910" r="6" fill="#fff"/>
+
+  <g transform="translate(640, 860)">
+    <rect width="480" height="400" rx="20" fill="#fff" filter="url(#shadow)" opacity="0.95"/>
+    <rect width="480" height="6" rx="3" fill="url(#greenGrad)"/>
+    <rect x="20" y="22" width="120" height="28" rx="14" fill="url(#greenGrad)"/>
+    <text x="80" y="41" text-anchor="middle" font-size="12" fill="#fff" font-weight="800">Phase 2</text>
+    <text x="152" y="42" font-size="18" fill="#3D3226" font-weight="900">0期 開催</text>
+    <text x="20" y="68" font-size="12" fill="#8C7B6B">2026年7月〜10月（4ヶ月間）</text>
+
+    <rect x="380" y="22" width="80" height="28" rx="14" fill="#E8F5E8"/>
+    <text x="420" y="41" text-anchor="middle" font-size="13" fill="#6BAF69" font-weight="800">3〜5人</text>
+
+    <!-- Recruitment source -->
+    <g transform="translate(20, 86)">
+      <rect width="440" height="58" rx="12" fill="#E8F5E8" stroke="#8CB88A" stroke-width="1.5"/>
+      <text x="220" y="22" text-anchor="middle" font-size="13" fill="#6BAF69" font-weight="800">🌱 0期メンバー = 個別セッション経験者</text>
+      <text x="220" y="44" text-anchor="middle" font-size="12" fill="#3D3226">Phase 1で結果を出した＆関心を持った人にお誘い</text>
+    </g>
+
+    <!-- Course structure: Mind → Master set -->
+    <g transform="translate(20, 158)">
+      <rect width="440" height="70" rx="10" fill="#F0F9F0" stroke="#8CB88A" stroke-width="1.5"/>
+      <text x="14" y="20" font-size="11" fill="#6BAF69" font-weight="700">📦 0期の講座構成</text>
+      <text x="14" y="42" font-size="12" fill="#3D3226">🧠 マインド講座（4ヶ月）→ 👩‍🏫 マスター（希望者のみ）</text>
+      <text x="14" y="60" font-size="10" fill="#8C7B6B">マインドを受けた人がマスターに進めるセット構成</text>
+    </g>
+
+    <g transform="translate(20, 242)">
+      <rect width="440" height="34" rx="10" fill="#F0F9F0"/>
+      <text x="14" y="22" font-size="13" fill="#3D3226">📸 ビフォーアフター記録 → 1期募集の実績素材</text>
+    </g>
+    <g transform="translate(20, 282)">
+      <rect width="440" height="34" rx="10" fill="#F0F9F0"/>
+      <text x="14" y="22" font-size="13" fill="#3D3226">🎓 月2回の講座形式（全8回）＋ 個別サポート</text>
+    </g>
+
+    <text x="20" y="352" font-size="11" fill="#8CB88A" font-style="italic">💬 「一緒に作っていく共創メンバー」モニター価格で</text>
+    <text x="20" y="372" font-size="11" fill="#8CB88A" font-style="italic">💬 「マインド講座 × マスターの同時募集」</text>
+  </g>
+
+  <!-- Dot -->
+  <circle cx="600" cy="1040" r="6" fill="url(#greenGrad)" opacity="0.4"/>
+
+  <!-- ===== PHASE 3: 1期準備・体験会 ===== -->
+  <circle cx="600" cy="1270" r="12" fill="url(#blueGrad)"/>
+  <circle cx="600" cy="1270" r="6" fill="#fff"/>
+
+  <g transform="translate(80, 1220)">
+    <rect width="480" height="280" rx="20" fill="#fff" filter="url(#shadow)" opacity="0.95"/>
+    <rect width="480" height="6" rx="3" fill="url(#blueGrad)"/>
+    <rect x="20" y="22" width="120" height="28" rx="14" fill="url(#blueGrad)"/>
+    <text x="80" y="41" text-anchor="middle" font-size="12" fill="#fff" font-weight="800">Phase 3</text>
+    <text x="152" y="42" font-size="18" fill="#3D3226" font-weight="900">1期準備・体験会</text>
+    <text x="20" y="68" font-size="12" fill="#8C7B6B">2026年11月〜12月（2ヶ月間）</text>
+
+    <!-- Funnel at this stage -->
+    <g transform="translate(20, 86)">
+      <rect width="440" height="52" rx="12" fill="#E6F4FA" stroke="#87CEEB" stroke-width="1.5"/>
+      <text x="220" y="20" text-anchor="middle" font-size="13" fill="#6BB3D9" font-weight="800">🔄 この時点で稼働するファネル</text>
+      <text x="220" y="40" text-anchor="middle" font-size="12" fill="#3D3226">YouTube → 診断 → LINE → 教育配信 → 体験会 → 個別 → 申込</text>
+    </g>
+
+    <g transform="translate(20, 150)">
+      <rect width="440" height="34" rx="10" fill="#F0F7FC"/>
+      <text x="14" y="22" font-size="13" fill="#3D3226">📊 0期の成果・お客様の声を素材にまとめ</text>
+    </g>
+    <g transform="translate(20, 190)">
+      <rect width="440" height="34" rx="10" fill="#F0F7FC"/>
+      <text x="14" y="22" font-size="13" fill="#3D3226">🎤 体験会開催（1〜2回）→ 1期の大きな募集</text>
+    </g>
+
+    <g transform="translate(20, 236)">
+      <rect width="440" height="28" rx="14" fill="#E6F4FA"/>
+      <text x="220" y="19" text-anchor="middle" font-size="12" fill="#6BB3D9" font-weight="700">🎯 目標：1期受講生 10名の募集完了</text>
+    </g>
+  </g>
+
+  <!-- Dot -->
+  <circle cx="600" cy="1380" r="6" fill="url(#blueGrad)" opacity="0.4"/>
+
+  <!-- ===== PHASE 4: 1期 開催 ===== -->
+  <circle cx="600" cy="1570" r="12" fill="url(#purpleGrad)"/>
+  <circle cx="600" cy="1570" r="6" fill="#fff"/>
+
+  <g transform="translate(640, 1520)">
+    <rect width="480" height="300" rx="20" fill="#fff" filter="url(#shadow)" opacity="0.95"/>
+    <rect width="480" height="6" rx="3" fill="url(#purpleGrad)"/>
+    <rect x="20" y="22" width="120" height="28" rx="14" fill="url(#purpleGrad)"/>
+    <text x="80" y="41" text-anchor="middle" font-size="12" fill="#fff" font-weight="800">Phase 4</text>
+    <text x="152" y="42" font-size="18" fill="#3D3226" font-weight="900">マインド講座 1期</text>
+    <text x="20" y="68" font-size="12" fill="#8C7B6B">2027年1月〜4月（4ヶ月間）</text>
+
+    <rect x="380" y="22" width="80" height="28" rx="14" fill="#F0E6FF"/>
+    <text x="420" y="41" text-anchor="middle" font-size="13" fill="#9B7FC4" font-weight="800">10人</text>
+
+    <!-- Milestone banner -->
+    <g transform="translate(20, 86)">
+      <rect width="440" height="50" rx="12" fill="#F0E6FF" stroke="#B89FD8" stroke-width="1.5"/>
+      <text x="220" y="22" text-anchor="middle" font-size="13" fill="#9B7FC4" font-weight="800">⭐ きいちゃんの目標「1年後」達成ポイント</text>
+      <text x="220" y="40" text-anchor="middle" font-size="11" fill="#8C7B6B">「0期を終えて1期ぐらいにはしておきたい」（3/17）</text>
+    </g>
+
+    <g transform="translate(20, 148)">
+      <rect width="440" height="34" rx="10" fill="#F8F0FF"/>
+      <text x="14" y="22" font-size="13" fill="#3D3226">🧠 大きく講座形式で開催（月2回 × 3ヶ月）</text>
+    </g>
+    <g transform="translate(20, 188)">
+      <rect width="440" height="34" rx="10" fill="#F8F0FF"/>
+      <text x="14" y="22" font-size="13" fill="#3D3226">📹 栄養はオンライン教材で提供（コンテンツ化済）</text>
+    </g>
+    <g transform="translate(20, 228)">
+      <rect width="440" height="34" rx="10" fill="#F8F0FF"/>
+      <text x="14" y="22" font-size="13" fill="#3D3226">🤝 0期メンバーがサポート参加（講師候補）</text>
+    </g>
+
+    <text x="20" y="290" font-size="11" fill="#B89FD8" font-style="italic">💬 「ここからが大きく集める本格始動」</text>
+  </g>
+
+  <!-- Dot -->
+  <circle cx="600" cy="1690" r="6" fill="url(#purpleGrad)" opacity="0.4"/>
+
+  <!-- ===== PHASE 5: 養成講座 ===== -->
+  <circle cx="600" cy="1890" r="12" fill="url(#coralGrad)"/>
+  <circle cx="600" cy="1890" r="6" fill="#fff"/>
+
+  <g transform="translate(80, 1840)">
+    <rect width="480" height="270" rx="20" fill="#fff" filter="url(#shadow)" opacity="0.95"/>
+    <rect width="480" height="6" rx="3" fill="url(#coralGrad)"/>
+    <rect x="20" y="22" width="120" height="28" rx="14" fill="url(#coralGrad)"/>
+    <text x="80" y="41" text-anchor="middle" font-size="12" fill="#fff" font-weight="800">Phase 5</text>
+    <text x="152" y="42" font-size="18" fill="#3D3226" font-weight="900">養成講座・マスター</text>
+    <text x="20" y="68" font-size="12" fill="#8C7B6B">2027年〜2028年</text>
+
+    <rect x="380" y="22" width="80" height="28" rx="14" fill="#FFF0EC"/>
+    <text x="420" y="41" text-anchor="middle" font-size="12" fill="#E87461" font-weight="800">5〜10人</text>
+
+    <g transform="translate(20, 86)">
+      <rect width="210" height="90" rx="12" fill="#FFF0EC"/>
+      <text x="105" y="24" text-anchor="middle" font-size="12" fill="#E87461" font-weight="800">🎓 認定講師取得</text>
+      <text x="105" y="46" text-anchor="middle" font-size="11" fill="#3D3226">思考の学校</text>
+      <text x="105" y="64" text-anchor="middle" font-size="11" fill="#3D3226">認定講師 資格</text>
+      <text x="105" y="82" text-anchor="middle" font-size="10" fill="#8C7B6B">取得中 or 取得済</text>
+    </g>
+    <g transform="translate(250, 86)">
+      <rect width="210" height="90" rx="12" fill="#FFF0EC"/>
+      <text x="105" y="24" text-anchor="middle" font-size="12" fill="#E87461" font-weight="800">📦 マスター設計</text>
+      <text x="105" y="46" text-anchor="middle" font-size="11" fill="#3D3226">栄養 + マインド</text>
+      <text x="105" y="64" text-anchor="middle" font-size="11" fill="#3D3226">統合養成プログラム</text>
+      <text x="105" y="82" text-anchor="middle" font-size="10" fill="#8C7B6B">2027年後半〜</text>
+    </g>
+
+    <g transform="translate(20, 190)">
+      <rect width="440" height="34" rx="10" fill="#FFF5F0"/>
+      <text x="14" y="22" font-size="13" fill="#3D3226">🌟 「教えられる人」を育て始める</text>
+    </g>
+
+    <text x="20" y="260" font-size="11" fill="#E87461" font-style="italic">💬 「0期・1期の実績がここでの説得力になる」</text>
+  </g>
+
+  <!-- Dot -->
+  <circle cx="600" cy="1970" r="6" fill="url(#coralGrad)" opacity="0.4"/>
+
+  <!-- ===== PHASE 6: コミュニティ ===== -->
+  <circle cx="600" cy="2170" r="12" fill="url(#pinkGrad)"/>
+  <circle cx="600" cy="2170" r="6" fill="#fff"/>
+
+  <g transform="translate(640, 2120)">
+    <rect width="480" height="250" rx="20" fill="#fff" filter="url(#shadow)" opacity="0.95"/>
+    <rect width="480" height="6" rx="3" fill="url(#pinkGrad)"/>
+    <rect x="20" y="22" width="120" height="28" rx="14" fill="url(#pinkGrad)"/>
+    <text x="80" y="41" text-anchor="middle" font-size="12" fill="#fff" font-weight="800">Phase 6</text>
+    <text x="152" y="42" font-size="18" fill="#3D3226" font-weight="900">コミュニティ・リトリート</text>
+    <text x="20" y="68" font-size="12" fill="#8C7B6B">2028年〜2029年（3年後ビジョン）</text>
+
+    <g transform="translate(20, 86)">
+      <rect width="140" height="90" rx="14" fill="#FFF0F5"/>
+      <text x="70" y="28" text-anchor="middle" font-size="24">👩‍🏫</text>
+      <text x="70" y="54" text-anchor="middle" font-size="14" fill="#E8789A" font-weight="900">30人</text>
+      <text x="70" y="74" text-anchor="middle" font-size="11" fill="#3D3226">認定講師</text>
+    </g>
+    <g transform="translate(170, 86)">
+      <rect width="140" height="90" rx="14" fill="#FFF0F5"/>
+      <text x="70" y="28" text-anchor="middle" font-size="24">🌺</text>
+      <text x="70" y="54" text-anchor="middle" font-size="14" fill="#E8789A" font-weight="900">沖縄</text>
+      <text x="70" y="74" text-anchor="middle" font-size="11" fill="#3D3226">リトリート</text>
+    </g>
+    <g transform="translate(320, 86)">
+      <rect width="140" height="90" rx="14" fill="#FFF0F5"/>
+      <text x="70" y="28" text-anchor="middle" font-size="24">🎤</text>
+      <text x="70" y="54" text-anchor="middle" font-size="14" fill="#E8789A" font-weight="900">ゲスト</text>
+      <text x="70" y="74" text-anchor="middle" font-size="11" fill="#3D3226">思考の学校</text>
+    </g>
+
+    <g transform="translate(20, 192)">
+      <rect width="440" height="42" rx="12" fill="#FFF0F5" stroke="#F2A0C0" stroke-width="1"/>
+      <text x="220" y="17" text-anchor="middle" font-size="13" fill="#E8789A" font-weight="800">🌻 きいちゃんの3年後ビジョン</text>
+      <text x="220" y="35" text-anchor="middle" font-size="11" fill="#3D3226">「働く時間は少なく、仲間とともに、豊かに」</text>
+    </g>
+  </g>
+
+  <!-- ===== BOTTOM: Next Actions ===== -->
+  <g transform="translate(160, 2440)">
+    <rect width="880" height="310" rx="24" fill="#fff" filter="url(#shadow)" opacity="0.97"/>
+    <rect width="880" height="6" rx="3" fill="url(#honeyGrad)"/>
+    <text x="440" y="38" text-anchor="middle" font-size="16" fill="#3D3226" font-weight="900">⚡ 直近のネクストアクション</text>
+    <text x="440" y="56" text-anchor="middle" font-size="11" fill="#8C7B6B">今週〜来週でやること</text>
+
+    <g transform="translate(30, 72)">
+      <rect width="820" height="30" rx="8" fill="#FFF9E6"/>
+      <circle cx="14" cy="15" r="8" fill="url(#honeyGrad)"/>
+      <text x="14" y="19" text-anchor="middle" font-size="10" fill="#fff" font-weight="800">1</text>
+      <text x="30" y="20" font-size="12" fill="#3D3226">ヒアリングシートを埋める</text>
+      <text x="620" y="20" font-size="10" fill="#8C7B6B">4/18まで</text>
+      <text x="800" y="20" font-size="10" fill="#C4A24E" font-weight="700" text-anchor="end">きいちゃん</text>
+    </g>
+    <g transform="translate(30, 108)">
+      <rect width="820" height="30" rx="8" fill="#FFF9E6"/>
+      <circle cx="14" cy="15" r="8" fill="url(#honeyGrad)"/>
+      <text x="14" y="19" text-anchor="middle" font-size="10" fill="#fff" font-weight="800">2</text>
+      <text x="30" y="20" font-size="12" fill="#3D3226">診断チャット最終仕上げ</text>
+      <text x="620" y="20" font-size="10" fill="#8C7B6B">4/21まで</text>
+      <text x="800" y="20" font-size="10" fill="#C4A24E" font-weight="700" text-anchor="end">野村</text>
+    </g>
+    <g transform="translate(30, 144)">
+      <rect width="820" height="30" rx="8" fill="#FFF9E6"/>
+      <circle cx="14" cy="15" r="8" fill="url(#honeyGrad)"/>
+      <text x="14" y="19" text-anchor="middle" font-size="10" fill="#fff" font-weight="800">3</text>
+      <text x="30" y="20" font-size="12" fill="#3D3226">LINE公式アカウント開設確認</text>
+      <text x="620" y="20" font-size="10" fill="#8C7B6B">4/18まで</text>
+      <text x="800" y="20" font-size="10" fill="#C4A24E" font-weight="700" text-anchor="end">きいちゃん</text>
+    </g>
+    <g transform="translate(30, 180)">
+      <rect width="820" height="30" rx="8" fill="#FFF9E6"/>
+      <circle cx="14" cy="15" r="8" fill="url(#honeyGrad)"/>
+      <text x="14" y="19" text-anchor="middle" font-size="10" fill="#fff" font-weight="800">4</text>
+      <text x="30" y="20" font-size="12" fill="#3D3226">特典動画の制作</text>
+      <text x="620" y="20" font-size="10" fill="#8C7B6B">4月中</text>
+      <text x="800" y="20" font-size="10" fill="#C4A24E" font-weight="700" text-anchor="end">きいちゃん</text>
+    </g>
+    <g transform="translate(30, 216)">
+      <rect width="820" height="30" rx="8" fill="#FFF9E6"/>
+      <circle cx="14" cy="15" r="8" fill="url(#honeyGrad)"/>
+      <text x="14" y="19" text-anchor="middle" font-size="10" fill="#fff" font-weight="800">5</text>
+      <text x="30" y="20" font-size="12" fill="#3D3226">閉店アナウンス文ドラフト</text>
+      <text x="620" y="20" font-size="10" fill="#8C7B6B">4/21まで</text>
+      <text x="800" y="20" font-size="10" fill="#C4A24E" font-weight="700" text-anchor="end">きいちゃん+野村</text>
+    </g>
+    <g transform="translate(30, 252)">
+      <rect width="820" height="30" rx="8" fill="#FFF9E6"/>
+      <circle cx="14" cy="15" r="8" fill="url(#honeyGrad)"/>
+      <text x="14" y="19" text-anchor="middle" font-size="10" fill="#fff" font-weight="800">6</text>
+      <text x="30" y="20" font-size="12" fill="#3D3226">個別セッションへの動線設計</text>
+      <text x="620" y="20" font-size="10" fill="#8C7B6B">5月頭</text>
+      <text x="800" y="20" font-size="10" fill="#C4A24E" font-weight="700" text-anchor="end">きいちゃん+野村</text>
+    </g>
+
+    <text x="440" y="300" text-anchor="middle" font-size="11" fill="#8C7B6B">📝 次回MTGで期間・価格を確定し更新</text>
+  </g>
+
+</svg>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなたのワンちゃん、心の栄養足りてる？ — 無料診断</title>
+    <meta name="description" content="管理栄養士が教える、愛犬の心と体の健康チェック。3分であなたとワンちゃんの関係を見直すきっかけに。">
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --honey: #f5c542; --honey-deep: #d4a017; --honey-light: #fff9e6;
+            --cream: #fff5d6; --peach: #f7b89c; --peach-deep: #e8926e;
+            --coral: #f2988e; --coral-deep: #e06b6b;
+            --sage: #8cb88a; --sage-light: #eef6ee;
+            --sky: #85bdd9; --sky-light: #edf5fa;
+            --lavender: #b8a9d8; --lavender-light: #f3f0fa;
+            --brown: #c49a6c; --brown-light: #faf1e6;
+            --bg: #fffcf5; --text: #4a3a2a; --muted: #a09080;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Zen Maru Gothic', sans-serif;
+            background: var(--bg);
+            min-height: 100vh; min-height: 100dvh;
+            color: var(--text);
+        }
+        .container {
+            max-width: 480px; margin: 0 auto;
+            display: flex; flex-direction: column;
+            height: 100vh; height: 100dvh;
+        }
+        .header {
+            background: linear-gradient(135deg, #fff9e6, #fff0e0, #fce8d8);
+            padding: 14px 20px;
+            display: flex; align-items: center; gap: 12px;
+            border-bottom: 2px solid rgba(245,197,66,0.3);
+            flex-shrink: 0;
+            box-shadow: 0 2px 12px rgba(245,197,66,0.12);
+        }
+        .header-avatar {
+            width: 44px; height: 44px; border-radius: 50%;
+            overflow: hidden; flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(245,197,66,0.25);
+            border: 2.5px solid var(--honey);
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--honey-light), #fff0e0);
+            font-size: 24px;
+        }
+        .ai-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--honey), var(--peach));
+            color: #fff; font-size: 9px; font-weight: 700;
+            padding: 1px 6px; border-radius: 4px;
+            margin-left: 6px; vertical-align: middle; letter-spacing: 1px;
+        }
+        .header-info h3 { font-size: 14px; font-weight: 900; color: var(--text); }
+        .header-info h3 .sensei { font-size: 11px; color: var(--honey-deep); font-weight: 700; }
+        .header-info p {
+            font-size: 10px; color: var(--honey-deep);
+            display: flex; align-items: center; gap: 4px;
+        }
+        .header-info p .dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--sage); animation: pulse 2s infinite;
+        }
+        .chat-area {
+            flex: 1; overflow-y: auto; padding: 16px;
+            display: flex; flex-direction: column; gap: 12px;
+            scroll-behavior: smooth;
+            background: linear-gradient(180deg, var(--bg) 0%, #fff5e8 100%);
+        }
+        .chat-area::-webkit-scrollbar { width: 4px; }
+        .chat-area::-webkit-scrollbar-thumb { background: rgba(245,197,66,0.3); border-radius: 2px; }
+        .msg { display: flex; gap: 8px; max-width: 90%; }
+        .msg-bot { align-self: flex-start; }
+        .msg-user { align-self: flex-end; flex-direction: row-reverse; }
+        .msg-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            overflow: hidden; flex-shrink: 0; margin-top: 2px;
+            box-shadow: 0 2px 6px rgba(245,197,66,0.15);
+            border: 2px solid var(--honey);
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--honey-light), #fff0e0);
+            font-size: 16px;
+        }
+        .msg-bubble {
+            padding: 12px 16px; border-radius: 20px;
+            font-size: 14px; line-height: 1.9;
+            animation: fadeSlideIn 0.3s ease forwards;
+        }
+        .msg-bot .msg-bubble {
+            background: #fff;
+            border: 1px solid rgba(245,197,66,0.2);
+            border-top-left-radius: 4px; color: var(--text);
+            box-shadow: 4px 4px 12px rgba(245,197,66,0.06), -2px -2px 8px rgba(255,255,255,0.8);
+        }
+        .msg-user .msg-bubble {
+            background: linear-gradient(135deg, var(--honey), var(--peach));
+            border-top-right-radius: 4px; color: #fff; font-weight: 700;
+        }
+        .msg-bubble strong { color: var(--honey-deep); }
+        .msg-user .msg-bubble strong { color: #fff; }
+        .options-wrap {
+            display: flex; flex-direction: column; gap: 8px;
+            margin-left: 40px;
+            animation: fadeSlideUp 0.4s ease forwards;
+        }
+        .opt-btn {
+            display: flex; align-items: center; gap: 10px;
+            width: 100%; background: #fff;
+            border: 2px solid rgba(245,197,66,0.25);
+            border-radius: 16px; padding: 12px 16px;
+            color: var(--text); font-size: 14px;
+            font-family: 'Zen Maru Gothic', sans-serif;
+            text-align: left; cursor: pointer;
+            transition: all 0.2s; line-height: 1.5;
+            box-shadow: 3px 3px 8px rgba(245,197,66,0.06), -2px -2px 6px rgba(255,255,255,0.7);
+        }
+        .opt-btn:hover {
+            background: var(--honey-light);
+            border-color: var(--honey);
+            transform: translateX(4px);
+            box-shadow: 4px 4px 12px rgba(245,197,66,0.15);
+        }
+        .opt-btn:active { transform: scale(0.97); }
+        .opt-btn.selected {
+            background: var(--honey-light);
+            border-color: var(--honey);
+            box-shadow: 0 0 0 2px rgba(245,197,66,0.2);
+        }
+        .opt-btn.selected::after {
+            content: ' ✓'; color: var(--honey-deep); font-weight: 900;
+        }
+        .opt-emoji { font-size: 18px; flex-shrink: 0; }
+        .typing { display: flex; gap: 8px; align-self: flex-start; }
+        .typing-dots {
+            display: flex; align-items: center; gap: 5px;
+            padding: 14px 18px; background: #fff;
+            border: 1px solid rgba(245,197,66,0.15);
+            border-radius: 20px; border-top-left-radius: 4px;
+            box-shadow: 3px 3px 8px rgba(245,197,66,0.06);
+        }
+        .typing-dots span {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--honey); opacity: 0.4;
+            animation: typingBounce 1.4s infinite;
+        }
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        .footer {
+            padding: 12px 16px;
+            border-top: 2px solid rgba(245,197,66,0.15);
+            background: #fff; flex-shrink: 0;
+            text-align: center;
+        }
+        .footer p { font-size: 11px; color: var(--muted); }
+        .name-input {
+            width: 100%; padding: 12px 16px; border-radius: 16px;
+            border: 2px solid rgba(245,197,66,0.35); background: #fff;
+            color: var(--text); font-size: 15px; font-family: 'Zen Maru Gothic', sans-serif;
+            outline: none; transition: border-color 0.2s;
+            box-shadow: inset 2px 2px 6px rgba(245,197,66,0.05);
+        }
+        .name-input:focus { border-color: var(--honey); }
+        .name-input::placeholder { color: #c8b090; }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-5px); opacity: 1; }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .hidden { display: none !important; }
+        .result-card {
+            background: linear-gradient(135deg, #fff9e6, #fff0e0);
+            border: 2px solid rgba(245,197,66,0.2);
+            border-radius: 20px; padding: 20px;
+            box-shadow: 6px 6px 16px rgba(245,197,66,0.08), -3px -3px 8px rgba(255,255,255,0.8);
+        }
+        .cta-btn {
+            display: block; width: 100%;
+            background: linear-gradient(135deg, var(--honey), var(--peach));
+            color: #fff; font-family: 'Zen Maru Gothic', sans-serif;
+            font-size: 16px; font-weight: 900;
+            padding: 18px; border: none; border-radius: 50px;
+            cursor: pointer; text-align: center; text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(245,197,66,0.35);
+            margin: 8px 0;
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(245,197,66,0.45);
+        }
+        .submit-btn {
+            flex-shrink: 0; width: auto; padding: 12px 24px;
+            background: linear-gradient(135deg, var(--honey), var(--peach));
+            color: #fff; font-weight: 900; border: 2px solid var(--honey);
+            border-radius: 16px; font-family: 'Zen Maru Gothic', sans-serif;
+            font-size: 14px; cursor: pointer; transition: all 0.2s;
+            box-shadow: 0 3px 10px rgba(245,197,66,0.2);
+        }
+        .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 15px rgba(245,197,66,0.3); }
+        .trivia-card {
+            background: linear-gradient(135deg, var(--honey-light), #fff0e0);
+            border: 1.5px dashed var(--honey);
+            border-radius: 16px; padding: 14px 16px;
+            margin: 4px 0; font-size: 13px; line-height: 1.7;
+        }
+        .trivia-card .trivia-label {
+            font-size: 11px; font-weight: 900; color: var(--honey-deep);
+            margin-bottom: 6px; letter-spacing: 1px;
+        }
+        .trivia-card .trivia-science {
+            font-size: 11px; color: var(--muted); margin-top: 8px;
+            padding-top: 8px; border-top: 1px dashed rgba(245,197,66,0.3);
+        }
+        .trivia-card .trivia-science strong { color: var(--peach-deep); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-avatar">🐕</div>
+            <div class="header-info">
+                <h3>🌻 ワンちゃんの<span class="sensei">心の栄養診断</span> <span class="ai-badge">無料</span></h3>
+                <p><span class="dot"></span> <span>3分でわかる！愛犬の幸せ度チェック 🐾</span></p>
+            </div>
+        </div>
+        <div class="chat-area" id="chatArea"></div>
+        <div class="footer">
+            <p>選択肢をタップしてね 🐾</p>
+        </div>
+    </div>
+
+<script>
+const AVATAR = '🐕';
+
+/* ── State ── */
+let userName = '';
+let userDogName = '';
+
+const chatArea = document.getElementById('chatArea');
+
+/* ── Helpers ── */
+function scrollToBottom() {
+    setTimeout(() => { chatArea.scrollTop = chatArea.scrollHeight; }, 50);
+}
+function addBotMsg(html) {
+    const div = document.createElement('div');
+    div.className = 'msg msg-bot';
+    div.innerHTML = `<div class="msg-avatar">${AVATAR}</div>
+        <div class="msg-bubble">${html}</div>`;
+    chatArea.appendChild(div); scrollToBottom();
+}
+function addUserMsg(text) {
+    const div = document.createElement('div');
+    div.className = 'msg msg-user';
+    div.innerHTML = `<div class="msg-bubble">${text}</div>`;
+    chatArea.appendChild(div); scrollToBottom();
+}
+function addOptions(options, callback) {
+    const wrap = document.createElement('div');
+    wrap.className = 'options-wrap'; wrap.id = 'currentOptions';
+    options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        const descLine = opt.desc ? `<br><span style="font-size:11px;color:var(--muted);">${opt.desc}</span>` : '';
+        btn.innerHTML = `<span class="opt-emoji">${opt.emoji}</span><span>${opt.label}${descLine}</span>`;
+        btn.onclick = () => {
+            wrap.remove();
+            addUserMsg(`${opt.emoji} ${opt.label}`);
+            setTimeout(() => callback(opt.value), 300);
+        };
+        wrap.appendChild(btn);
+    });
+    chatArea.appendChild(wrap); scrollToBottom();
+}
+function addCustomHTML(html) {
+    const div = document.createElement('div');
+    div.className = 'msg msg-bot';
+    div.innerHTML = `<div class="msg-avatar">${AVATAR}</div>
+        <div class="msg-bubble" style="padding: 8px 12px;">${html}</div>`;
+    chatArea.appendChild(div); scrollToBottom();
+}
+function showTyping() {
+    const div = document.createElement('div');
+    div.className = 'typing'; div.id = 'typingIndicator';
+    div.innerHTML = `<div class="msg-avatar">${AVATAR}</div>
+        <div class="typing-dots"><span></span><span></span><span></span></div>`;
+    chatArea.appendChild(div); scrollToBottom();
+}
+function hideTyping() {
+    const el = document.getElementById('typingIndicator');
+    if (el) el.remove();
+}
+function botSays(messages, onDone) {
+    let i = 0;
+    function next() {
+        if (i >= messages.length) { if (onDone) setTimeout(onDone, 300); return; }
+        showTyping();
+        const delay = 800 + Math.min(messages[i].length * 15, 2500);
+        setTimeout(() => {
+            hideTyping(); addBotMsg(messages[i]); i++;
+            setTimeout(next, 400);
+        }, delay);
+    }
+    next();
+}
+function addTrivia(label, body, science) {
+    const card = `
+        <div class="trivia-card">
+            <div class="trivia-label">${label}</div>
+            ${body}
+            ${science ? `<div class="trivia-science">🔬 ${science}</div>` : ''}
+        </div>`;
+    addCustomHTML(card);
+}
+
+/* ━━━━━━ 5つの心の栄養素 ━━━━━━ */
+let diagScores = { gohan: 0, kutsurogi: 0, wakuwaku: 0, karada: 0, kizuna: 0 };
+let currentCategoryIndex = 0;
+
+const categories = [
+    {
+        key: 'gohan', emoji: '🍚', name: '安心ごはん',
+        items: [
+            '最後のごはんから翌朝まで8時間以上あいていない',
+            'フード選びはSNSの口コミや値段で決めている',
+            '愛犬の食べムラや好き嫌いに悩んでいる',
+        ],
+        trivia: {
+            label: '💡 へぇ〜！ ごはんの豆知識',
+            body: '実は夜のごはん→翌朝まで<strong>8〜10時間</strong>空けると、腸の「お掃除機能」（MMC）が働くの！<br><br>獣医さんは「こまめにあげて」って言うけど、分子栄養学では<strong>空腹時間も大事</strong>なんだよ 🍚✨',
+            science: '<strong>管理栄養士きいちゃん の視点：</strong>黄色い液を吐くのは空腹じゃなく、腸が修復中のサインかも。'
+        }
+    },
+    {
+        key: 'kutsurogi', emoji: '🏠', name: 'くつろぎの巣',
+        items: [
+            '愛犬だけの静かな「安全基地」がない',
+            '夜、テレビや照明がついたまま寝かせている',
+            '家族の声や生活音が常に聞こえる環境にいる',
+        ],
+        trivia: {
+            label: '💡 へぇ〜！ 犬の睡眠の豆知識',
+            body: '犬は人間よりも<strong>眠りが浅い</strong>って知ってた？<br><br>1日12〜14時間寝るけど、深い睡眠はたった<strong>10%</strong>くらい。だから<strong>静かで暗い安全基地</strong>がめちゃくちゃ大事なの 🏠💤',
+            science: '犬の睡眠の質は<strong>コルチゾール（ストレスホルモン）</strong>の分泌に直結。睡眠環境の改善は免疫力UPにもつながります。'
+        }
+    },
+    {
+        key: 'wakuwaku', emoji: '🌿', name: 'わくわく時間',
+        items: [
+            'お散歩中、匂いを嗅ぎたがったらリードで引いてしまう',
+            '毎日同じルート、同じ時間の散歩をしている',
+            '知育トイやノーズワークなどの遊びはしていない',
+        ],
+        trivia: {
+            label: '💡 へぇ〜！ お散歩の豆知識',
+            body: '犬にとって匂いを嗅ぐことは「<strong>鼻で世界を読む</strong>」こと！📖<br><br>15分の<strong>嗅覚散歩</strong>は、30分の普通の散歩と同じくらい<strong>脳を使う</strong>って言われてるの。リードを引かないで、好きなだけ嗅がせてあげてね 🌿🐾',
+            science: 'ノーズワークは犬の<strong>セロトニン（幸せホルモン）</strong>の分泌を促進。メンタルヘルスに直結します。'
+        }
+    },
+    {
+        key: 'karada', emoji: '💪', name: '体のサイン',
+        items: [
+            '愛犬のストレスサイン（あくび・舌なめずり等）を知らない',
+            '「いつもと違う」に気づける自信がない',
+            'うんちの状態や食欲を毎日チェックしていない',
+        ],
+        trivia: {
+            label: '💡 へぇ〜！ ストレスサインの豆知識',
+            body: '犬が<strong>あくび</strong>するのは眠いからだけじゃないの！<br><br>実は「<strong>カーミングシグナル</strong>」って呼ばれるストレス緩和行動の1つ。<br><br>あくび、舌なめずり、身震い…これが読めると、犬の「<strong>本当のきもち</strong>」が分かるようになるよ 💪✨',
+            science: 'ストレスサインの早期発見は<strong>慢性炎症の予防</strong>にもつながります。犬は痛みを隠す動物だからこそ、飼い主の観察力がカギ。'
+        }
+    },
+    {
+        key: 'kizuna', emoji: '💛', name: '心のつながり',
+        items: [
+            '愛犬が体調を崩すと心配で何も手につかない',
+            '外出時、愛犬を残す罪悪感がある',
+            '自分がイライラしている時、愛犬も落ち着かないと感じる',
+        ],
+        trivia: {
+            label: '💡 へぇ〜！ 衝撃の研究結果',
+            body: 'スウェーデンの大学（2019年）の研究で、<strong>飼い主と犬のストレスホルモンが連動している</strong>ことが証明されたの！😳<br><br>つまり…あなたが心配すればするほど、ワンちゃんも<strong>ストレスを感じている</strong>可能性がある。',
+            science: '<strong>きいちゃんの核心テーゼ：</strong>飼い主のマインド（心の状態）が犬の健康に直結する。これは「感覚」ではなく「科学」です。'
+        }
+    }
+];
+
+/* ━━━━━━ FLOW ━━━━━━ */
+
+function startChat() {
+    const ticket = `
+        <div style="text-align:center;padding:20px 16px;background:linear-gradient(135deg,#fff9e6,#fff0e0,#fce8d8);border:2px solid rgba(245,197,66,0.3);border-radius:20px;margin:4px 0;">
+            <div style="font-size:10px;color:var(--honey-deep);letter-spacing:4px;margin-bottom:8px;font-weight:700;">🐾 FREE DIAGNOSIS</div>
+            <div style="font-size:17px;color:var(--text);line-height:1.8;font-weight:900;">
+                あなたのワンちゃん、<br>心の栄養足りてる？
+            </div>
+            <div style="width:40px;height:2px;background:linear-gradient(90deg,var(--honey),var(--peach));margin:12px auto;border-radius:1px;"></div>
+            <div style="font-size:11px;color:var(--muted);line-height:1.6;">無料 ／ 3分 ／ 管理栄養士監修 🌻</div>
+        </div>`;
+    addCustomHTML(ticket);
+
+    setTimeout(() => {
+        botSays([
+            'こんにちは！🌻<br><br><strong>きいちゃん</strong>です！<br>来てくれてありがとう🐾',
+            'ねぇ、ちょっと聞いてもいい？<br><br>愛犬が<strong>ご飯を残す</strong>とか、<br><strong>体をずっと掻いてる</strong>とか、<br><br>「なんでだろう…」って<br>不安になったこと、ない？🥺',
+            'フード変えてみたり、<br>病院行ったり、<br>ネットで調べまくったり…<br><br>「<strong>これで合ってるんかな</strong>」って<br>ずっとモヤモヤしてない？',
+            '実はね、私もそうやったの。<br><br>管理栄養士なのに、<br>自分の犬の<strong>腎臓が悪化</strong>して…<br><br>「栄養のプロやのに<br>　なんで治せへんの？」って<br>ほんまに苦しかった😢<br><br>でもね、ある日<br><strong>すべてが変わるきっかけ</strong>が<br>あった。<br><br>その話、少しだけ聞いてほしい🐾<br>まずお名前教えて！'
+        ], () => askName());
+    }, 600);
+}
+
+function askName() {
+    const wrap = document.createElement('div');
+    wrap.className = 'options-wrap';
+    wrap.innerHTML = `
+        <div style="display:flex;gap:8px;">
+            <input type="text" class="name-input" id="nameInput" placeholder="お名前を入力…🐾" maxlength="20">
+            <button class="submit-btn" id="nameSubmit">OK</button>
+        </div>`;
+    chatArea.appendChild(wrap); scrollToBottom();
+    const input = document.getElementById('nameInput');
+    const submit = document.getElementById('nameSubmit');
+    const doSubmit = () => {
+        const name = input.value.trim();
+        if (!name) { input.focus(); return; }
+        userName = name; wrap.remove();
+        addUserMsg(name);
+        setTimeout(() => {
+            botSays([
+                `<strong>${userName}</strong>さん！🐾<br>よろしくね！🌻`,
+                `私は<strong>管理栄養士</strong>で、<br><strong>分子栄養学</strong>っていう<br>体の仕組みから栄養を考える<br>専門家やねん。<br><br>これまで<strong>1,000人以上</strong>の<br>飼い主さんに栄養のこと<br>教えてきたんやけど…<br><br>ある時<strong>気づいちゃった</strong>ことが<br>あってね💡`,
+                `それがね…<br><br>「<strong>フードだけ変えても<br>　ダメな子がおる</strong>」<br><br>ってこと。<br><br>じゃあ何が足りひんのか？<br><br>今からの診断で<br>一緒に見ていこ！🐾<br><br>ワンちゃんのお名前は？🐕`
+            ], () => askDogName());
+        }, 300);
+    };
+    submit.onclick = doSubmit;
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSubmit(); });
+    setTimeout(() => input.focus(), 500);
+}
+
+function askDogName() {
+    const wrap = document.createElement('div');
+    wrap.className = 'options-wrap';
+    wrap.innerHTML = `
+        <div style="display:flex;gap:8px;">
+            <input type="text" class="name-input" id="dogNameInput" placeholder="ワンちゃんのお名前…🐕" maxlength="20">
+            <button class="submit-btn" id="dogNameSubmit">OK</button>
+        </div>`;
+    chatArea.appendChild(wrap); scrollToBottom();
+    const input = document.getElementById('dogNameInput');
+    const submit = document.getElementById('dogNameSubmit');
+    const doSubmit = () => {
+        const name = input.value.trim();
+        if (!name) { input.focus(); return; }
+        userDogName = name; wrap.remove();
+        addUserMsg('🐕 ' + name);
+        setTimeout(() => {
+            botSays([
+                `<strong>${userDogName}</strong>ちゃん！🐕💛<br>かわいい名前やね〜！`,
+                `じゃあ${userName}さんと<br>${userDogName}ちゃんのために、<br><br><strong>心の栄養チェック</strong>するね！🐾<br><br>5つのカテゴリーを<br>サクッと見ていくから、<br><br>当てはまるやつ<br>全部タップして💛`
+            ], () => askCategory());
+        }, 300);
+    };
+    submit.onclick = doSubmit;
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSubmit(); });
+    setTimeout(() => input.focus(), 500);
+}
+
+/* ── カテゴリ別チェック ── */
+function askCategory() {
+    if (currentCategoryIndex >= categories.length) {
+        showDiagResult();
+        return;
+    }
+    const cat = categories[currentCategoryIndex];
+    const catLabel = `${cat.emoji} ${cat.name}（${currentCategoryIndex + 1}/5）`;
+
+    botSays([
+        `<strong>${catLabel}</strong><br><br>この中で当てはまるものは？<br><span style="font-size:12px;color:var(--muted);">複数選べるよ！なければそのまま「次へ」🐾</span>`
+    ], () => {
+        const wrap = document.createElement('div');
+        wrap.className = 'options-wrap';
+        const selected = new Set();
+
+        cat.items.forEach((item, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'opt-btn';
+            btn.innerHTML = `<span class="opt-emoji">☐</span><span>${item}</span>`;
+            btn.onclick = () => {
+                if (selected.has(idx)) {
+                    selected.delete(idx);
+                    btn.classList.remove('selected');
+                    btn.querySelector('.opt-emoji').textContent = '☐';
+                } else {
+                    selected.add(idx);
+                    btn.classList.add('selected');
+                    btn.querySelector('.opt-emoji').textContent = '☑️';
+                }
+            };
+            wrap.appendChild(btn);
+        });
+
+        const submitBtn = document.createElement('button');
+        submitBtn.className = 'submit-btn';
+        submitBtn.style.marginTop = '4px';
+        submitBtn.textContent = currentCategoryIndex < categories.length - 1 ? '次へ →' : '診断結果を見る 🐾';
+        submitBtn.onclick = () => {
+            diagScores[cat.key] = selected.size;
+            const checkedItems = cat.items.filter((_, i) => selected.has(i));
+            wrap.remove();
+            if (checkedItems.length > 0) {
+                addUserMsg(`${cat.emoji} ${cat.name}：${checkedItems.length}個`);
+            } else {
+                addUserMsg(`${cat.emoji} ${cat.name}：なし ✨`);
+            }
+            // 承認 → すぐ次へ（atoreno型：テンポ重視）
+            setTimeout(() => {
+                const reactions = {
+                    gohan: [
+                        `${userDogName}ちゃんの<br>ごはん事情、バッチリ！🍚✨`,
+                        `なるほどね〜！<br>フード選びって<br>情報が多すぎて迷うよね 😊`,
+                        `うんうん、わかる！<br>私もね、最初は<br>値段とCMで選んでたの 😅`,
+                    ],
+                    kutsurogi: [
+                        `${userDogName}ちゃん、<br>安心できる場所が<br>ちゃんとあるんだね 🏠✨`,
+                        `あ〜、これね！<br>犬にとっては<br>意外と大きいの 🏠`,
+                        `実はこれ、<br>めちゃくちゃ多いの！🏠<br>でもちょっとの工夫で変わるよ💛`,
+                    ],
+                    wakuwaku: [
+                        `お散歩上手！🌿<br>${userDogName}ちゃん<br>楽しそうだね〜！`,
+                        `あるある！<br>忙しいとつい<br>同じコースになるよね 🌿`,
+                        `これね〜！<br>多くの飼い主さんが<br>同じこと言うの 🌿`,
+                    ],
+                    karada: [
+                        `すごい！<br>${userDogName}ちゃんのこと<br>よく見てるんだね 💪✨`,
+                        `知らなくて当たり前！<br>だって誰も<br>教えてくれないもんね 💪`,
+                        `正直に答えてくれて<br>ありがとう🥺<br>ここ、すごく大事なとこ💪`,
+                    ],
+                    kizuna: [
+                        `${userName}さんと<br>${userDogName}ちゃん、<br>いい関係だね〜 💛✨`,
+                        `愛犬を大切に<br>思ってる証拠！💛`,
+                        `これ全部当てはまるの、<br>実は<strong>愛が深い人ほど</strong><br>そうなるの💛`,
+                    ],
+                };
+                const n = checkedItems.length;
+                const idx = n === 0 ? 0 : n <= 1 ? 1 : 2;
+                botSays([reactions[cat.key][idx]], () => {
+                    currentCategoryIndex++;
+                    askCategory();
+                });
+            }, 400);
+        };
+        wrap.appendChild(submitBtn);
+        chatArea.appendChild(wrap); scrollToBottom();
+    });
+}
+
+/* ━━━ 診断結果 ━━━ */
+function showDiagResult() {
+    const total = Object.values(diagScores).reduce((a, b) => a + b, 0);
+    const sorted = Object.entries(diagScores).sort((a, b) => b[1] - a[1]);
+    const topKey = sorted[0][0];
+    const topScore = sorted[0][1];
+    const maxScore = 3;
+
+    const catInfo = {
+        gohan:    { name: '🍚 安心ごはん', color: 'var(--brown)', advice: 'フード選びの見直し', detail: '食事のリズムやフードの選び方に改善ポイントがありそう！<br>管理栄養士の視点で、正しい基準をお伝えするね🐾' },
+        kutsurogi:{ name: '🏠 くつろぎの巣', color: 'var(--sky)', advice: '環境の見直し', detail: '愛犬がリラックスできる環境づくりが大事！<br>安全基地を作るだけで変わることがあるよ🏠' },
+        wakuwaku: { name: '🌿 わくわく時間', color: 'var(--sage)', advice: 'エンリッチメントの工夫', detail: 'お散歩や遊びの質で、犬のメンタルは大きく変わるの！<br>嗅覚散歩、試してみてね🌿' },
+        karada:   { name: '💪 体のサイン', color: 'var(--lavender)', advice: 'ストレスサインの学び', detail: '犬のSOSサインを知ることが第一歩！<br>知るだけで、接し方が全然変わるよ💪' },
+        kizuna:   { name: '💛 心のつながり', color: 'var(--coral)', advice: '飼い主マインドのケア', detail: '実はここが一番大事。<br>あなたの心の状態が、そのまま愛犬に伝わっているかも…💛' },
+    };
+
+    // 満点スコア（問題の少なさ＝良い状態）を逆転して表示
+    let level, levelEmoji, levelMsg;
+    if (total <= 3) {
+        level = '🌟 心の栄養たっぷり犬'; levelEmoji = '🌟';
+        levelMsg = `すごい！${userDogName}ちゃんは<br>心も体も満たされてそう✨`;
+    } else if (total <= 7) {
+        level = '🌻 もうちょっとで満点犬'; levelEmoji = '🌻';
+        levelMsg = `いい線いってる！<br>あと少しの工夫で、<br>${userDogName}ちゃんもっと幸せに🌻`;
+    } else if (total <= 11) {
+        level = '🌱 心の栄養、育て途中犬'; levelEmoji = '🌱';
+        levelMsg = `大丈夫！気づいた今日が<br>スタートだよ🌱`;
+    } else {
+        level = '🆘 心のSOSかも犬'; levelEmoji = '🆘';
+        levelMsg = `今すぐケアしてあげたい状態。<br>でも大丈夫、一緒に考えよう🐾`;
+    }
+
+    // バーチャートHTML
+    let barsHTML = Object.entries(diagScores).map(([key, score]) => {
+        const cat = categories.find(c => c.key === key);
+        const info = catInfo[key];
+        const pct = Math.round((score / maxScore) * 100);
+        const isTop = key === topKey && topScore > 0;
+        const barColor = isTop
+            ? `linear-gradient(90deg, var(--honey), var(--coral))`
+            : score > 0
+            ? `linear-gradient(90deg, var(--honey-light), var(--honey))`
+            : 'linear-gradient(90deg, #e8e0d0, #d8d0c0)';
+        return `
+            <div style="margin-bottom:8px;">
+                <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:${isTop ? '900' : '500'};color:${isTop ? 'var(--coral-deep)' : score > 0 ? 'var(--honey-deep)' : '#bbb'};">
+                    <span>${cat.emoji} ${cat.name}</span>
+                    <span>${score}/${maxScore}</span>
+                </div>
+                <div style="height:10px;border-radius:5px;background:#f5ede0;overflow:hidden;margin-top:4px;">
+                    <div style="height:100%;width:${Math.max(pct, 3)}%;border-radius:5px;background:${barColor};transition:width 1s ease;"></div>
+                </div>
+            </div>`;
+    }).join('');
+
+    const resultCard = `
+        <div class="result-card" style="margin:6px 0;">
+            <div style="text-align:center;margin-bottom:14px;">
+                <div style="font-size:10px;color:var(--honey-deep);letter-spacing:3px;font-weight:700;">🐾 診断結果</div>
+                <div style="font-size:16px;font-weight:900;color:var(--text);margin-top:6px;line-height:1.6;">
+                    ${userName}さん × ${userDogName}ちゃんの<br>心の栄養マップ
+                </div>
+                <div style="margin:12px 0;font-size:32px;">${levelEmoji}</div>
+                <div style="display:inline-block;background:linear-gradient(135deg,var(--honey),var(--peach));color:#fff;font-size:14px;font-weight:900;padding:6px 20px;border-radius:50px;">${level}</div>
+            </div>
+            <div style="margin-top:16px;">
+            ${barsHTML}
+            </div>
+            ${topScore > 0 ? `
+            <div style="margin-top:14px;background:rgba(242,152,142,0.08);border-radius:14px;padding:14px;border:1.5px solid var(--coral);">
+                <div style="font-size:13px;font-weight:900;color:var(--coral-deep);margin-bottom:4px;">
+                    ⚠️ 一番足りていない栄養素：${catInfo[topKey].name}
+                </div>
+                <div style="font-size:12px;color:#777;line-height:1.7;">
+                    ${catInfo[topKey].detail}
+                </div>
+            </div>` : `
+            <div style="margin-top:14px;background:rgba(140,184,138,0.1);border-radius:14px;padding:14px;">
+                <div style="font-size:13px;font-weight:900;color:var(--sage);">
+                    ✨ 全カテゴリー良好！
+                </div>
+                <div style="font-size:12px;color:#777;line-height:1.7;">
+                    素晴らしい！もっと深く知りたい方へ🐾
+                </div>
+            </div>`}
+        </div>`;
+    addCustomHTML(resultCard);
+
+    // 方向違いの気づき
+    const directionShift = {
+        gohan: `今までフード選びを<br>頑張ってきたと思うけど、<br><br>実は<strong>食事のリズム</strong>や<br><strong>選ぶ基準</strong>そのものが<br>ズレてたかも。<br><br>獣医さんは「こまめにあげて」<br>って言うけど、<br>分子栄養学では<strong>逆</strong>なの。`,
+        kutsurogi: `愛犬のために<br>色々してあげてると思うけど、<br><br>実は<strong>そっとしておく場所</strong>を<br>作ってあげることが<br>一番大事だったりするの。`,
+        wakuwaku: `お散歩、毎日行ってて<br>偉いよね！<br><br>でもね、実は<strong>匂いを嗅ぐ時間</strong>が<br>犬にとっては一番大事。<br><br>15分の嗅覚散歩は<br>30分の普通の散歩と同じくらい<br>脳を使うって言われてるの🐾`,
+        karada: `犬って<strong>痛みを隠す動物</strong>なの。<br><br>だからこそ、<br>小さなストレスサインを<br>読み取れるかどうかが<br>すべてを変えるんだよ。`,
+        kizuna: `ここが、<br>私が一番伝えたいこと。<br><br>実はね、スウェーデンの大学の<br>研究で証明されてるの。<br><br><strong>飼い主のストレスホルモンと<br>犬のストレスホルモンは<br>連動している</strong>って。<br><br>つまり、あなたの心配が<br>${userDogName}ちゃんの<br>免疫力を下げてる可能性がある。`,
+    };
+
+    setTimeout(() => {
+        botSays([
+            `${userName}さんの結果が出たで！🐾<br><br>${levelMsg}`,
+        ], () => {
+            // 結果を見せた後、少し間を置いて常識破壊
+            setTimeout(() => {
+                botSays([
+                    `${topScore > 0 ? `ここまで見て、<br>「あ、${catInfo[topKey].name}を<br>改善すればいいんやな」<br><br>って思った？` : `全項目バッチリやん！<br>すごいね！<br><br>でもね…`}`,
+                    `ここからが大事な話。<br><br>実はね、私<br>1,000人以上見てきて<br>1つ気づいたことがあって。<br><br>フードも変えた。<br>環境も整えた。<br>お散歩も頑張った。<br><br><strong>全部やっても<br>ダメな子がおる</strong>ねん。`,
+                    `何が違ったと思う？🐾`,
+                ], () => {
+                    addOptions([
+                        { value: 'food', label: 'フードの質？', emoji: '🍚' },
+                        { value: 'gene', label: '犬種や体質？', emoji: '🧬' },
+                        { value: 'mind', label: '飼い主の気持ち？', emoji: '💛' },
+                    ], (val) => {
+                        if (val === 'mind') {
+                            botSays([
+                                `${userName}さん…<br>すごい。<br><br>そう、<strong>正解</strong>。<br><br>でもね、なんで<br>それが正解なのか、<br>ちょっとだけ聞いてほしい🐾`
+                            ], () => showStory());
+                        } else {
+                            botSays([
+                                `うん、それも大事！<br><br>でもね、実は<br>もっと根っこにある<br>ものがあってん。<br><br>私も最初は<br>信じられへんかった。<br><br>ちょっとだけ聞いて🐾`
+                            ], () => showStory());
+                        }
+                    });
+                });
+            }, 800);
+        });
+    }, 800);
+}
+
+/* ━━━ きいちゃんの原体験 ━━━ */
+function showStory() {
+    botSays([
+        `私の犬がね、<br>急に<strong>血を吐いた</strong>ねん。<br><br>お尻からも出血して、<br>もう本当にパニックやった。`,
+        `管理栄養士として<br>栄養の知識はあったし、<br>フードも最善を尽くしてた。<br><br>なのに、<strong>なんで？</strong>って。`,
+        `心配で心配で<br>片時も離れられへんかった。<br><br>ずっとそばにいて、<br>「大丈夫？大丈夫？」って<br>声かけ続けて…`,
+        `でもある日、<br>気づいてん。<br><br>「この子は、<br>　<strong>この子の人生</strong>なんや」<br><br>そう思って、<br>私の気持ちを<br><strong>切り離した</strong>瞬間…`,
+        `犬が、<strong>自分で<br>水を飲みに行った</strong>ねん🥺<br><br>そこから劇的に回復した。<br><br>栄養だけやなかった。<br>私の<strong>心配のエネルギー</strong>が<br>犬に伝わってたんやと思う。`,
+        `だから、<br>私が今伝えてるのは<br><br>「<strong>正しい栄養の知識</strong>」と<br>「<strong>飼い主マインド</strong>」の<br><strong>両方</strong>が必要<br><br>ってこと。<br><br>どっちか1つだけじゃ<br>足りひんねん🌻`,
+    ], () => {
+        addOptions([
+            { value: 'want', label: 'もっと知りたい！', emoji: '💛' },
+            { value: 'think', label: 'ちょっと考えたい…', emoji: '😔' },
+        ], (val) => {
+            if (val === 'think') {
+                botSays([
+                    `大丈夫、無理しなくていいよ🐾<br><br>でもね…<br>${userDogName}ちゃんのために<br><strong>心の栄養レシピ</strong>だけでも<br>受け取ってみない？🎁<br><br>読むだけでヒントになるから💛`
+                ], () => showCTA());
+            } else {
+                botSays([
+                    `うれしい！💛<br><br>${userName}さんと<br>${userDogName}ちゃんのために<br>特別な<strong>心の栄養レシピ</strong>を<br>プレゼントするね🎁`
+                ], () => showCTA());
+            }
+        });
+    });
+}
+
+/* ━━━ CTA: LINE登録 ━━━ */
+function showCTA() {
+    const sorted = Object.entries(diagScores).sort((a, b) => b[1] - a[1]);
+    const topKey = sorted[0][0];
+    const topScore = sorted[0][1];
+
+    const giftContent = {
+        gohan:    { title: '獣医さんが教えてくれない<br>フード選び3つの基準', desc: '分子栄養学の視点で、本当に大事な選び方をお伝えします' },
+        kutsurogi:{ title: '今日からできる！<br>愛犬のストレスフリー環境チェックリスト', desc: '照明・音・安全基地…すぐ実践できる環境改善ポイント' },
+        wakuwaku: { title: '5分でできる！<br>脳が喜ぶエンリッチメント7選', desc: '嗅覚散歩、知育トイ、ノーズワーク…犬の脳を活性化' },
+        karada:   { title: '愛犬のSOS見逃してない？<br>ストレスサイン早見表', desc: 'カーミングシグナルの見分け方を管理栄養士が解説' },
+        kizuna:   { title: '飼い主の心配が犬を病気にする？<br>最新研究が明かした衝撃の事実', desc: 'コルチゾール同期研究 × 飼い主マインドの教育動画' },
+    };
+    const gift = topScore > 0 ? giftContent[topKey] : giftContent.kizuna;
+
+    const ctaCard = `
+        <div style="margin:8px 0;">
+            <div class="result-card" style="text-align:center;padding:24px;">
+                <div style="font-size:10px;color:var(--honey-deep);letter-spacing:3px;font-weight:700;margin-bottom:8px;">🎁 ${userName}さん専用プレゼント</div>
+                <div style="font-size:15px;font-weight:900;color:var(--text);line-height:1.6;margin-bottom:10px;">
+                    ${gift.title}
+                </div>
+                <div style="font-size:12px;color:#999;line-height:1.7;margin-bottom:14px;">
+                    🎥 ${gift.desc}<br>
+                    📝 ${userDogName}ちゃんに合ったケア方法付き<br>
+                    ✨ ここでは話せない「飼い主マインド」の秘密も解説
+                </div>
+                <div style="background:linear-gradient(135deg,var(--honey-light),#fff0e0);border:2px solid var(--honey);border-radius:14px;padding:12px;margin-bottom:14px;">
+                    <div style="font-size:11px;color:var(--honey-deep);font-weight:900;margin-bottom:4px;">🌻 管理栄養士×飼い主マインドの専門家が監修</div>
+                    <div style="font-size:14px;font-weight:900;color:var(--text);line-height:1.6;">
+                        今だけ <span style="color:var(--coral-deep);font-size:16px;">無料</span> でプレゼント
+                    </div>
+                </div>
+                <a href="#" onclick="alert('ここからLINE登録へ接続します');return false;" class="cta-btn">
+                    🐾 LINEで心の栄養レシピを受け取る 💛
+                </a>
+                <div style="font-size:10px;color:var(--muted);margin-top:8px;line-height:1.6;">
+                    ※ 無理な勧誘は一切しません 🌻<br>
+                    ※ 登録後すぐにお届けします
+                </div>
+            </div>
+        </div>`;
+    addCustomHTML(ctaCard);
+
+    setTimeout(() => {
+        botSays([
+            `${userName}さん、<br>ここまで付き合ってくれて<br>ありがとう 🐾<br><br>フードのこと、<br>環境のこと、<br>お散歩のこと…<br><br>大事なことはたくさんあるけど、<br>一番大切なのは<br><strong>あなた自身の心の状態</strong>🌻`,
+            `あなたが穏やかでいられたら、<br>${userDogName}ちゃんも穏やかになれる。<br><br>それは科学が証明してること。<br><br>一人で抱え込まなくて大丈夫💛<br>きいちゃんが全力で<br>寄り添うからね 🐕🌻`
+        ]);
+    }, 500);
+}
+
+/* ── Start ── */
+window.addEventListener('load', () => {
+    setTimeout(startChat, 500);
+});
+</script>
+</body>
+</html>
