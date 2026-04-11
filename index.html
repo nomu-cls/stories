@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>きいちゃん プロジェクト — Inside Story</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: linear-gradient(180deg, #FFF9E6 0%, #FFF5F0 50%, #F0F7FC 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  .container {
+    max-width: 560px;
+    width: 100%;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #F5C542, #F29880);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    padding: 6px 24px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 900;
+    color: #3D3226;
+    margin-bottom: 8px;
+  }
+  .sub {
+    font-size: 14px;
+    color: #8C7B6B;
+  }
+  .line {
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #F5C542, #F29880);
+    border-radius: 2px;
+    margin: 16px auto 0;
+  }
+  .card {
+    display: block;
+    background: rgba(255,255,255,0.95);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    text-decoration: none;
+    color: #3D3226;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .card.honey::before { background: linear-gradient(90deg, #F5C542, #F29880); }
+  .card.green::before { background: linear-gradient(90deg, #8CB88A, #6BAF69); }
+  .card.blue::before { background: linear-gradient(90deg, #87CEEB, #6BB3D9); }
+  .card.orange::before { background: linear-gradient(90deg, #FFAD5E, #F5943A); }
+  .card .emoji { font-size: 24px; margin-right: 12px; }
+  .card .title { font-size: 16px; font-weight: 700; }
+  .card .desc { font-size: 12px; color: #8C7B6B; margin-top: 4px; }
+  .card .arrow {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #D4C4A0;
+  }
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    color: #B0A090;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="badge">🐾 PROJECT</div>
+    <h1>きいちゃん プロジェクト</h1>
+    <p class="sub">栄養 × 飼い主マインド トレーナー</p>
+    <div class="line"></div>
+  </div>
+
+  <a href="kiichan-proposal.html" class="card honey">
+    <span class="emoji">📋</span>
+    <span class="title">ご提案書</span>
+    <div class="desc">事業設計・ファネル・ロードマップ・お見積もり</div>
+    <span class="arrow">→</span>
+  </a>
+
+  <a href="kiichan-roadmap.svg" class="card green">
+    <span class="emoji">🗺️</span>
+    <span class="title">ロードマップ</span>
+    <div class="desc">Phase 0〜5 のタイムライン全体像</div>
+    <span class="arrow">→</span>
+  </a>
+
+  <a href="kiichan-funnel.svg" class="card orange">
+    <span class="emoji">🔄</span>
+    <span class="title">ファネル設計</span>
+    <div class="desc">SNS → 診断 → LINE → 教育 → 個別 → 講座</div>
+    <span class="arrow">→</span>
+  </a>
+
+  <a href="kiichan-shindan.html" class="card blue">
+    <span class="emoji">💬</span>
+    <span class="title">チャットLP（叩き台）</span>
+    <div class="desc">心の栄養診断 チャット形式デモ</div>
+    <span class="arrow">→</span>
+  </a>
+
+  <div class="footer">
+    Inside Story｜Presented by 野村<br>
+    2026年4月
+  </div>
+</div>
+
+</body>
+</html>
