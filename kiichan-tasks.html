@@ -1255,7 +1255,7 @@
           </div>
         </div>
         <div class="log-topic">📌 ${l.topic}</div>
-        <div class="log-content">${linkify(l.content)}</div>
+        <div class="log-content markdown-body" style="margin-top: 12px;">${typeof marked !== 'undefined' ? marked.parse(l.content) : linkify(l.content)}</div>
       `;
       container.appendChild(card);
     });
