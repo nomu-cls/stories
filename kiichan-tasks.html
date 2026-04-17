@@ -282,6 +282,18 @@
     align-self: flex-start;
     margin-bottom: 20px;
   }
+  
+  .log-card.completed {
+    opacity: 0.6;
+    background: #fafafa;
+    border-left-color: #ddd;
+  }
+  .log-card.completed .log-topic {
+    color: #888;
+  }
+  .log-card.completed .log-content {
+    display: none;
+  }
 
   /* Modals */
   .modal-overlay {
@@ -1247,14 +1259,20 @@
       container.innerHTML = '<div class="empty-state">アジェンダはまだありません📋</div>';
       return;
     }
-    const sorted = [...agendas].sort((a, b) => b.date.localeCompare(a.date));
+    // 完了したものは下へ、未完了は日付が近いもの（昇順）を上へ
+    const sorted = [...agendas].sort((a, b) => {
+      if (a.completed !== b.completed) return a.completed ? 1 : -1;
+      // どちらも未完了、またはどちらも完了の場合は日付昇順
+      return a.date.localeCompare(b.date);
+    });
     sorted.forEach(a => {
       const card = document.createElement('div');
-      card.className = 'log-card';
+      card.className = `log-card ${a.completed ? 'completed' : ''}`;
       card.innerHTML = `
         <div class="log-header">
-          <div class="log-date">${a.date}</div>
+          <div class="log-date">${a.date} ${a.completed ? '<span style="font-size:12px; color:#aaa;">(完了済)</span>' : ''}</div>
           <div style="display:flex; gap:8px;">
+            <button class="btn" style="padding:4px 8px; font-size:11px;" onclick="toggleAgendaStatus('${a.id}')">${a.completed ? '戻す' : '完了'}</button>
             <button class="btn" style="padding:4px 8px; font-size:11px;" onclick="openAgendaModal('${a.id}')">編集</button>
             <button class="btn" style="padding:4px 8px; font-size:11px;" onclick="deleteAgenda('${a.id}')">削除</button>
           </div>
@@ -1264,6 +1282,16 @@
       `;
       container.appendChild(card);
     });
+  }
+
+  function toggleAgendaStatus(id) {
+    const idx = agendas.findIndex(a => a.id === id);
+    if (idx > -1) {
+      agendas[idx].completed = !agendas[idx].completed;
+      renderAgendas();
+      dbSaveAgendas();
+      if(agendas[idx].completed) fireCosmicCelebration(agendas[idx].topic.substring(0,20) + "...\n完了おめでとう！🌻");
+    }
   }
 
   function openAgendaModal(id = null) {
