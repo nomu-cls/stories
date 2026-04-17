@@ -8,6 +8,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <!-- Confetti -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- Marked (Markdown Parser) -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap');
@@ -294,6 +296,23 @@
   .log-card.completed .log-content {
     display: none;
   }
+
+  /* Markdown Preview Modal */
+  .modal.fullscreen { width: 90%; max-width: 900px; height: 85vh; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
+  .modal-header { padding: 16px 24px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: #fff; border-radius: 20px 20px 0 0; }
+  .modal-header h2 { margin: 0; font-size: 18px; color: #3D3226; font-weight: 700; }
+  .markdown-body { padding: 32px 40px; flex: 1; overflow-y: auto; line-height: 1.6; font-size: 15px; color: #333; background: #fafafa; }
+  .markdown-body h1 { font-size: 24px; border-bottom: 2px solid #eaecef; padding-bottom: 8px; margin-bottom: 16px; color: #222; }
+  .markdown-body h2 { font-size: 20px; border-bottom: 1px solid #eaecef; padding-bottom: 6px; margin: 24px 0 12px; color: #3D3226; }
+  .markdown-body h3 { font-size: 18px; margin: 20px 0 10px; color: #444; }
+  .markdown-body pre { background: #f6f8fa; padding: 16px; border-radius: 8px; overflow-x: auto; margin-bottom: 16px; font-size: 13px; }
+  .markdown-body code { background: #f6f8fa; padding: 2px 4px; border-radius: 4px; font-family: monospace; font-size: 14px; color: #d63384; }
+  .markdown-body ul, .markdown-body ol { padding-left: 24px; margin-bottom: 16px; }
+  .markdown-body li { margin-bottom: 6px; }
+  .markdown-body p { margin-bottom: 16px; }
+  .markdown-body blockquote { border-left: 4px solid #F5C542; color: #666; padding-left: 16px; margin-left: 0; margin-bottom: 16px; background: #fffdf5; padding: 8px 16px; border-radius: 0 8px 8px 0; }
+  .close-icon-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: #888; font-weight: 300; }
+  .close-icon-btn:hover { color: #333; }
 
   /* Modals */
   .modal-overlay {
@@ -594,6 +613,19 @@
     <div class="modal-actions">
       <button class="btn" onclick="closeAssetModal()">キャンセル</button>
       <button class="btn primary" onclick="saveAsset()">保存する 🌻</button>
+    </div>
+  </div>
+</div>
+
+<!-- Markdown Preview Modal -->
+<div class="modal-overlay" id="markdownPreviewModal" onclick="if(event.target===this) closeMarkdownPreview()">
+  <div class="modal fullscreen">
+    <div class="modal-header">
+      <h2 id="markdownModalTitle">📄 ドキュメント</h2>
+      <button class="close-icon-btn" onclick="closeMarkdownPreview()">×</button>
+    </div>
+    <div class="markdown-body" id="markdownModalContent">
+      Loading...
     </div>
   </div>
 </div>
@@ -1156,9 +1188,10 @@
   function linkify(text) {
     if (!text) return '（内容なし）';
     // URLや拡張子付きファイル名、相対パスのMarkdownなどを抽出してリンク化
-    const urlRegex = /(https?:\/\/[^\s]+|[\w-]+\.html|[\w-]+\.svg|(?:\.\.\/)+[^\s]+\.md)/g;
+    const urlRegex = /(https?:\/\/[^\s]+|[\w-]+\.html|[\w-]+\.svg|(?:\.\.\/)+[^\s]+\.md|docs\/[^\s]+\.md)/g;
     return text.replace(urlRegex, function(url) {
       if(url.startsWith('http')) return `<a href="${url}" target="_blank" style="color:#C4A24E;text-decoration:underline;">${url}</a>`;
+      if(url.endsWith('.md')) return `<a href="javascript:void(0)" onclick="openMarkdownPreview('${url}')" style="color:#C4A24E;text-decoration:underline;">📋 ${url.split('/').pop()}</a>`;
       return `<a href="${url}" target="_blank" style="color:#C4A24E;text-decoration:underline;">📋 ${url.split('/').pop()}</a>`;
     });
   }
@@ -1386,9 +1419,12 @@
     if (assets.length === 0) return;
 
     assets.forEach(a => {
-      const linksHtml = (a.links || []).map(link => 
-        `<a href="${link.url}" target="_blank" class="asset-link">${link.name}</a>`
-      ).join('');
+      const linksHtml = (a.links || []).map(link => {
+        if(link.url.endsWith('.md')) {
+          return `<a href="javascript:void(0)" onclick="openMarkdownPreview('${link.url}')" class="asset-link">${link.name}</a>`;
+        }
+        return `<a href="${link.url}" target="_blank" class="asset-link">${link.name}</a>`;
+      }).join('');
 
       const card = document.createElement('div');
       card.className = 'asset-card';
@@ -1467,6 +1503,31 @@
       renderAssets();
       dbSaveAssets();
     }
+  }
+
+  async function openMarkdownPreview(url) {
+    const modal = document.getElementById('markdownPreviewModal');
+    const titleEl = document.getElementById('markdownModalTitle');
+    const contentEl = document.getElementById('markdownModalContent');
+    
+    titleEl.textContent = '📄 ' + url.split('/').pop();
+    contentEl.innerHTML = '<div style="text-align:center; padding: 40px; color:#888;">読み込み中...</div>';
+    modal.classList.add('active');
+
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Failed to fetch doc');
+      const text = await res.text();
+      // Configure marked to use sanitized output (basic security)
+      contentEl.innerHTML = marked.parse(text);
+    } catch(e) {
+      console.error(e);
+      contentEl.innerHTML = '<div style="color:#ef4444; padding:20px; text-align:center;">ドキュメントの読み込みに失敗しました。<br>ファイルが存在しないか、アクセス権限がありません。</div>';
+    }
+  }
+
+  function closeMarkdownPreview() {
+    document.getElementById('markdownPreviewModal').classList.remove('active');
   }
 
   init();
