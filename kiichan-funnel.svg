@@ -1,136 +1,188 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" font-family="'Helvetica Neue', Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1800" font-family="'Helvetica Neue', Arial, sans-serif">
   <defs>
-    <linearGradient id="bgG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FFF9E6"/>
-      <stop offset="50%" stop-color="#FFF5F0"/>
-      <stop offset="100%" stop-color="#F0F7FC"/>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fffcf5"/>
+      <stop offset="100%" stop-color="#f5efe5"/>
     </linearGradient>
-    <linearGradient id="yG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F5C542"/><stop offset="100%" stop-color="#F29880"/></linearGradient>
-    <linearGradient id="oG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFAD5E"/><stop offset="100%" stop-color="#F5943A"/></linearGradient>
-    <linearGradient id="gG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#8CB88A"/><stop offset="100%" stop-color="#6BAF69"/></linearGradient>
-    <linearGradient id="bG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#87CEEB"/><stop offset="100%" stop-color="#6BB3D9"/></linearGradient>
-    <linearGradient id="pG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#B89FD8"/><stop offset="100%" stop-color="#9B7FC4"/></linearGradient>
-    <linearGradient id="cG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F29880"/><stop offset="100%" stop-color="#E87461"/></linearGradient>
-    <filter id="sh" x="-3%" y="-3%" width="108%" height="112%">
-      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-opacity="0.08" flood-color="#000"/>
+    <linearGradient id="honeyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f5c542"/>
+      <stop offset="100%" stop-color="#e8926e"/>
+    </linearGradient>
+    <linearGradient id="sageGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8cb88a"/>
+      <stop offset="100%" stop-color="#6fa06d"/>
+    </linearGradient>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#85bdd9"/>
+      <stop offset="100%" stop-color="#6a9fc0"/>
+    </linearGradient>
+    <linearGradient id="lavGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b8a9d8"/>
+      <stop offset="100%" stop-color="#9a8bc0"/>
+    </linearGradient>
+    <linearGradient id="coralGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f2988e"/>
+      <stop offset="100%" stop-color="#e06b6b"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d4a017"/>
+      <stop offset="100%" stop-color="#b8860b"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#00000015"/>
+    </filter>
+    <filter id="shadowDeep">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#00000020"/>
     </filter>
   </defs>
 
-  <rect width="900" height="1100" fill="url(#bgG)"/>
+  <!-- Background -->
+  <rect width="1000" height="1800" fill="url(#bgGrad)"/>
 
-  <!-- Title -->
-  <text x="450" y="40" text-anchor="middle" font-size="10" fill="#C4A24E" letter-spacing="5" font-weight="700">🐾 FUNNEL DESIGN</text>
-  <text x="450" y="70" text-anchor="middle" font-size="22" fill="#3D3226" font-weight="900">きいちゃん ファネル全体設計</text>
-  <text x="450" y="94" text-anchor="middle" font-size="12" fill="#8C7B6B">栄養 × 飼い主マインド ── 集客から講座までの流れ</text>
-  <line x1="350" y1="108" x2="550" y2="108" stroke="url(#yG)" stroke-width="2" stroke-linecap="round"/>
+  <!-- ===== TITLE ===== -->
+  <rect x="100" y="25" width="800" height="90" rx="20" fill="url(#honeyGrad)" filter="url(#shadowDeep)"/>
+  <text x="500" y="62" text-anchor="middle" fill="#fff" font-size="22" font-weight="900">🐕 きいちゃん ビジネスファネル全体図</text>
+  <text x="500" y="88" text-anchor="middle" fill="#fff" font-size="12" font-weight="600" opacity="0.9">こじらせ飼い主マインド講座 0期 → 事例収集 → 本講座</text>
 
-  <!-- Step 1: SNS -->
-  <g transform="translate(150, 130)">
-    <rect width="600" height="80" rx="16" fill="#fff" filter="url(#sh)" opacity="0.95"/>
-    <rect width="600" height="5" rx="3" fill="url(#yG)"/>
-    <circle cx="40" cy="45" r="20" fill="url(#yG)"/>
-    <text x="40" y="50" text-anchor="middle" font-size="14" fill="#fff" font-weight="900">1</text>
-    <text x="72" y="38" font-size="16" fill="#3D3226" font-weight="900">📺 YouTube / Instagram / SNS</text>
-    <text x="72" y="60" font-size="12" fill="#8C7B6B">「ワンちゃん、心の栄養足りてる？」→ 診断リンクを誘導</text>
-  </g>
+  <!-- ===== FUNNEL SHAPE ===== -->
+  <polygon points="200,140 800,140 880,1340 120,1340" fill="#f5efe5" opacity="0.3" stroke="#d4a017" stroke-width="1" stroke-dasharray="8,6"/>
 
-  <!-- Arrow -->
-  <polygon points="445,218 445,230 440,230 450,242 460,230 455,230 455,218" fill="url(#yG)" opacity="0.6"/>
+  <!-- ===== STAGE 0: YOUTUBE ===== -->
+  <rect x="150" y="155" width="700" height="120" rx="16" fill="#fff" stroke="#d4a017" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="150" y="155" width="700" height="35" rx="16" fill="url(#honeyGrad)"/>
+  <rect x="150" y="172" width="700" height="18" fill="url(#honeyGrad)"/>
+  <text x="180" y="180" fill="#fff" font-size="13" font-weight="900">📺 YouTube / SNS（認知）</text>
+  <text x="700" y="180" text-anchor="end" fill="#fff" font-size="10" font-weight="600">TTP戦略</text>
+  <text x="180" y="215" fill="#4a3a2a" font-size="11" font-weight="700">TTP先：獣医師まなみ（バズ率699%）/ リーリャの犬ごはん（436%）</text>
+  <text x="180" y="237" fill="#777" font-size="10">栄養系入口動画 → パラダイムシフト「フード変えても変わらない→マインドだった」</text>
+  <text x="180" y="255" fill="#d4a017" font-size="10" font-weight="700">▶ コンテンツ例：「こじらせ飼い主の口グセ3選」「犬が食べない本当の原因」</text>
 
-  <!-- Step 2: Diagnosis -->
-  <g transform="translate(150, 248)">
-    <rect width="600" height="100" rx="16" fill="#fff" filter="url(#sh)" opacity="0.95"/>
-    <rect width="600" height="5" rx="3" fill="url(#oG)"/>
-    <circle cx="40" cy="55" r="20" fill="url(#oG)"/>
-    <text x="40" y="60" text-anchor="middle" font-size="14" fill="#fff" font-weight="900">2</text>
-    <text x="72" y="38" font-size="16" fill="#3D3226" font-weight="900">🧩 心の栄養診断（チャットLP）</text>
-    <text x="72" y="58" font-size="12" fill="#3D3226">10問・3分のチャット形式。レーダーチャートで5つの栄養素を可視化</text>
-    <rect x="72" y="68" width="280" height="22" rx="11" fill="#FFF0E0"/>
-    <text x="82" y="84" font-size="11" fill="#F5943A" font-weight="700">💡 入口が「診断」だから軽い＆楽しい → 完走率が高い</text>
-  </g>
+  <!-- Arrow 0→1 -->
+  <line x1="500" y1="275" x2="500" y2="310" stroke="#8cb88a" stroke-width="2.5" stroke-dasharray="6,4"/>
+  <polygon points="493,305 500,317 507,305" fill="#8cb88a"/>
 
-  <!-- Arrow -->
-  <polygon points="445,356 445,368 440,368 450,380 460,368 455,368 455,356" fill="url(#oG)" opacity="0.6"/>
+  <!-- ===== STAGE 1: DIAGNOSIS CHAT ===== -->
+  <rect x="160" y="320" width="680" height="120" rx="16" fill="#fff" stroke="#8cb88a" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="160" y="320" width="680" height="35" rx="16" fill="url(#sageGrad)"/>
+  <rect x="160" y="337" width="680" height="18" fill="url(#sageGrad)"/>
+  <text x="190" y="345" fill="#fff" font-size="13" font-weight="900">🐾 診断チャット LP（リード獲得）</text>
+  <text x="700" y="345" text-anchor="end" fill="#fff" font-size="10" font-weight="600">✅ 実装済み</text>
+  <text x="190" y="380" fill="#4a3a2a" font-size="11" font-weight="700">犬のきもち「わかってる？」クイズ → 心の栄養診断結果</text>
+  <text x="190" y="400" fill="#777" font-size="10">→ きいちゃんの原体験ストーリー → LINE登録CTA</text>
+  <text x="190" y="420" fill="#d4a017" font-size="10" font-weight="700">🎯 目標：LINE登録率 30%+</text>
 
-  <!-- Step 3: LINE -->
-  <g transform="translate(150, 386)">
-    <rect width="600" height="100" rx="16" fill="#fff" filter="url(#sh)" opacity="0.95"/>
-    <rect width="600" height="5" rx="3" fill="url(#gG)"/>
-    <circle cx="40" cy="55" r="20" fill="url(#gG)"/>
-    <text x="40" y="60" text-anchor="middle" font-size="14" fill="#fff" font-weight="900">3</text>
-    <text x="72" y="38" font-size="16" fill="#3D3226" font-weight="900">🎁 LINE登録 ＋ 特典プレゼント</text>
-    <text x="72" y="58" font-size="12" fill="#3D3226">不足栄養素に合わせた「心の栄養レシピ」を無料プレゼント</text>
-    <rect x="72" y="68" width="340" height="22" rx="11" fill="#E8F5E8"/>
-    <text x="82" y="84" font-size="11" fill="#6BAF69" font-weight="700">💡 タイプ別特典で「あなた専用」感 → LINE登録率アップ</text>
-  </g>
+  <!-- Arrow 1→2 -->
+  <line x1="500" y1="440" x2="500" y2="475" stroke="#85bdd9" stroke-width="2.5" stroke-dasharray="6,4"/>
+  <polygon points="493,470 500,482 507,470" fill="#85bdd9"/>
 
-  <!-- Arrow -->
-  <polygon points="445,494 445,506 440,506 450,518 460,506 455,506 455,494" fill="url(#gG)" opacity="0.6"/>
+  <!-- ===== STAGE 2: LINE ===== -->
+  <rect x="170" y="485" width="660" height="155" rx="16" fill="#fff" stroke="#85bdd9" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="170" y="485" width="660" height="35" rx="16" fill="url(#skyGrad)"/>
+  <rect x="170" y="502" width="660" height="18" fill="url(#skyGrad)"/>
+  <text x="200" y="510" fill="#fff" font-size="13" font-weight="900">💬 LINE登録 + 特典配布（教育）</text>
+  <text x="700" y="510" text-anchor="end" fill="#fff" font-size="10" font-weight="600">仮デザイン済み</text>
 
-  <!-- Step 4: Education -->
-  <g transform="translate(150, 524)">
-    <rect width="600" height="100" rx="16" fill="#fff" filter="url(#sh)" opacity="0.95"/>
-    <rect width="600" height="5" rx="3" fill="url(#bG)"/>
-    <circle cx="40" cy="55" r="20" fill="url(#bG)"/>
-    <text x="40" y="60" text-anchor="middle" font-size="14" fill="#fff" font-weight="900">4</text>
-    <text x="72" y="38" font-size="16" fill="#3D3226" font-weight="900">📹 教育配信（LINE内）</text>
-    <text x="72" y="58" font-size="12" fill="#3D3226">飼い主マインドの重要性を伝える動画・配信コンテンツ</text>
-    <rect x="72" y="68" width="400" height="22" rx="11" fill="#E6F4FA"/>
-    <text x="82" y="84" font-size="11" fill="#6BB3D9" font-weight="700">💡 「栄養だけじゃダメだった」→ 科学的根拠でマインドの必要性を教育</text>
-  </g>
+  <rect x="195" y="535" width="295" height="50" rx="10" fill="#edf5fa" stroke="#85bdd9" stroke-width="1"/>
+  <text x="215" y="557" fill="#4a3a2a" font-size="10" font-weight="700">🎥 特典動画（10-15分）</text>
+  <text x="215" y="573" fill="#777" font-size="9">鏡の法則 → 限界提示 → セッション案内</text>
 
-  <!-- Arrow -->
-  <polygon points="445,632 445,644 440,644 450,656 460,644 455,644 455,632" fill="url(#bG)" opacity="0.6"/>
+  <rect x="510" y="535" width="295" height="50" rx="10" fill="#edf5fa" stroke="#85bdd9" stroke-width="1"/>
+  <text x="530" y="557" fill="#4a3a2a" font-size="10" font-weight="700">📝 PDF チェックシート</text>
+  <text x="530" y="573" fill="#777" font-size="9">こじらせ度チェック+栄養コラム+翻訳ワーク</text>
 
-  <!-- Step 5: Individual Session -->
-  <g transform="translate(150, 662)">
-    <rect width="600" height="100" rx="16" fill="#fff" filter="url(#sh)" opacity="0.95"/>
-    <rect width="600" height="5" rx="3" fill="url(#pG)"/>
-    <circle cx="40" cy="55" r="20" fill="url(#pG)"/>
-    <text x="40" y="60" text-anchor="middle" font-size="14" fill="#fff" font-weight="900">5</text>
-    <text x="72" y="38" font-size="16" fill="#3D3226" font-weight="900">🔥 個別セッション</text>
-    <text x="72" y="58" font-size="12" fill="#3D3226">1対1で飼い主マインドを実践。結果を出す＆実績を作る</text>
-    <rect x="72" y="68" width="440" height="22" rx="11" fill="#F0E6FF"/>
-    <text x="82" y="84" font-size="11" fill="#9B7FC4" font-weight="700">💡 1回のセッション = コンテンツ素材 + 発信ネタ + 実績（3つの資産）</text>
-  </g>
+  <text x="200" y="610" fill="#d4a017" font-size="10" font-weight="700">🎯 目標：特典消化率 60%+ → セッション申込率 15%+</text>
+  <text x="200" y="628" fill="#a09080" font-size="9">※ 解決策を出し尽くさない。「一人では気づけない」限界を提示</text>
 
-  <!-- Arrow -->
-  <polygon points="445,770 445,782 440,782 450,794 460,782 455,782 455,770" fill="url(#pG)" opacity="0.6"/>
+  <!-- Arrow 2→3 -->
+  <line x1="500" y1="640" x2="500" y2="675" stroke="#b8a9d8" stroke-width="2.5" stroke-dasharray="6,4"/>
+  <polygon points="493,670 500,682 507,670" fill="#b8a9d8"/>
 
-  <!-- Step 6: Course -->
-  <g transform="translate(150, 800)">
-    <rect width="600" height="120" rx="16" fill="#fff" filter="url(#sh)" opacity="0.95"/>
-    <rect width="600" height="5" rx="3" fill="url(#cG)"/>
-    <circle cx="40" cy="55" r="20" fill="url(#cG)"/>
-    <text x="40" y="60" text-anchor="middle" font-size="14" fill="#fff" font-weight="900">6</text>
-    <text x="72" y="38" font-size="16" fill="#3D3226" font-weight="900">🎓 飼い主マインド講座（0期 → 1期）</text>
-    <text x="72" y="58" font-size="12" fill="#3D3226">マインド講座（4ヶ月） → マスターコース（希望者）</text>
+  <!-- ===== STAGE 3: MONITOR SESSION ===== -->
+  <rect x="185" y="685" width="630" height="145" rx="16" fill="#fff" stroke="#b8a9d8" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="185" y="685" width="630" height="35" rx="16" fill="url(#lavGrad)"/>
+  <rect x="185" y="702" width="630" height="18" fill="url(#lavGrad)"/>
+  <text x="215" y="710" fill="#fff" font-size="13" font-weight="900">💌 個別モニターセッション</text>
+  <text x="680" y="710" text-anchor="end" fill="#fff" font-size="10" font-weight="600">モニター限定●名</text>
+  <text x="215" y="747" fill="#4a3a2a" font-size="11" font-weight="700">愛犬からのラブレター翻訳（栄養面＋マインド面）</text>
+  <text x="215" y="767" fill="#777" font-size="10">• こじらせマインドを一緒に紐解く個別セッション</text>
+  <text x="215" y="787" fill="#777" font-size="10">• セッション後アンケートで事例・声を収集</text>
+  <text x="215" y="808" fill="#d4a017" font-size="10" font-weight="700">💰 通常価格 ¥XX,XXX → モニター特別価格 ¥X,XXX</text>
 
-    <rect x="72" y="72" width="240" height="28" rx="8" fill="#FFF0EC"/>
-    <text x="82" y="91" font-size="11" fill="#E87461" font-weight="700">0期：個別声がけ（3〜5人）</text>
-    <rect x="330" y="72" width="240" height="28" rx="8" fill="#FFF0EC"/>
-    <text x="340" y="91" font-size="11" fill="#E87461" font-weight="700">1期：仕組みで集客（10人〜）</text>
-  </g>
+  <!-- Arrow 3→filter -->
+  <line x1="500" y1="830" x2="500" y2="860" stroke="#b8a9d8" stroke-width="2.5" stroke-dasharray="6,4"/>
+  <polygon points="493,855 500,867 507,855" fill="#b8a9d8"/>
 
-  <!-- Bottom summary -->
-  <g transform="translate(100, 950)">
-    <rect width="700" height="120" rx="20" fill="#fff" filter="url(#sh)" opacity="0.97"/>
-    <rect width="700" height="5" rx="3" fill="url(#yG)"/>
-    <text x="350" y="34" text-anchor="middle" font-size="14" fill="#3D3226" font-weight="900">🌟 きいちゃんのファネルが強い理由</text>
-    <g transform="translate(30, 50)">
-      <rect width="200" height="52" rx="10" fill="#FFF9E6"/>
-      <text x="100" y="22" text-anchor="middle" font-size="11" fill="#C4A24E" font-weight="700">入口が軽い</text>
-      <text x="100" y="40" text-anchor="middle" font-size="10" fill="#3D3226">3分の診断で気軽に開始</text>
-    </g>
-    <g transform="translate(250, 50)">
-      <rect width="200" height="52" rx="10" fill="#FFF9E6"/>
-      <text x="100" y="22" text-anchor="middle" font-size="11" fill="#C4A24E" font-weight="700">科学で信頼</text>
-      <text x="100" y="40" text-anchor="middle" font-size="10" fill="#3D3226">コルチゾール研究で裏付け</text>
-    </g>
-    <g transform="translate(470, 50)">
-      <rect width="200" height="52" rx="10" fill="#FFF9E6"/>
-      <text x="100" y="22" text-anchor="middle" font-size="11" fill="#C4A24E" font-weight="700">栄養×マインド</text>
-      <text x="100" y="40" text-anchor="middle" font-size="10" fill="#3D3226">他にない2本柱の強み</text>
-    </g>
-  </g>
+  <!-- ===== FILTER ===== -->
+  <rect x="340" y="870" width="320" height="50" rx="25" fill="#f3f0fa" stroke="#b8a9d8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="500" y="900" text-anchor="middle" fill="#7a6ba0" font-size="12" font-weight="900">💡 0期に興味ありますか？🌻</text>
+
+  <!-- Branch: No -->
+  <line x1="340" y1="895" x2="240" y2="895" stroke="#ccc" stroke-width="1.5"/>
+  <line x1="240" y1="895" x2="240" y2="935" stroke="#ccc" stroke-width="1.5"/>
+  <rect x="160" y="935" width="160" height="35" rx="10" fill="#f5f5f5" stroke="#ddd" stroke-width="1"/>
+  <text x="240" y="957" text-anchor="middle" fill="#aaa" font-size="10" font-weight="600">LINE継続フォロー</text>
+
+  <!-- Arrow: Yes -->
+  <line x1="500" y1="920" x2="500" y2="970" stroke="url(#coralGrad)" stroke-width="3"/>
+  <polygon points="493,964 500,978 507,964" fill="#e06b6b"/>
+  <text x="530" y="955" fill="#e06b6b" font-size="10" font-weight="900">興味あり！</text>
+
+  <!-- ===== STAGE 4: 0-KI ===== -->
+  <rect x="200" y="985" width="600" height="155" rx="18" fill="#fff" stroke="url(#coralGrad)" stroke-width="3" filter="url(#shadowDeep)"/>
+  <rect x="200" y="985" width="600" height="38" rx="18" fill="url(#coralGrad)"/>
+  <rect x="200" y="1005" width="600" height="18" fill="url(#coralGrad)"/>
+  <text x="230" y="1010" fill="#fff" font-size="13" font-weight="900">🎓 こじらせ飼い主マインド講座 0期</text>
+  <text x="670" y="1010" text-anchor="end" fill="#fff" font-size="10" font-weight="600">少人数制</text>
+  <text x="230" y="1050" fill="#4a3a2a" font-size="11" font-weight="700">目的：仮説検証 ＋ 事例収集 ＋ お客様の声</text>
+  <text x="230" y="1072" fill="#777" font-size="10">• 個別サポートから開始（マンツーマン or 少人数）</text>
+  <text x="230" y="1092" fill="#777" font-size="10">• カリキュラムのテスト＆改善</text>
+  <text x="230" y="1112" fill="#777" font-size="10">• ビフォーアフター・感想をコンテンツ素材として収集</text>
+  <text x="230" y="1130" fill="#d4a017" font-size="10" font-weight="700">📄 0期説明資料を準備する（要作成）</text>
+
+  <!-- Arrow 4→5 -->
+  <line x1="500" y1="1140" x2="500" y2="1175" stroke="#d4a017" stroke-width="2.5" stroke-dasharray="6,4"/>
+  <polygon points="493,1170 500,1182 507,1170" fill="#d4a017"/>
+
+  <!-- ===== STAGE 5: FUTURE ===== -->
+  <rect x="220" y="1190" width="560" height="100" rx="16" fill="#fff" stroke="#d4a017" stroke-width="2" filter="url(#shadow)" stroke-dasharray="6,4"/>
+  <rect x="220" y="1190" width="560" height="32" rx="16" fill="url(#goldGrad)" opacity="0.7"/>
+  <rect x="220" y="1206" width="560" height="16" fill="url(#goldGrad)" opacity="0.7"/>
+  <text x="250" y="1214" fill="#fff" font-size="13" font-weight="900">🚀 本講座（1期〜）</text>
+  <text x="250" y="1250" fill="#4a3a2a" font-size="11" font-weight="700">0期の事例・声を使って本格展開</text>
+  <text x="250" y="1272" fill="#777" font-size="10">LP作成（事例ベース）/ 自動ウェビナー化 / YouTube集客の本格化 / 価格UP</text>
+
+  <!-- ===== TIMELINE ===== -->
+  <rect x="100" y="1350" width="800" height="420" rx="18" fill="#fff" stroke="#d4a017" stroke-width="2" filter="url(#shadowDeep)"/>
+  <rect x="100" y="1350" width="800" height="42" rx="18" fill="url(#honeyGrad)"/>
+  <rect x="100" y="1374" width="800" height="18" fill="url(#honeyGrad)"/>
+  <text x="500" y="1378" text-anchor="middle" fill="#fff" font-size="15" font-weight="900">📅 3ヶ月ロードマップ（4/17〜7月末）</text>
+
+  <!-- Phase 0 -->
+  <rect x="130" y="1405" width="740" height="52" rx="10" fill="#eef6ee" stroke="#8cb88a" stroke-width="1"/>
+  <text x="155" y="1425" fill="#8cb88a" font-size="11" font-weight="900">Phase 0（4/17〜4/30）設計</text>
+  <text x="155" y="1445" fill="#4a3a2a" font-size="10">✅ ファネル設計 → 特典動画撮影 → LINE設定 → 0期説明資料 → LP公開テスト ※発信しない</text>
+
+  <!-- Phase 1 -->
+  <rect x="130" y="1465" width="740" height="52" rx="10" fill="#edf5fa" stroke="#85bdd9" stroke-width="1"/>
+  <text x="155" y="1485" fill="#85bdd9" font-size="11" font-weight="900">Phase 1（5月）閉店集客＋モニター</text>
+  <text x="155" y="1505" fill="#4a3a2a" font-size="10">閉店で既存フォロワーに案内 → モニター3-5名セッション → 事例収集 → 0期お誘い</text>
+
+  <!-- Phase 2 -->
+  <rect x="130" y="1525" width="740" height="52" rx="10" fill="#f3f0fa" stroke="#b8a9d8" stroke-width="1"/>
+  <text x="155" y="1545" fill="#b8a9d8" font-size="11" font-weight="900">Phase 2（6月）SNS整備＋発信開始</text>
+  <text x="155" y="1565" fill="#4a3a2a" font-size="10">YTリブランディング → TTP動画2-3本 → Instagram整理 → 0期カリキュラム完成</text>
+
+  <!-- Phase 3 -->
+  <rect x="130" y="1585" width="740" height="52" rx="10" fill="#fef0f0" stroke="#f2988e" stroke-width="1"/>
+  <text x="155" y="1605" fill="#e06b6b" font-size="11" font-weight="900">Phase 3（7月）🎓 0期スタート</text>
+  <text x="155" y="1625" fill="#4a3a2a" font-size="10">0期第1講義実施 → YouTube月2本定期投稿 → 1期設計着手</text>
+
+  <!-- Principle -->
+  <rect x="130" y="1650" width="740" height="45" rx="10" fill="#fff9e6" stroke="#d4a017" stroke-width="1"/>
+  <text x="500" y="1670" text-anchor="middle" fill="#d4a017" font-size="10" font-weight="900">💡 大原則：設計してから発信。いきなり発信しない。全部整ってから出す。</text>
+  <text x="500" y="1685" text-anchor="middle" fill="#999" font-size="9">4月＝設計 → 5月＝閉店＆事例 → 6月＝発信開始 → 7月＝0期</text>
+
+  <!-- Bottom -->
+  <rect x="150" y="1720" width="700" height="35" rx="8" fill="none" stroke="#d4a017" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="500" y="1742" text-anchor="middle" fill="#a09080" font-size="10" font-weight="600">詳細は kiichan-roadmap.svg を参照</text>
 </svg>

@@ -1,0 +1,243 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 2200" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fffcf5"/>
+      <stop offset="100%" stop-color="#fff5e8"/>
+    </linearGradient>
+    <linearGradient id="honeyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f5c542"/>
+      <stop offset="100%" stop-color="#f7b89c"/>
+    </linearGradient>
+    <linearGradient id="sageGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8cb88a"/>
+      <stop offset="100%" stop-color="#a8d4a6"/>
+    </linearGradient>
+    <linearGradient id="coralGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f2988e"/>
+      <stop offset="100%" stop-color="#e06b6b"/>
+    </linearGradient>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#85bdd9"/>
+      <stop offset="100%" stop-color="#a8d4eb"/>
+    </linearGradient>
+    <linearGradient id="lavGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b8a9d8"/>
+      <stop offset="100%" stop-color="#d4c8ef"/>
+    </linearGradient>
+    <linearGradient id="tealGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5ba8a0"/>
+      <stop offset="100%" stop-color="#7dc4bc"/>
+    </linearGradient>
+    <linearGradient id="ctaGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f5c542"/>
+      <stop offset="100%" stop-color="#e8926e"/>
+    </linearGradient>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#d4a017" flood-opacity="0.12"/>
+    </filter>
+    <filter id="shadowDeep" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#d4a017" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="2200" fill="url(#bgGrad)"/>
+
+  <!-- ===== TITLE ===== -->
+  <rect x="100" y="30" width="800" height="100" rx="20" fill="url(#honeyGrad)" filter="url(#shadowDeep)"/>
+  <text x="500" y="70" text-anchor="middle" fill="#fff" font-size="24" font-weight="900">🎁 LINE特典動画の構成</text>
+  <text x="500" y="98" text-anchor="middle" fill="#fff" font-size="13" font-weight="600" opacity="0.9">迷走神経 × 飼い主マインド → 個別セッション予約</text>
+
+  <!-- Arrow -->
+  <line x1="500" y1="130" x2="500" y2="165" stroke="#d4a017" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="493,160 500,172 507,160" fill="#d4a017"/>
+
+  <!-- ===== OPENING ===== -->
+  <rect x="120" y="175" width="760" height="140" rx="18" fill="#fff" stroke="#f5c542" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="120" y="175" width="760" height="38" rx="18" fill="url(#honeyGrad)"/>
+  <rect x="120" y="195" width="760" height="18" fill="url(#honeyGrad)"/>
+  <text x="150" y="200" fill="#fff" font-size="14" font-weight="900">🌻 オープニング（1〜2分）</text>
+  <text x="150" y="238" fill="#4a3a2a" font-size="13" font-weight="700">「LINE登録ありがとうございます。きいちゃんです🌻」</text>
+  <text x="150" y="262" fill="#4a3a2a" font-size="12">「この動画では、しつけでもフードでもない、</text>
+  <text x="158" y="280" fill="#d4a017" font-size="12" font-weight="700">『愛犬が本当に必要としている飼い主の姿』</text>
+  <text x="158" y="298" fill="#4a3a2a" font-size="12">を科学的な根拠とともにお話しします」</text>
+
+  <!-- Arrow -->
+  <line x1="500" y1="315" x2="500" y2="355" stroke="#5ba8a0" stroke-width="2.5" stroke-dasharray="6,4"/>
+  <polygon points="493,350 500,362 507,350" fill="#5ba8a0"/>
+
+  <!-- ===== PART 1: VAGUS NERVE SCIENCE ===== -->
+  <rect x="120" y="365" width="760" height="370" rx="18" fill="#fff" stroke="#5ba8a0" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="120" y="365" width="760" height="38" rx="18" fill="url(#tealGrad)"/>
+  <rect x="120" y="385" width="760" height="18" fill="url(#tealGrad)"/>
+  <text x="150" y="390" fill="#fff" font-size="14" font-weight="900">🧠 Part 1：自律神経の科学 — 迷走神経とコミュニケーション（4〜5分）</text>
+  <text x="150" y="425" fill="#4a3a2a" font-size="12" font-weight="700">🎯 目的：「マインドが大事」に科学的根拠を与える</text>
+
+  <!-- Vagus nerve diagram -->
+  <rect x="150" y="445" width="700" height="75" rx="12" fill="#e8f5f3" stroke="#5ba8a0" stroke-width="1"/>
+  <text x="170" y="467" fill="#5ba8a0" font-size="12" font-weight="900">🧬 迷走神経（副交感神経）の働き</text>
+  <text x="170" y="487" fill="#4a3a2a" font-size="11">• ストレスがかかると交感神経が優位 → フリーズ・逃走・攻撃反応</text>
+  <text x="170" y="507" fill="#4a3a2a" font-size="11">• 迷走神経が正常に働くと → コミュニケーション機能が回復 → 落ち着いて考えられる</text>
+
+  <rect x="150" y="530" width="700" height="55" rx="12" fill="#fff9e6" stroke="#f5c542" stroke-width="1"/>
+  <text x="170" y="552" fill="#d4a017" font-size="12" font-weight="900">💡 コミュニケーション機能が働く条件 = 「安心・安全」</text>
+  <text x="170" y="572" fill="#4a3a2a" font-size="11">この環境が整うと、問題が起きても冷静に対処できる（飼い主も犬も）</text>
+
+  <!-- Signs -->
+  <rect x="150" y="595" width="340" height="120" rx="12" fill="#e8f5f3" stroke="#5ba8a0" stroke-width="1"/>
+  <text x="170" y="617" fill="#5ba8a0" font-size="11" font-weight="900">😊 副交感神経が良好なサイン</text>
+  <text x="170" y="637" fill="#4a3a2a" font-size="10">✅ 口角が上がっている</text>
+  <text x="170" y="655" fill="#4a3a2a" font-size="10">✅ 眉が上がり、目がしっかり開いている</text>
+  <text x="170" y="673" fill="#4a3a2a" font-size="10">✅ 大きな口ではっきり話す</text>
+  <text x="170" y="691" fill="#4a3a2a" font-size="10">✅ 相手の声を聞いて意味を汲み取れる</text>
+
+  <rect x="510" y="595" width="340" height="120" rx="12" fill="#fef0f0" stroke="#e06b6b" stroke-width="1"/>
+  <text x="530" y="617" fill="#e06b6b" font-size="11" font-weight="900">😰 交感神経が優位なサイン</text>
+  <text x="530" y="637" fill="#4a3a2a" font-size="10">❌ 表情が硬い・眉間にしわ</text>
+  <text x="530" y="655" fill="#4a3a2a" font-size="10">❌ ため息が多い</text>
+  <text x="530" y="673" fill="#4a3a2a" font-size="10">❌ 声が小さい・言葉が出にくい</text>
+  <text x="530" y="691" fill="#4a3a2a" font-size="10">❌ イライラ・焦り・不安</text>
+
+  <text x="500" y="725" text-anchor="middle" fill="#d4a017" font-size="11" font-weight="700">🐕 犬は飼い主の表情で「安全か危険か」を判断している ＝ 笑顔は「安心」のサイン</text>
+
+  <!-- Arrow -->
+  <line x1="500" y1="735" x2="500" y2="775" stroke="#8cb88a" stroke-width="2.5" stroke-dasharray="6,4"/>
+  <polygon points="493,770 500,782 507,770" fill="#8cb88a"/>
+
+  <!-- ===== PART 2: STRESS BEHAVIORS ===== -->
+  <rect x="120" y="785" width="760" height="270" rx="18" fill="#fff" stroke="#8cb88a" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="120" y="785" width="760" height="38" rx="18" fill="url(#sageGrad)"/>
+  <rect x="120" y="805" width="760" height="18" fill="url(#sageGrad)"/>
+  <text x="150" y="810" fill="#fff" font-size="14" font-weight="900">🐕 Part 2：犬が感じる飼い主のストレス行動（3〜4分）</text>
+  <text x="150" y="845" fill="#4a3a2a" font-size="12" font-weight="700">🎯 目的：「ハッ！私やってる…」と当事者意識を持たせる</text>
+
+  <rect x="150" y="865" width="700" height="48" rx="10" fill="#eef6ee" stroke="#8cb88a" stroke-width="1"/>
+  <text x="170" y="885" fill="#4a3a2a" font-size="11" font-weight="700">😰 例1：フードを残した時の「えっ、食べないの！？」という焦った顔と声</text>
+  <text x="180" y="903" fill="#777" font-size="10">→ 犬は「ご飯＝怖いことが起きる」と学習 → 副交感神経↓ → さらに食べない</text>
+
+  <rect x="150" y="920" width="700" height="48" rx="10" fill="#eef6ee" stroke="#8cb88a" stroke-width="1"/>
+  <text x="170" y="940" fill="#4a3a2a" font-size="11" font-weight="700">😰 例2：病気や留守番の時の過剰な「ごめんね」の声色</text>
+  <text x="180" y="958" fill="#777" font-size="10">→ 犬に「悪いことが起きている」という危険信号が伝わる</text>
+
+  <rect x="150" y="975" width="700" height="48" rx="10" fill="#eef6ee" stroke="#8cb88a" stroke-width="1"/>
+  <text x="170" y="995" fill="#4a3a2a" font-size="11" font-weight="700">😰 例3：無意識のため息・ピリピリした空気</text>
+  <text x="180" y="1013" fill="#777" font-size="10">→ 犬のコルチゾールが飼い主と連動して上昇（スウェーデンの研究で証明済み）</text>
+
+  <text x="500" y="1045" text-anchor="middle" fill="#d4a017" font-size="11" font-weight="700">💡「犬は子どもと同じ。お母さんの笑顔があれば、怖いことも我慢できる」</text>
+
+  <!-- Arrow -->
+  <line x1="500" y1="1055" x2="500" y2="1095" stroke="#85bdd9" stroke-width="2.5" stroke-dasharray="6,4"/>
+  <polygon points="493,1090 500,1102 507,1090" fill="#85bdd9"/>
+
+  <!-- ===== PART 3: MIRROR LAW ===== -->
+  <rect x="120" y="1105" width="760" height="270" rx="18" fill="#fff" stroke="#85bdd9" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="120" y="1105" width="760" height="38" rx="18" fill="url(#skyGrad)"/>
+  <rect x="120" y="1125" width="760" height="18" fill="url(#skyGrad)"/>
+  <text x="150" y="1130" fill="#fff" font-size="14" font-weight="900">💎 Part 3：愛犬からのラブレター — 鏡の法則（3〜4分）</text>
+  <text x="150" y="1165" fill="#4a3a2a" font-size="12" font-weight="700">🎯 目的：問題の捉え方を180度変える</text>
+
+  <text x="150" y="1195" fill="#4a3a2a" font-size="12">「不安になりたくてなっているわけじゃないですよね。</text>
+  <text x="158" y="1213" fill="#4a3a2a" font-size="12">実は、愛犬の行動は…</text>
+  <text x="158" y="1235" fill="#d4a017" font-size="14" font-weight="900">『あなた自身の心の投影＝愛犬からのラブレター💌』</text>
+
+  <rect x="150" y="1255" width="340" height="55" rx="12" fill="#edf5fa" stroke="#85bdd9" stroke-width="1"/>
+  <text x="170" y="1275" fill="#4a3a2a" font-size="11" font-weight="700">🐕 犬が落ち着きがない → ⬇️</text>
+  <text x="170" y="1300" fill="#85bdd9" font-size="11" font-weight="700">「私が何かに追われて焦ってない？」</text>
+
+  <rect x="510" y="1255" width="340" height="55" rx="12" fill="#edf5fa" stroke="#85bdd9" stroke-width="1"/>
+  <text x="530" y="1275" fill="#4a3a2a" font-size="11" font-weight="700">🐕 犬が食べてくれない → ⬇️</text>
+  <text x="530" y="1300" fill="#85bdd9" font-size="11" font-weight="700">「私が周りの愛情を拒絶してない？」</text>
+
+  <text x="500" y="1345" text-anchor="middle" fill="#d4a017" font-size="12" font-weight="700">🐾 「問題行動は、愛犬からあなたへのメッセージです」</text>
+  <text x="500" y="1365" text-anchor="middle" fill="#777" font-size="11">→ 「もっと知りたい！」「うちの子はどうなの？」</text>
+
+  <!-- Arrow -->
+  <line x1="500" y1="1375" x2="500" y2="1415" stroke="#b8a9d8" stroke-width="2.5" stroke-dasharray="6,4"/>
+  <polygon points="493,1410 500,1422 507,1410" fill="#b8a9d8"/>
+
+  <!-- ===== PART 4: SUBCONSCIOUS - WHY YOU CAN'T DO IT ALONE ===== -->
+  <rect x="120" y="1425" width="760" height="340" rx="18" fill="#fff" stroke="#b8a9d8" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="120" y="1425" width="760" height="38" rx="18" fill="url(#lavGrad)"/>
+  <rect x="120" y="1445" width="760" height="18" fill="url(#lavGrad)"/>
+  <text x="150" y="1450" fill="#fff" font-size="14" font-weight="900">🔒 Part 4：「笑顔でいればいい」…そんな簡単じゃない（3〜4分）</text>
+  <text x="150" y="1488" fill="#4a3a2a" font-size="12" font-weight="700">🎯 目的：「わかってるけどできない」理由を解き明かす → セッションの必然性</text>
+
+  <!-- Step 1: False simplicity -->
+  <rect x="150" y="1505" width="700" height="40" rx="10" fill="#fef0f0" stroke="#e06b6b" stroke-width="1"/>
+  <text x="170" y="1522" fill="#e06b6b" font-size="11" font-weight="900">❌「じゃあ笑顔でいればいいんでしょ？」</text>
+  <text x="170" y="1540" fill="#777" font-size="10">→ それができれば苦労しないですよね。わかってるけどできない。</text>
+
+  <!-- Step 2: Why - Subconscious -->
+  <rect x="150" y="1553" width="700" height="55" rx="10" fill="#fff9e6" stroke="#f5c542" stroke-width="1"/>
+  <text x="170" y="1573" fill="#d4a017" font-size="11" font-weight="900">💡 なぜできないのか？ → 潜在意識の「プログラム」が自動で動いているから</text>
+  <text x="170" y="1590" fill="#4a3a2a" font-size="10">幼少期の経験、親との関係、過去の失敗…無意識に「不安パターン」が出来上がっている</text>
+  <text x="170" y="1604" fill="#4a3a2a" font-size="10">意識の95%は潜在意識。自分で気づけるのはたった5%しかない</text>
+
+  <!-- Step 3: Subconscious examples -->
+  <rect x="150" y="1618" width="340" height="60" rx="10" fill="#f3f0fa" stroke="#b8a9d8" stroke-width="1"/>
+  <text x="170" y="1638" fill="#9a8bc0" font-size="10" font-weight="900">🧊 潜在意識の思い込み例</text>
+  <text x="170" y="1655" fill="#4a3a2a" font-size="10">「私がちゃんとしなきゃ」</text>
+  <text x="170" y="1672" fill="#4a3a2a" font-size="10">「周りに迷惑をかけちゃいけない」</text>
+
+  <rect x="510" y="1618" width="340" height="60" rx="10" fill="#f3f0fa" stroke="#b8a9d8" stroke-width="1"/>
+  <text x="530" y="1638" fill="#9a8bc0" font-size="10" font-weight="900">🐕 犬に出る症状</text>
+  <text x="530" y="1655" fill="#4a3a2a" font-size="10">→ 飼い主の緊張が犬に伝わり続ける</text>
+  <text x="530" y="1672" fill="#4a3a2a" font-size="10">→ 何を試しても「根っこ」が変わらない</text>
+
+  <!-- Step 4: Conclusion -->
+  <rect x="150" y="1690" width="700" height="55" rx="10" fill="#f3f0fa" stroke="#b8a9d8" stroke-width="2"/>
+  <text x="500" y="1710" text-anchor="middle" fill="#7a6ba0" font-size="13" font-weight="900">⚠️「潜在意識は、自分では見えません」</text>
+  <text x="500" y="1730" text-anchor="middle" fill="#7a6ba0" font-size="11">栄養・トレーニング・医療を続けつつ、第三者と一緒にマインドを見る必要がある</text>
+  <text x="500" y="1755" text-anchor="middle" fill="#d4a017" font-size="11" font-weight="700">だから…一人じゃなくて、きいちゃんと一緒にやりませんか？🌻</text>
+
+  <!-- Arrow (big, emphasized) -->
+  <line x1="500" y1="1765" x2="500" y2="1810" stroke="url(#ctaGrad)" stroke-width="3.5"/>
+  <polygon points="490,1804 500,1820 510,1804" fill="#e8926e"/>
+
+  <!-- ===== CTA ===== -->
+  <rect x="100" y="1830" width="800" height="310" rx="22" fill="#fff" stroke="url(#ctaGrad)" stroke-width="3" filter="url(#shadowDeep)"/>
+
+  <rect x="130" y="1845" width="740" height="50" rx="14" fill="url(#honeyGrad)" opacity="0.15"/>
+  <text x="500" y="1865" text-anchor="middle" fill="#d4a017" font-size="11" font-weight="700" letter-spacing="3">🌟 モニター限定 ●名様</text>
+  <text x="500" y="1888" text-anchor="middle" fill="#4a3a2a" font-size="18" font-weight="900">愛犬からのラブレター翻訳セッション 💌</text>
+
+  <text x="170" y="1925" fill="#4a3a2a" font-size="12" font-weight="700">セッションで得られること：</text>
+
+  <rect x="170" y="1940" width="660" height="30" rx="8" fill="#fff9e6" stroke="#f5c542" stroke-width="1"/>
+  <text x="190" y="1960" fill="#4a3a2a" font-size="11">✅ あなたの潜在意識のパターンと、愛犬の行動の連動を分析</text>
+
+  <rect x="170" y="1977" width="660" height="30" rx="8" fill="#fff9e6" stroke="#f5c542" stroke-width="1"/>
+  <text x="190" y="1997" fill="#4a3a2a" font-size="11">✅ こじらせマインドの根っこ（潜在意識の思い込み）を一緒に見つける</text>
+
+  <rect x="170" y="2014" width="660" height="30" rx="8" fill="#fff9e6" stroke="#f5c542" stroke-width="1"/>
+  <text x="190" y="2034" fill="#4a3a2a" font-size="11">✅ 副交感神経を整え、笑顔を取り戻す具体的な日常の整え方</text>
+
+  <!-- Closing -->
+  <rect x="170" y="2060" width="660" height="55" rx="12" fill="url(#honeyGrad)" opacity="0.9"/>
+  <text x="500" y="2083" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">「あなたの笑顔が、愛犬にとって最高の安心・安全です🌻」</text>
+  <text x="500" y="2103" text-anchor="middle" fill="#fff" font-size="11">「私にそのお手伝いをさせてくださいね」— きいちゃん</text>
+
+  <!-- ===== LOGIC FLOW ===== -->
+  <rect x="120" y="2170" width="760" height="160" rx="14" fill="#f5f0e0" stroke="#d4a017" stroke-width="1"/>
+  <text x="500" y="2198" text-anchor="middle" fill="#d4a017" font-size="12" font-weight="900">📐 動画の心理設計</text>
+
+  <text x="150" y="2225" fill="#4a3a2a" font-size="11" font-weight="700">Part 1</text>
+  <text x="200" y="2225" fill="#777" font-size="11">「迷走神経と笑顔の科学」→ 権威性＆新しい視点</text>
+
+  <text x="150" y="2248" fill="#4a3a2a" font-size="11" font-weight="700">Part 2</text>
+  <text x="200" y="2248" fill="#777" font-size="11">「ハッ！私やってる…」→ 当事者意識</text>
+
+  <text x="150" y="2271" fill="#4a3a2a" font-size="11" font-weight="700">Part 3</text>
+  <text x="200" y="2271" fill="#777" font-size="11">「犬は鏡。ラブレターだった」→ パラダイムシフト</text>
+
+  <text x="150" y="2294" fill="#4a3a2a" font-size="11" font-weight="700">Part 4</text>
+  <text x="200" y="2294" fill="#777" font-size="11">「笑顔でいればいい？→無理→潜在意識→一人じゃ見えない」→ 自然なCTA</text>
+
+  <!-- Bottom bar -->
+  <rect x="150" y="2340" width="700" height="25" rx="8" fill="none" stroke="#d4a017" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="500" y="2358" text-anchor="middle" fill="#a09080" font-size="10" font-weight="600">
+    科学（迷走神経）→ 気づき（ストレス行動）→ 転換（ラブレター）→ 潜在意識（一人じゃ無理）→ 予約
+  </text>
+</svg>
+
+

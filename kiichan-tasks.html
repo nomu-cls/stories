@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>きいちゃん プロジェクトポータル 🌻</title>
+<!-- Supabase SDK & Config -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<!-- Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    background: linear-gradient(180deg, #FFF9E6 0%, #FFF5F0 50%, #F0F7FC 100%);
+    color: #3D3226;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  /* Top Navigation Bar */
+  .top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(245, 197, 66, 0.2);
+    z-index: 100;
+  }
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .header-brand h1 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #C4A24E;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .header-brand h1 .badge {
+    background: linear-gradient(135deg, #F5C542, #F29880);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 12px;
+  }
+
+  /* Main Tabs */
+  .main-tabs {
+    display: flex;
+    gap: 8px;
+    background: rgba(0,0,0,0.03);
+    padding: 6px;
+    border-radius: 12px;
+  }
+  .tab-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: #8C7B6B;
+    font-weight: 700;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover {
+    background: rgba(255,255,255,0.5);
+  }
+  .tab-btn.active {
+    background: #fff;
+    color: #C4A24E;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .nav-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  /* Buttons */
+  .btn {
+    background: #fff;
+    border: 2px solid #F5C542;
+    color: #C4A24E;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-weight: 700;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 13px;
+  }
+  .btn:hover { background: #FFF9E6; transform: translateY(-2px); }
+  .btn.primary { background: linear-gradient(135deg, #F5C542, #F29880); color: #fff; border: none; }
+  .btn.primary:hover { box-shadow: 0 6px 16px rgba(245, 197, 66, 0.3); }
+  .btn.yoshuku { background: linear-gradient(135deg, #FFD700, #F5C542); color: #fff; border: none; animation: pulse 2s infinite; }
+  .btn.yoshuku:hover { animation: none; transform: scale(1.05); }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(245, 197, 66, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(245, 197, 66, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(245, 197, 66, 0); }
+  }
+
+  /* Content Views */
+  .view-container {
+    display: none;
+    flex: 1;
+    overflow: hidden;
+    padding: 20px 24px;
+  }
+  .view-container.active {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* === View 1: Task Board === */
+  .board-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .filter-select {
+    appearance: none;
+    background: #fff url('data:image/svg+xml;utf8,<svg fill="%23C4A24E" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 8px center;
+    padding-right: 32px;
+    outline: none;
+    border: 2px solid #F5C542;
+    color: #C4A24E;
+    padding: 8px 16px;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 13px;
+    font-family: inherit;
+  }
+  .phase-bar { display: flex; gap: 4px; margin-bottom: 16px; }
+  .phase-pill {
+    flex: 1; padding: 8px 12px; border-radius: 10px; text-align: center;
+    font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; opacity: 0.6;
+  }
+  .phase-pill.active { opacity: 1; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transform: translateY(-2px); }
+
+  .yoshuku-banner {
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,249,230,0.9));
+    border: 2px solid #F5C542; border-radius: 16px; padding: 14px 24px;
+    margin-bottom: 16px; display: flex; align-items: center; gap: 16px;
+    box-shadow: 0 8px 24px rgba(245, 197, 66, 0.12);
+  }
+  .yoshuku-banner .icon { font-size: 28px; }
+  .yoshuku-banner .text { flex: 1; font-size: 14px; font-weight: 700; color: #C4A24E; line-height: 1.5; }
+  .yoshuku-banner .delete-yoshuku { background: none; border: none; color: #ccc; cursor: pointer; font-size: 14px; }
+
+  .board { display: flex; gap: 16px; flex: 1; overflow-x: auto; padding-bottom: 10px; }
+  .column {
+    background: rgba(255,255,255,0.85); border-radius: 16px; display: flex; flex-direction: column;
+    box-shadow: 4px 4px 16px rgba(0,0,0,0.04), inset 2px 2px 4px rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.6);
+  }
+  .column-header { padding: 14px 18px; border-bottom: 2px solid #F5E6D0; display: flex; justify-content: space-between; align-items: center; }
+  .column-title { font-weight: 900; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+  .column-count { background: #FFF9E6; color: #C4A24E; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
+  .column.drag-over { background: rgba(255, 249, 230, 0.95); border: 2px dashed #F5C542; }
+
+  .task-list { padding: 12px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+  .column.wide { flex: 2; min-width: 280px; }
+  .column.wide .task-list { display: grid; grid-template-columns: 1fr 1fr; align-content: start; }
+  .column.narrow { flex: 1; min-width: 180px; }
+
+  .task-card {
+    background: #fff; border-radius: 12px; padding: 14px; box-shadow: 2px 4px 12px rgba(0,0,0,0.05);
+    cursor: grab; border: 1px solid #faf5ed; transition: transform 0.2s, box-shadow 0.2s; position: relative;
+  }
+  .task-card:active { cursor: grabbing; transform: scale(0.98); }
+  .task-card:hover { box-shadow: 4px 6px 16px rgba(0,0,0,0.08); }
+  .task-card.dragging { opacity: 0.5; }
+  .task-title { font-weight: 700; font-size: 13px; margin-bottom: 8px; line-height: 1.5; }
+  .task-meta { display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #888; }
+  .tag-area { display: flex; gap: 4px; margin-bottom: 6px; flex-wrap: wrap; }
+  .badge-cat { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+  
+  .badge-tokuten { background: rgba(139,195,74,0.1); color: #689f38; border: 1px solid rgba(139,195,74,0.2); }
+  .badge-line { background: rgba(0,195,0,0.1); color: #00b900; border: 1px solid rgba(0,195,0,0.2); }
+  .badge-content { background: rgba(59,130,246,0.1); color: #3b82f6; border: 1px solid rgba(59,130,246,0.2); }
+  .badge-session { background: rgba(178,120,233,0.1); color: #9b59b6; border: 1px solid rgba(178,120,233,0.2); }
+  .badge-snspub { background: rgba(233,120,85,0.1); color: #e07755; border: 1px solid rgba(233,120,85,0.2); }
+  .badge-zeroki { background: rgba(245,197,66,0.1); color: #c4a24e; border: 1px solid rgba(245,197,66,0.2); }
+  .badge-design { background: rgba(236,72,153,0.1); color: #ec4899; border: 1px solid rgba(236,72,153,0.2); }
+
+  .badge-phase { font-size: 8px; font-weight: 700; padding: 1px 5px; border-radius: 3px; margin-left: 4px; }
+  .phase-0 { background: #eef6ee; color: #6fa06d; }
+  .phase-1 { background: #edf5fa; color: #6a9fc0; }
+  .phase-2 { background: #f3f0fa; color: #9a8bc0; }
+  .phase-3 { background: #fef0f0; color: #e06b6b; }
+
+  .task-actions { position: absolute; top: 6px; right: 6px; display: none; }
+  .task-card:hover .task-actions { display: flex; gap: 4px; }
+  .delete-btn { background: none; border: none; color: #ccc; cursor: pointer; font-size: 12px; }
+  .delete-btn:hover { color: #ff6b6b; }
+
+  /* === View 2: Links & Assets === */
+  .assets-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    overflow-y: auto;
+    padding-bottom: 40px;
+  }
+  .asset-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    border: 1px solid #F5E6D0;
+    transition: transform 0.2s;
+  }
+  .asset-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .asset-icon { font-size: 32px; margin-bottom: 12px; }
+  .asset-title { font-size: 16px; font-weight: 900; margin-bottom: 8px; color: #3D3226; }
+  .asset-desc { font-size: 12px; color: #8C7B6B; margin-bottom: 16px; line-height: 1.5; }
+  .asset-links { display: flex; flex-direction: column; gap: 8px; }
+  .asset-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: #FAFAF5;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #C4A24E;
+    font-size: 12px;
+    font-weight: 700;
+    transition: background 0.2s;
+  }
+  .asset-link:hover { background: #FFF9E6; color: #F5943A; }
+
+  /* === View 3: Meeting Logs === */
+  .logs-container {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+    padding-bottom: 40px;
+  }
+  .log-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    border-left: 4px solid #F5C542;
+  }
+  .log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .log-date { font-weight: 900; font-size: 16px; color: #C4A24E; }
+  .log-topic { font-size: 14px; font-weight: 700; color: #3D3226; }
+  .log-content { font-size: 13px; line-height: 1.8; color: #555; white-space: pre-wrap; }
+  .add-log-btn {
+    align-self: flex-start;
+    margin-bottom: 20px;
+  }
+
+  /* Modals */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4); display: none; justify-content: center;
+    align-items: center; z-index: 1000;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: #fff; padding: 28px; border-radius: 20px;
+    width: 420px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  }
+  .modal.wide { width: 600px; }
+  .modal h2 { font-size: 18px; margin-bottom: 20px; color: #C4A24E; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; margin-bottom: 4px; font-size: 12px; font-weight: 700; color: #555; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 10px 12px; border: 2px solid #eee;
+    border-radius: 8px; font-family: inherit; font-size: 14px; outline: none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #F5C542; }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+  .modal-actions .btn { flex: 1; }
+
+  /* Status Indicator */
+  .sync-status {
+    font-size: 11px;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .sync-status.online { color: #51cf66; }
+  .sync-status.offline { color: #ff6b6b; }
+</style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<div class="top-nav">
+  <div class="header-brand">
+    <h1><span class="badge">PORTAL</span>🌻 きいちゃん プロジェクト</h1>
+  </div>
+  
+  <div class="main-tabs">
+    <button class="tab-btn active" onclick="switchTab('board')">📋 タスク</button>
+    <button class="tab-btn" onclick="switchTab('assets')">📎 資料・リンク</button>
+    <button class="tab-btn" onclick="switchTab('logs')">📝 議事録</button>
+  </div>
+
+  <div class="nav-controls">
+    <div class="sync-status online" id="syncStatus">🟢 同期済み</div>
+    <button class="btn yoshuku" onclick="addYoshuku()">🌻 予祝する</button>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- VIEW 1: TASK BOARD                         -->
+<!-- ========================================== -->
+<div class="view-container active" id="view-board">
+
+  <div class="board-controls">
+    <div style="display:flex; gap:10px;">
+      <select id="phaseFilter" class="filter-select" onchange="renderBoard()">
+        <option value="">📅 全Phase</option>
+        <option value="phase-0">Phase 0（設計）</option>
+        <option value="phase-1">Phase 1（集客）</option>
+        <option value="phase-2">Phase 2（SNS）</option>
+        <option value="phase-3">Phase 3（0期）</option>
+      </select>
+      <select id="assigneeFilter" class="filter-select" onchange="renderBoard()">
+        <option value="">👤 全員</option>
+        <option value="きいちゃん">きいちゃんのタスク</option>
+        <option value="野村">野村のタスク</option>
+      </select>
+    </div>
+    <button class="btn primary" onclick="openModal()">＋ タスクを追加</button>
+  </div>
+
+  <!-- Phase Progress Bar -->
+  <div class="phase-bar" id="phaseBar">
+    <div class="phase-pill active" style="background:#eef6ee; color:#6fa06d;" data-phase="phase-0" onclick="filterPhase('phase-0')">
+      🔧 Phase 0（4月）設計
+    </div>
+    <div class="phase-pill" style="background:#edf5fa; color:#6a9fc0;" data-phase="phase-1" onclick="filterPhase('phase-1')">
+      🎯 Phase 1（5月）閉店集客
+    </div>
+    <div class="phase-pill" style="background:#f3f0fa; color:#9a8bc0;" data-phase="phase-2" onclick="filterPhase('phase-2')">
+      📺 Phase 2（6月）SNS整備
+    </div>
+    <div class="phase-pill" style="background:#fef0f0; color:#e06b6b;" data-phase="phase-3" onclick="filterPhase('phase-3')">
+      🎓 Phase 3（7月）0期
+    </div>
+  </div>
+
+  <div id="yoshukuContainer" style="display: none;">
+    <div class="yoshuku-banner">
+      <div class="icon">🌻</div>
+      <div class="text" id="yoshukuText">ここに予祝が入ります</div>
+      <button class="delete-yoshuku" onclick="clearYoshuku()">✖</button>
+    </div>
+  </div>
+
+  <div class="board">
+    <div class="column wide" id="col-todo" ondragover="allowDrop(event)" ondrop="drop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
+      <div class="column-header">
+        <div class="column-title"><span style="color:#888;">📌</span> 未着手</div>
+        <div class="column-count" id="count-todo">0</div>
+      </div>
+      <div class="task-list" id="list-todo"></div>
+    </div>
+
+    <div class="column wide" id="col-inprogress" ondragover="allowDrop(event)" ondrop="drop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
+      <div class="column-header">
+        <div class="column-title"><span style="color:#f7a44c;">🚀</span> 進行中</div>
+        <div class="column-count" id="count-inprogress">0</div>
+      </div>
+      <div class="task-list" id="list-inprogress"></div>
+    </div>
+
+    <div class="column narrow" id="col-review" ondragover="allowDrop(event)" ondrop="drop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
+      <div class="column-header">
+        <div class="column-title"><span style="color:#b197fc;">👀</span> 確認中</div>
+        <div class="column-count" id="count-review">0</div>
+      </div>
+      <div class="task-list" id="list-review"></div>
+    </div>
+
+    <div class="column narrow" id="col-done" ondragover="allowDrop(event)" ondrop="drop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
+      <div class="column-header">
+        <div class="column-title"><span style="color:#51cf66;">✅</span> 完了</div>
+        <div class="column-count" id="count-done">0</div>
+      </div>
+      <div class="task-list" id="list-done"></div>
+    </div>
+  </div>
+
+  <!-- Add Task Modal -->
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal">
+      <h2 id="modalTitle">🌻 新しいタスク</h2>
+      <input type="hidden" id="editTaskId" value="">
+      <div class="form-group">
+        <label>タスク内容 <span style="color:#ef4444">*</span></label>
+        <input type="text" id="taskTitle" placeholder="例: 特典動画の台本を書く" required>
+      </div>
+      <div class="form-group">
+        <label>カテゴリ</label>
+        <select id="taskCategory">
+          <option value="">カテゴリなし</option>
+          <option value="content">📹 コンテンツ制作</option>
+          <option value="tokuten">🎁 特典（動画・PDF）</option>
+          <option value="line">💬 LINE設定</option>
+          <option value="session">💌 個別セッション</option>
+          <option value="snspub">📺 SNS・YouTube</option>
+          <option value="zeroki">🎓 0期準備</option>
+          <option value="design">🎨 設計・戦略</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>フェーズ</label>
+        <select id="taskPhase">
+          <option value="phase-0">Phase 0（4月 設計）</option>
+          <option value="phase-1">Phase 1（5月 閉店集客）</option>
+          <option value="phase-2">Phase 2（6月 SNS整備）</option>
+          <option value="phase-3">Phase 3（7月 0期）</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>担当者</label>
+        <select id="taskAssignee">
+          <option value="">未定</option>
+          <option value="きいちゃん">🌻 きいちゃん</option>
+          <option value="野村">🧑‍💻 野村</option>
+          <option value="きいちゃん+野村">🤝 きいちゃん+野村</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>期限</label>
+        <input type="date" id="taskDate">
+      </div>
+      <div class="form-group">
+        <label>メモ</label>
+        <textarea id="taskDesc" rows="2" placeholder="補足やメモ" style="width:100%; padding:8px; border:2px solid #eee; border-radius:8px; font-family:inherit; resize:vertical;"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" onclick="closeModal()">キャンセル</button>
+        <button class="btn primary" onclick="saveTask()">保存する 🌻</button>
+      </div>
+    </div>
+  </div>
+
+</div> <!-- /view-board -->
+
+<!-- ========================================== -->
+<!-- VIEW 2: ASSETS & LINKS                     -->
+<!-- ========================================== -->
+<div class="view-container" id="view-assets">
+  <div class="assets-container">
+    
+    <div class="asset-card">
+      <div class="asset-icon">🧩</div>
+      <div class="asset-title">診断チャット</div>
+      <div class="asset-desc">リード獲得用のLP。「心の栄養」を切り口に、潜在意識と迷走神経への興味を惹きます。</div>
+      <div class="asset-links">
+        <a href="kiichan-shindan.html" target="_blank" class="asset-link">👁️ プレビューを見る</a>
+        <a href="#" class="asset-link">✏️ 編集画面を開く</a>
+      </div>
+    </div>
+
+    <div class="asset-card">
+      <div class="asset-icon">🎁</div>
+      <div class="asset-title">LINE特典</div>
+      <div class="asset-desc">LINE登録者に配布する小冊子（PDF）と教育動画のフロー図です。</div>
+      <div class="asset-links">
+        <a href="kiichan-checksheet.html" target="_blank" class="asset-link">📄 チェックシートPDF</a>
+        <a href="kiichan-tokuten-flow.svg" target="_blank" class="asset-link">📉 動画構成ロジックツリー</a>
+      </div>
+    </div>
+
+    <div class="asset-card">
+      <div class="asset-icon">🗺️</div>
+      <div class="asset-title">事業全体設計</div>
+      <div class="asset-desc">ペットショップ閉店から0期スタートまでのスケジュールとファネル構造全体図です。</div>
+      <div class="asset-links">
+        <a href="kiichan-funnel.svg" target="_blank" class="asset-link">🗺️ ファネル＆ロードマップ</a>
+        <a href="kiichan-proposal.html" target="_blank" class="asset-link">📑 ご提案書を見る</a>
+      </div>
+    </div>
+
+    <div class="asset-card" style="border-color: #f472b6;">
+      <div class="asset-icon">💞</div>
+      <div class="asset-title">個別セッション・ファネル設計</div>
+      <div class="asset-desc">「自己完結」を防ぎ、プロの介入を必然化するための特典動画ストーリーとセッション募集LPです。</div>
+      <div class="asset-links">
+        <a href="../.gemini/antigravity/brain/ac4549f9-b098-4b9e-b914-1f77d21789ec/meeting_agenda.md" target="_blank" class="asset-link">📋 ミーティングアジェンダ</a>
+        <a href="../.gemini/antigravity/brain/ac4549f9-b098-4b9e-b914-1f77d21789ec/funnel_scenario_draft.md" target="_blank" class="asset-link">🎬 特典教育シナリオ原案</a>
+        <a href="kiichan-session-lp.html" target="_blank" class="asset-link">セールスLP（フロントエンド）</a>
+      </div>
+    </div>
+
+    <div class="asset-card">
+      <div class="asset-icon">📺</div>
+      <div class="asset-title">YouTube / SNS</div>
+      <div class="asset-desc">認知拡大からリスト取りへの要となる媒体。しつけ系の層を狙ってポジショニングします。</div>
+      <div class="asset-links">
+        <a href="https://www.youtube.com/@itokimiko-pet" target="_blank" class="asset-link">▶️ きいちゃんねる</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- VIEW 3: MEETING LOGS                       -->
+<!-- ========================================== -->
+<div class="view-container" id="view-logs">
+  <button class="btn primary add-log-btn" onclick="openLogModal()">＋ 議事録を追加</button>
+  
+  <div class="logs-container" id="logsList">
+    <!-- Logs will be rendered here -->
+  </div>
+</div>
+
+<!-- Log Modal -->
+<div class="modal-overlay" id="logModal">
+  <div class="modal wide">
+    <h2 id="logModalTitle">📝 議事録・決定事項</h2>
+    <input type="hidden" id="editLogId" value="">
+    <div class="form-group">
+      <label>日付 <span style="color:#ef4444">*</span></label>
+      <input type="date" id="logDate" required>
+    </div>
+    <div class="form-group">
+      <label>トピック（何を決めたか） <span style="color:#ef4444">*</span></label>
+      <input type="text" id="logTopic" placeholder="例: 0期の価格決定と特典動画の構成見直し" required>
+    </div>
+    <div class="form-group">
+      <label>内容 / メモ</label>
+      <textarea id="logContent" placeholder="・迷走神経の話を入れることになった&#10;・笑顔でいればいいの限界を伝える"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeLogModal()">キャンセル</button>
+      <button class="btn primary" onclick="saveLog()">保存する 🌻</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Project Config & Supabase Setup
+  const PROJECT_ID = 'kiichan';
+  const SUPABASE_URL = 'https://yqluegvlauzvgqywnejj.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxbHVlZ3ZsYXV6dmdxeXduZWpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY0MTAzMDYsImV4cCI6MjA4MTk4NjMwNn0.VRSfZybmSi4bUYfITm3K1X6dwBnA68_QZ50a-P_R8-8';
+  let supabaseClient = null;
+
+  try {
+    if (typeof supabase !== 'undefined') {
+      supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
+  } catch(e) { console.error("Supabase init failed", e); }
+
+  const initialTasks = [
+    // ===== Phase 0: 設計 (4/17〜4/30) =====
+    { id: gid(), title: 'ファネル全体図の最終確認', assignee: 'きいちゃん+野村', date: '2026-04-17', status: 'done', category: 'design', phase: 'phase-0', description: 'コンサルセッションで確認' },
+    { id: gid(), title: 'モニター価格＆人数の決定', assignee: 'きいちゃん+野村', date: '2026-04-17', status: 'todo', category: 'design', phase: 'phase-0' },
+    { id: gid(), title: '診断チャットLP最終仕上げ', assignee: '野村', date: '2026-04-17', status: 'done', category: 'content', phase: 'phase-0' },
+    { id: gid(), title: 'チェックシートPDF完成', assignee: '野村', date: '2026-04-17', status: 'done', category: 'tokuten', phase: 'phase-0' },
+    { id: gid(), title: 'ファネル＆ロードマップ図の作成', assignee: '野村', date: '2026-04-17', status: 'done', category: 'design', phase: 'phase-0' },
+    { id: gid(), title: '特典動画の台本作成（迷走神経パート含む）', assignee: 'きいちゃん', date: '2026-04-18', status: 'todo', category: 'tokuten', phase: 'phase-0', description: 'Part1: 迷走神経 Part2: ストレス行動 Part3: ラブレター Part4: 潜在意識' },
+    { id: gid(), title: '0期説明資料の骨子作成', assignee: 'きいちゃん+野村', date: '2026-04-18', status: 'todo', category: 'zeroki', phase: 'phase-0' },
+    { id: gid(), title: '特典動画の撮影（自宅・スマホOK）', assignee: 'きいちゃん', date: '2026-04-19', status: 'todo', category: 'tokuten', phase: 'phase-0' },
+    { id: gid(), title: '特典動画の編集', assignee: 'きいちゃん', date: '2026-04-20', status: 'todo', category: 'tokuten', phase: 'phase-0' },
+    { id: gid(), title: 'LINE公式アカウント設定＆自動応答', assignee: 'きいちゃん', date: '2026-04-20', status: 'todo', category: 'line', phase: 'phase-0' },
+    { id: gid(), title: 'Vercelに診断チャットLP公開', assignee: '野村', date: '2026-04-21', status: 'todo', category: 'content', phase: 'phase-0' },
+    { id: gid(), title: 'LINE特典動画の配信テスト', assignee: 'きいちゃん+野村', date: '2026-04-22', status: 'todo', category: 'line', phase: 'phase-0' },
+    { id: gid(), title: '0期説明資料の完成（価格・スケジュール）', assignee: 'きいちゃん+野村', date: '2026-04-24', status: 'todo', category: 'zeroki', phase: 'phase-0' },
+    { id: gid(), title: 'コンサルセッション：LP＆LINE導線の最終確認', assignee: 'きいちゃん+野村', date: '2026-04-25', status: 'todo', category: 'design', phase: 'phase-0' },
+    { id: gid(), title: 'モニター募集文面の作成', assignee: 'きいちゃん', date: '2026-04-27', status: 'todo', category: 'session', phase: 'phase-0' },
+    { id: gid(), title: '知人2-3名に導線テスト（友人モニター）', assignee: 'きいちゃん', date: '2026-04-30', status: 'todo', category: 'session', phase: 'phase-0', description: 'LP→LINE→チェックシートの一連を通してもらう' },
+    // ===== Phase 1: 閉店集客 (5月) =====
+    { id: gid(), title: '閉店＆診断チャット案内（既存フォロワー向け）', assignee: 'きいちゃん', date: '2026-05-05', status: 'todo', category: 'session', phase: 'phase-1' },
+    { id: gid(), title: 'モニター3-5名の個別セッション実施', assignee: 'きいちゃん', date: '2026-05-25', status: 'todo', category: 'session', phase: 'phase-1', description: '1名60-90分' },
+    { id: gid(), title: 'セッション内容のパターン分析', assignee: 'きいちゃん+野村', date: '2026-05-30', status: 'todo', category: 'zeroki', phase: 'phase-1', description: '0期カリキュラムに反映' },
+    // ===== Phase 2: SNS整備 (6月) =====
+    { id: gid(), title: 'YouTubeチャンネルリブランディング', assignee: 'きいちゃん+野村', date: '2026-06-07', status: 'todo', category: 'snspub', phase: 'phase-2', description: '名前・バナー・概要文を一新' },
+    { id: gid(), title: 'TTP動画1本目 撮影＆編集', assignee: 'きいちゃん', date: '2026-06-14', status: 'todo', category: 'snspub', phase: 'phase-2', description: '「管理栄養士が告白。フードを変えても犬が食べない本当の原因」' },
+    // ===== Phase 3: 0期 (7月) =====
+    { id: gid(), title: '🎓 0期 第1講義スタート！', assignee: 'きいちゃん', date: '2026-07-05', status: 'todo', category: 'zeroki', phase: 'phase-3', description: 'こじらせ飼い主マインド講座 0期' },
+  ];
+
+  const initialLogs = [
+    {
+      id: gid(),
+      date: '2026-04-16',
+      topic: '特典動画の構成リニューアルと0期のビジネスファネル化',
+      content: '・笑顔でいればいい、で終わらせない。「一人でやる限界＝潜在意識のプログラム」を追加。これがないとセッションに繋がらない。\n・健康診断的にチャットを使ってもらう。\n・youtubeはしつけ系のバズ動画をTTPしつつ、ポジションは「飼い主マインド」の先生にする。\n・まずは発信より「設計」と「個別での成功体験」を集めることに集中するスケジュールに変更。'
+    }
+  ];
+
+  function gid() { return Math.random().toString(36).substr(2, 9); }
+
+  let tasks = [];
+  let logs = [];
+  let yoshukuData = null;
+  let draggedTaskId = null;
+
+  async function init() {
+    // 1. ローカル優先読み込み
+    const saved = localStorage.getItem(`${PROJECT_ID}-tasks`);
+    if (saved) tasks = JSON.parse(saved); else tasks = initialTasks;
+    
+    const savedLogs = localStorage.getItem(`${PROJECT_ID}-logs`);
+    if (savedLogs) logs = JSON.parse(savedLogs); else logs = initialLogs;
+
+    const savedY = localStorage.getItem(`${PROJECT_ID}-yoshuku`);
+    if (savedY) yoshukuData = savedY;
+
+    renderBoard();
+    renderLogs();
+    renderYoshuku();
+
+    // 2. Supabaseからマスターデータ取得 (matchbox_tasksテーブルのdescriptionカラム等を利用したハックか、専用JSON保管) 
+    await syncFromCloud();
+  }
+
+  // --- タブ切り替え ---
+  function switchTab(viewName) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    
+    document.querySelectorAll('.view-container').forEach(view => view.classList.remove('active'));
+    document.getElementById('view-' + viewName).classList.add('active');
+  }
+
+  // --- クラウド同期（Supabase portal_tasks / portal_logs / portal_yoshuku） ---
+  function updateSyncStatus(status) {
+    const el = document.getElementById('syncStatus');
+    if (status === 'syncing') { el.className = 'sync-status'; el.innerHTML = '🔄 同期中...'; }
+    else if (status === 'online') { el.className = 'sync-status online'; el.innerHTML = '🟢 同期済み'; }
+    else { el.className = 'sync-status offline'; el.innerHTML = '🔴 オフライン'; }
+  }
+
+  const db = () => supabaseClient;
+
+  // --- DB: Tasks ---
+  async function dbLoadTasks() {
+    if (!db()) return null;
+    try {
+      const { data, error } = await db().from('portal_tasks')
+        .select('*').eq('project_id', PROJECT_ID)
+        .order('created_at', { ascending: true });
+      if (error) throw error;
+      return data;
+    } catch(e) { console.warn('[Portal] Load tasks failed:', e); return null; }
+  }
+
+  async function dbInsertTask(task) {
+    if (!db()) return null;
+    try {
+      const { data, error } = await db().from('portal_tasks').insert({
+        project_id: PROJECT_ID,
+        title: task.title, assignee: task.assignee || '', date: task.date || '',
+        status: task.status || 'todo', category: task.category || '',
+        phase: task.phase || '', description: task.description || '',
+        starred: task.title.startsWith('⭐')
+      }).select().single();
+      if (error) throw error;
+      return data;
+    } catch(e) { console.warn('[Portal] Insert task failed:', e); return null; }
+  }
+
+  async function dbUpdateTask(id, updates) {
+    if (!db()) return;
+    try {
+      updates.updated_at = new Date().toISOString();
+      if (updates.title) updates.starred = updates.title.startsWith('⭐');
+      await db().from('portal_tasks').update(updates).eq('id', id);
+    } catch(e) { console.warn('[Portal] Update task failed:', e); }
+  }
+
+  async function dbDeleteTask(id) {
+    if (!db()) return;
+    try { await db().from('portal_tasks').delete().eq('id', id); }
+    catch(e) { console.warn('[Portal] Delete task failed:', e); }
+  }
+
+  // --- DB: Logs ---
+  async function dbLoadLogs() {
+    if (!db()) return null;
+    try {
+      const { data, error } = await db().from('portal_logs')
+        .select('*').eq('project_id', PROJECT_ID)
+        .order('date', { ascending: false });
+      if (error) throw error;
+      return data;
+    } catch(e) { console.warn('[Portal] Load logs failed:', e); return null; }
+  }
+
+  async function dbInsertLog(log) {
+    if (!db()) return null;
+    try {
+      const { data, error } = await db().from('portal_logs').insert({
+        project_id: PROJECT_ID,
+        date: log.date, topic: log.topic, content: log.content || ''
+      }).select().single();
+      if (error) throw error;
+      return data;
+    } catch(e) { console.warn('[Portal] Insert log failed:', e); return null; }
+  }
+
+  async function dbUpdateLog(id, updates) {
+    if (!db()) return;
+    try {
+      updates.updated_at = new Date().toISOString();
+      await db().from('portal_logs').update(updates).eq('id', id);
+    } catch(e) { console.warn('[Portal] Update log failed:', e); }
+  }
+
+  async function dbDeleteLog(id) {
+    if (!db()) return;
+    try { await db().from('portal_logs').delete().eq('id', id); }
+    catch(e) { console.warn('[Portal] Delete log failed:', e); }
+  }
+
+  // --- DB: Yoshuku ---
+  async function dbLoadYoshuku() {
+    if (!db()) return null;
+    try {
+      const { data, error } = await db().from('portal_yoshuku')
+        .select('text').eq('project_id', PROJECT_ID).maybeSingle();
+      if (error) throw error;
+      return data ? data.text : null;
+    } catch(e) { console.warn('[Portal] Load yoshuku failed:', e); return null; }
+  }
+
+  async function dbSaveYoshuku(text) {
+    if (!db()) return;
+    try {
+      await db().from('portal_yoshuku').upsert({
+        project_id: PROJECT_ID, text: text, updated_at: new Date().toISOString()
+      }, { onConflict: 'project_id' });
+    } catch(e) { console.warn('[Portal] Save yoshuku failed:', e); }
+  }
+
+  async function dbClearYoshuku() {
+    if (!db()) return;
+    try { await db().from('portal_yoshuku').delete().eq('project_id', PROJECT_ID); }
+    catch(e) { console.warn('[Portal] Clear yoshuku failed:', e); }
+  }
+
+  // --- 初期化：DBからロード。空ならシードデータをDBに投入 ---
+  async function syncFromCloud() {
+    if (!db()) { updateSyncStatus('offline'); return; }
+    updateSyncStatus('syncing');
+    try {
+      // Tasks
+      const dbTasks = await dbLoadTasks();
+      if (dbTasks !== null) {
+        if (dbTasks.length > 0) {
+          tasks = dbTasks;
+        } else {
+          // DBが空 → 初期データをシード
+          console.log('[Portal] Seeding initial tasks to DB...');
+          for (const t of initialTasks) {
+            await dbInsertTask(t);
+          }
+          const refreshed = await dbLoadTasks();
+          if (refreshed) tasks = refreshed;
+        }
+      }
+
+      // Logs
+      const dbLogs = await dbLoadLogs();
+      if (dbLogs !== null) {
+        if (dbLogs.length > 0) {
+          logs = dbLogs;
+        } else {
+          console.log('[Portal] Seeding initial logs to DB...');
+          for (const l of initialLogs) {
+            await dbInsertLog(l);
+          }
+          const refreshed = await dbLoadLogs();
+          if (refreshed) logs = refreshed;
+        }
+      }
+
+      // Yoshuku
+      const dbY = await dbLoadYoshuku();
+      if (dbY) yoshukuData = dbY;
+
+      renderBoard();
+      renderLogs();
+      renderYoshuku();
+      updateSyncStatus('online');
+    } catch(e) {
+      console.warn('[Portal] Sync from cloud failed:', e);
+      updateSyncStatus('offline');
+    }
+  }
+
+  // --- タスク操作 ---
+  function dragStart(event, id) { draggedTaskId = id; setTimeout(() => event.target.classList.add('dragging'), 0); }
+  function dragEnd(event) { event.target.classList.remove('dragging'); document.querySelectorAll('.column').forEach(c => c.classList.remove('drag-over')); }
+  function allowDrop(event) { event.preventDefault(); }
+  function dragEnter(event) { event.preventDefault(); const c = event.target.closest('.column'); if(c) c.classList.add('drag-over'); }
+  function dragLeave(event) { const c = event.target.closest('.column'); if(c && !c.contains(event.relatedTarget)) c.classList.remove('drag-over'); }
+
+  function drop(event) {
+    event.preventDefault();
+    const col = event.target.closest('.column');
+    if (col && draggedTaskId) {
+      col.classList.remove('drag-over');
+      const newStatus = col.id.replace('col-', '');
+      const taskIndex = tasks.findIndex(t => t.id === draggedTaskId);
+      if(taskIndex > -1 && tasks[taskIndex].status !== newStatus) {
+        const title = tasks[taskIndex].title;
+        tasks[taskIndex].status = newStatus;
+        renderBoard();
+        dbUpdateTask(tasks[taskIndex].id, { status: newStatus });
+        if (newStatus === 'done') fireCosmicCelebration(title + "<br>完了おめでとうございます！🌻");
+      }
+    }
+  }
+
+  function deleteTask(id) {
+    if(confirm('タスクを削除しますか？')) {
+      tasks = tasks.filter(t => t.id !== id);
+      renderBoard();
+      dbDeleteTask(id);
+    }
+  }
+
+  function openModal(taskId = null) {
+    const modal = document.getElementById('taskModal');
+    document.getElementById('modalTitle').textContent = taskId ? '🌻 タスクを編集' : '🌻 新しいタスク';
+    document.getElementById('editTaskId').value = taskId || '';
+    if (taskId) {
+      const t = tasks.find(x => x.id === taskId);
+      if (t) {
+        document.getElementById('taskTitle').value = t.title;
+        document.getElementById('taskCategory').value = t.category || '';
+        document.getElementById('taskPhase').value = t.phase || 'phase-0';
+        document.getElementById('taskAssignee').value = t.assignee || '';
+        document.getElementById('taskDate').value = t.date === '未定' ? '' : t.date;
+        document.getElementById('taskDesc').value = t.description || '';
+      }
+    } else {
+      document.getElementById('taskTitle').value = '';
+      document.getElementById('taskCategory').value = '';
+      document.getElementById('taskPhase').value = 'phase-0';
+      document.getElementById('taskAssignee').value = '';
+      document.getElementById('taskDate').value = '';
+      document.getElementById('taskDesc').value = '';
+    }
+    modal.classList.add('active');
+  }
+
+  function closeModal() { document.getElementById('taskModal').classList.remove('active'); }
+
+  async function saveTask() {
+    const editId = document.getElementById('editTaskId').value;
+    const title = document.getElementById('taskTitle').value.trim();
+    if(!title) return alert('タスク内容を入力してください');
+    const obj = {
+      title,
+      category: document.getElementById('taskCategory').value,
+      phase: document.getElementById('taskPhase').value,
+      assignee: document.getElementById('taskAssignee').value,
+      date: document.getElementById('taskDate').value || '未定',
+      description: document.getElementById('taskDesc').value
+    };
+
+    if (editId) {
+      const idx = tasks.findIndex(t => t.id === editId);
+      if (idx > -1) Object.assign(tasks[idx], obj);
+      dbUpdateTask(editId, obj);
+    } else {
+      obj.status = 'todo';
+      const inserted = await dbInsertTask(obj);
+      if (inserted) { tasks.push(inserted); } else { obj.id = gid(); tasks.push(obj); }
+    }
+    closeModal();
+    renderBoard();
+  }
+
+  function toggleStar(id) {
+    const t = tasks.find(x => x.id === id);
+    if (!t) return;
+    t.title = t.title.startsWith('⭐') ? t.title.replace(/^⭐\s*/, '') : '⭐ ' + t.title;
+    renderBoard();
+    dbUpdateTask(id, { title: t.title });
+  }
+
+  function filterPhase(phase) {
+    const sel = document.getElementById('phaseFilter');
+    sel.value = sel.value === phase ? '' : phase;
+    document.querySelectorAll('.phase-pill').forEach(p => {
+      p.classList.toggle('active', sel.value === '' || p.dataset.phase === sel.value);
+    });
+    renderBoard();
+  }
+
+  function renderBoard() {
+    const tagsMap = {
+      content: {label:'📹 コンテンツ', cls:'badge-content'}, tokuten: {label:'🎁 特典', cls:'badge-tokuten'},
+      line: {label:'💬 LINE', cls:'badge-line'}, session: {label:'💌 セッション', cls:'badge-session'},
+      snspub: {label:'📺 SNS/YouTube', cls:'badge-snspub'}, zeroki: {label:'🎓 0期', cls:'badge-zeroki'},
+      design: {label:'🎨 設計', cls:'badge-design'}
+    };
+    const phaseLabels = {'phase-0':'P0','phase-1':'P1','phase-2':'P2','phase-3':'P3'};
+    const filterPhase = document.getElementById('phaseFilter').value;
+    const filterAssignee = document.getElementById('assigneeFilter').value;
+
+    ['todo', 'inprogress', 'review', 'done'].forEach(status => {
+      let colTasks = tasks.filter(t => t.status === status);
+      if(filterPhase) colTasks = colTasks.filter(t => t.phase === filterPhase);
+      if(filterAssignee) colTasks = colTasks.filter(t => t.assignee && t.assignee.includes(filterAssignee));
+      colTasks.sort((a, b) => {
+        const aS = a.title.startsWith('⭐'), bS = b.title.startsWith('⭐');
+        if (aS && !bS) return -1; if (!aS && bS) return 1;
+        const d1 = a.date && a.date !== '未定' ? a.date : '9999-99-99';
+        const d2 = b.date && b.date !== '未定' ? b.date : '9999-99-99';
+        return d1.localeCompare(d2);
+      });
+
+      const listEl = document.getElementById(`list-${status}`);
+      document.getElementById(`count-${status}`).innerText = colTasks.length;
+      listEl.innerHTML = '';
+      if(colTasks.length === 0) { listEl.innerHTML = '<div class="empty-state">タスクはありません 🐾</div>'; return; }
+
+      colTasks.forEach(t => {
+        let tagHtml = '';
+        if (t.category && tagsMap[t.category]) { const c = tagsMap[t.category]; tagHtml = `<span class="badge-cat ${c.cls}">${c.label}</span>`; }
+        const phaseTag = t.phase ? `<span class="badge-phase ${t.phase}">${phaseLabels[t.phase] || ''}</span>` : '';
+        const card = document.createElement('div');
+        card.className = 'task-card'; card.draggable = true;
+        card.ondragstart = (e) => dragStart(e, t.id); card.ondragend = dragEnd;
+        card.innerHTML = `
+          <div class="tag-area">${tagHtml}${phaseTag}</div>
+          <div class="task-title">${t.title.replace(/\n/g, '<br>')}</div>
+          ${t.description ? `<div style="font-size:10px; color:#aaa; margin-bottom:4px;">💭 ${t.description.substring(0,40)}${t.description.length>40?'...':''}</div>` : ''}
+          <div class="task-meta">
+            <span>📅 ${t.date}</span> ${t.assignee ? `<span>👤 ${t.assignee}</span>` : ''}
+            <div style="margin-left:auto; display:flex; gap:4px; align-items:center;">
+              <button class="delete-btn" onclick="toggleStar('${t.id}')" style="font-size:14px;">${t.title.startsWith('⭐') ? '⭐' : '☆'}</button>
+              <button class="delete-btn" onclick="openModal('${t.id}')">✏️</button>
+              <button class="delete-btn" onclick="deleteTask('${t.id}')">🗑️</button>
+            </div>
+          </div>
+        `;
+        listEl.appendChild(card);
+      });
+    });
+  }
+
+  // --- Meeting Logs 操作 ---
+  function renderLogs() {
+    const container = document.getElementById('logsList');
+    container.innerHTML = '';
+    if (logs.length === 0) {
+      container.innerHTML = '<div class="empty-state">議事録はまだありません📝</div>';
+      return;
+    }
+    
+    // 日付の降順
+    const sorted = [...logs].sort((a, b) => b.date.localeCompare(a.date));
+    sorted.forEach(l => {
+      const card = document.createElement('div');
+      card.className = 'log-card';
+      card.innerHTML = `
+        <div class="log-header">
+          <div class="log-date">${l.date}</div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn" style="padding:4px 8px; font-size:11px;" onclick="openLogModal('${l.id}')">編集</button>
+            <button class="btn" style="padding:4px 8px; font-size:11px;" onclick="deleteLog('${l.id}')">削除</button>
+          </div>
+        </div>
+        <div class="log-topic">📌 ${l.topic}</div>
+        <div class="log-content">${l.content || '（内容なし）'}</div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function openLogModal(id = null) {
+    const modal = document.getElementById('logModal');
+    document.getElementById('logModalTitle').textContent = id ? '📝 議事録を編集' : '📝 新しい議事録';
+    document.getElementById('editLogId').value = id || '';
+    
+    if (id) {
+      const l = logs.find(x => x.id === id);
+      if (l) {
+        document.getElementById('logDate').value = l.date;
+        document.getElementById('logTopic').value = l.topic;
+        document.getElementById('logContent').value = l.content || '';
+      }
+    } else {
+      const today = new Date();
+      document.getElementById('logDate').value = today.toISOString().split('T')[0];
+      document.getElementById('logTopic').value = '';
+      document.getElementById('logContent').value = '';
+    }
+    modal.classList.add('active');
+  }
+
+  function closeLogModal() { document.getElementById('logModal').classList.remove('active'); }
+
+  async function saveLog() {
+    const id = document.getElementById('editLogId').value;
+    const date = document.getElementById('logDate').value;
+    const topic = document.getElementById('logTopic').value.trim();
+    const content = document.getElementById('logContent').value.trim();
+    if (!date || !topic) return alert('日付とトピックは必須です');
+
+    if (id) {
+      const idx = logs.findIndex(l => l.id === id);
+      if (idx > -1) { logs[idx].date = date; logs[idx].topic = topic; logs[idx].content = content; }
+      dbUpdateLog(id, { date, topic, content });
+    } else {
+      const inserted = await dbInsertLog({ date, topic, content });
+      if (inserted) { logs.push(inserted); } else { logs.push({ id: gid(), date, topic, content }); }
+    }
+    closeLogModal();
+    renderLogs();
+  }
+
+  function deleteLog(id) {
+    if (confirm('この議事録を削除しますか？')) {
+      logs = logs.filter(l => l.id !== id);
+      renderLogs();
+      dbDeleteLog(id);
+    }
+  }
+
+  // --- YOSHUKU ---
+  function addYoshuku() {
+    const text = prompt("どんな最高な未来を前祝い（予祝）しますか？🌻\n\n例: 7月に0期がスタートして、参加者の犬がみんな笑顔になった！");
+    if (text) {
+      yoshukuData = text + " 🌻✨";
+      renderYoshuku();
+      dbSaveYoshuku(yoshukuData);
+      fireCosmicCelebration(text + " 🌻✨");
+    }
+  }
+
+  function renderYoshuku() {
+    const container = document.getElementById('yoshukuContainer');
+    const textEl = document.getElementById('yoshukuText');
+    if (yoshukuData) { textEl.innerText = yoshukuData; container.style.display = 'block'; } else { container.style.display = 'none'; }
+  }
+
+  function clearYoshuku() {
+    if(confirm('予祝を消しますか？')) {
+      yoshukuData = null;
+      renderYoshuku();
+      dbClearYoshuku();
+    }
+  }
+
+  function fireCosmicCelebration(messageText) {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(255,249,230,0.9);backdrop-filter:blur(4px);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#333;overflow:hidden;transition:opacity 0.8s;';
+    overlay.innerHTML = `
+      <div style="position:relative; z-index:20; text-align:center;">
+        <div style="font-size:80px; margin-bottom:16px;">🐕🌻</div>
+        <h1 style="font-size:36px; font-weight:900; color:#C4A24E; text-shadow: 0 4px 15px rgba(196,162,78,0.3); line-height:1.4;">${messageText}</h1>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    const end = Date.now() + 2500;
+    (function frame() {
+      confetti({ particleCount: 8, angle: 60, spread: 60, origin: { x: 0.1, y: 0.8 }, colors: ['#F5C542', '#F29880', '#8CB88A', '#87CEEB'] });
+      confetti({ particleCount: 8, angle: 120, spread: 60, origin: { x: 0.9, y: 0.8 }, colors: ['#F5C542', '#F29880', '#8CB88A', '#87CEEB'] });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    }());
+    setTimeout(() => { overlay.style.opacity = '0'; setTimeout(() => overlay.remove(), 1000); }, 4000);
+  }
+
+  init();
+</script>
+
+</body>
+</html>

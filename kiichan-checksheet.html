@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>愛犬からのラブレター セルフチェックシート</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --honey: #f5c542; --honey-deep: #d4a017; --honey-light: #fff9e6;
+            --peach: #f7b89c; --peach-deep: #e8926e;
+            --coral: #f2988e; --coral-deep: #e06b6b;
+            --sage: #8cb88a; --sage-light: #eef6ee;
+            --sky: #85bdd9; --sky-light: #edf5fa;
+            --lavender: #b8a9d8; --lavender-light: #f3f0fa;
+            --bg: #fffcf5; --text: #4a3a2a; --muted: #a09080;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Zen Maru Gothic', sans-serif;
+            background: #f0ebe0;
+            color: var(--text);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 20px auto;
+            background: var(--bg);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media print {
+            body { background: none; }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            .no-print { display: none !important; }
+        }
+
+        /* ── Header ── */
+        .header {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff0e0 40%, #fce8d8 100%);
+            padding: 28px 36px 20px;
+            border-bottom: 3px solid rgba(245,197,66,0.25);
+            position: relative;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 50%;
+            transform: translateX(-50%);
+            width: 60px; height: 4px;
+            background: linear-gradient(90deg, var(--honey), var(--peach));
+            border-radius: 2px;
+        }
+        .header-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--honey), var(--peach));
+            color: #fff; font-size: 9px; font-weight: 700;
+            padding: 3px 12px; border-radius: 20px;
+            letter-spacing: 2px; margin-bottom: 10px;
+        }
+        .header h1 {
+            font-size: 22px; font-weight: 900;
+            line-height: 1.6; color: var(--text);
+        }
+        .header h1 em {
+            font-style: normal;
+            color: var(--honey-deep);
+        }
+        .header-sub {
+            font-size: 11px; color: var(--muted);
+            margin-top: 6px; line-height: 1.6;
+        }
+        .header-avatar {
+            position: absolute;
+            top: 20px; right: 30px;
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--honey-light), #fff0e0);
+            border: 3px solid var(--honey);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 3px 12px rgba(245,197,66,0.2);
+        }
+
+        /* ── Content ── */
+        .content {
+            padding: 28px 36px;
+        }
+
+        /* ── Intro ── */
+        .intro {
+            background: linear-gradient(135deg, var(--honey-light), #fff0e0);
+            border: 1.5px solid rgba(245,197,66,0.3);
+            border-radius: 14px;
+            padding: 16px 20px;
+            font-size: 12px;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 24px;
+        }
+        .intro strong { color: var(--honey-deep); }
+
+        /* ── Step sections ── */
+        .step {
+            margin-bottom: 22px;
+        }
+        .step-header {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 12px;
+        }
+        .step-num {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 900; color: #fff;
+            flex-shrink: 0;
+        }
+        .step-num.s1 { background: linear-gradient(135deg, var(--sage), #6fa06d); }
+        .step-num.s2 { background: linear-gradient(135deg, var(--sky), #6aa0c0); }
+        .step-num.s3 { background: linear-gradient(135deg, var(--lavender), #9a8bc0); }
+        .step-num.s4 { background: linear-gradient(135deg, var(--honey), var(--peach)); }
+
+        .step-title {
+            font-size: 14px; font-weight: 900; color: var(--text);
+        }
+        .step-title small {
+            font-size: 10px; font-weight: 500; color: var(--muted);
+            margin-left: 6px;
+        }
+
+        /* ── Checklist ── */
+        .checklist {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+        .checklist.single-col {
+            grid-template-columns: 1fr;
+        }
+        .check-item {
+            display: flex; align-items: flex-start; gap: 8px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 11.5px;
+            line-height: 1.5;
+        }
+        .check-item.green { background: var(--sage-light); border: 1px solid rgba(140,184,138,0.3); }
+        .check-item.blue { background: var(--sky-light); border: 1px solid rgba(133,189,217,0.3); }
+        .check-item.purple { background: var(--lavender-light); border: 1px solid rgba(184,169,216,0.3); }
+
+        .check-box {
+            width: 18px; height: 18px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 1px;
+            background: #fff;
+        }
+        .check-item.green .check-box { border-color: var(--sage); }
+        .check-item.blue .check-box { border-color: var(--sky); }
+
+        /* ── Translation box ── */
+        .translate-box {
+            background: var(--lavender-light);
+            border: 2px solid rgba(184,169,216,0.3);
+            border-radius: 14px;
+            padding: 18px 20px;
+        }
+        .translate-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .translate-label {
+            font-size: 11px; font-weight: 700;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .translate-label.dog { color: var(--sage); }
+        .translate-label.me { color: var(--sky); }
+        .translate-blank {
+            flex: 1;
+            border-bottom: 2px dotted rgba(184,169,216,0.5);
+            min-height: 24px;
+        }
+        .translate-arrow {
+            text-align: center;
+            font-size: 16px;
+            color: var(--lavender);
+            margin: 4px 0;
+        }
+        .translate-result {
+            background: #fff;
+            border: 1.5px solid rgba(184,169,216,0.3);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-top: 10px;
+            font-size: 12px;
+            line-height: 1.7;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        /* ── CTA section ── */
+        .cta-section {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff0e0 50%, #fce8d8 100%);
+            border: 2px solid var(--honey);
+            border-radius: 16px;
+            padding: 20px 24px;
+            text-align: center;
+        }
+        .cta-section h3 {
+            font-size: 15px; font-weight: 900;
+            color: var(--text); margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .cta-section h3 em {
+            font-style: normal; color: var(--honey-deep);
+        }
+        .cta-section p {
+            font-size: 11px; color: #888;
+            line-height: 1.7; margin-bottom: 12px;
+        }
+        .cta-btn-fake {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--honey), var(--peach));
+            color: #fff; font-weight: 900; font-size: 14px;
+            padding: 12px 36px;
+            border-radius: 50px;
+            box-shadow: 0 4px 16px rgba(245,197,66,0.3);
+        }
+        .cta-note {
+            font-size: 9px; color: var(--muted);
+            margin-top: 8px; line-height: 1.6;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            text-align: center;
+            padding: 16px;
+            font-size: 9px;
+            color: var(--muted);
+            border-top: 1px solid rgba(245,197,66,0.15);
+        }
+
+        /* ── Decorations ── */
+        .paw-deco {
+            position: absolute;
+            font-size: 80px;
+            opacity: 0.04;
+            pointer-events: none;
+        }
+        .paw-deco.top-left { top: 160px; left: -10px; transform: rotate(-20deg); }
+        .paw-deco.bottom-right { bottom: 80px; right: -10px; transform: rotate(15deg); }
+
+        .hint {
+            font-size: 10px;
+            color: var(--muted);
+            line-height: 1.6;
+            padding: 6px 12px;
+            background: rgba(245,197,66,0.06);
+            border-radius: 8px;
+            margin-top: 6px;
+        }
+
+        /* ── Nutrition column ── */
+        .nutrition-section {
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #fdfbf7, #fff6ed);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 4px 15px rgba(245,197,66,0.08);
+            border: 1px solid rgba(245,197,66,0.2);
+        }
+        .nutrition-section .step-header { margin-bottom: 16px; }
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+        .nutrition-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 12px;
+            text-align: center;
+            font-size: 11px;
+            line-height: 1.7;
+            border-top: 4px solid var(--honey);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            transition: transform 0.2s;
+        }
+        .nutrition-card:hover {
+            transform: translateY(-2px);
+        }
+        .nutrition-card .nc-icon {
+            font-size: 26px;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        .nutrition-card .nc-title {
+            font-size: 13px;
+            font-weight: 900;
+            color: var(--honey-deep);
+            margin-bottom: 8px;
+            border-bottom: 1px dashed rgba(245,197,66,0.3);
+            padding-bottom: 6px;
+        }
+        .nutrition-card .nc-body {
+            font-size: 11px;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .nutrition-card .nc-body strong {
+            color: var(--primary-dark);
+            background: linear-gradient(transparent 70%, rgba(245,197,66,0.3) 70%);
+        }
+        .nutrition-note {
+            margin-top: 14px;
+            font-size: 11.5px;
+            color: #d97706; /* deeper amber */
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.6;
+            background: #fff;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px dashed #fcd34d;
+        }
+
+        /* ── Header avatar image ── */
+        .header-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* ── Dog illustration ── */
+        .dog-illo {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .dog-illo img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(245,197,66,0.3);
+            box-shadow: 0 4px 16px rgba(245,197,66,0.12);
+        }
+
+        .step-num.s5 { background: linear-gradient(135deg, var(--honey), var(--peach)); }
+    </style>
+</head>
+<body>
+
+<!-- Print button -->
+<div class="no-print" style="text-align:center; padding:16px;">
+    <button onclick="window.print()" style="
+        font-family:'Zen Maru Gothic',sans-serif; font-size:16px; font-weight:900;
+        background:linear-gradient(135deg,#f5c542,#f7b89c); color:#fff;
+        border:none; padding:14px 40px; border-radius:50px; cursor:pointer;
+        box-shadow:0 4px 16px rgba(245,197,66,0.3);
+    ">🖨️ PDFとして保存する（印刷）</button>
+</div>
+
+<div class="page">
+    <!-- Decorative paws -->
+    <div class="paw-deco top-left">🐾</div>
+    <div class="paw-deco bottom-right">🐾</div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-badge">🐾 LINE特典 ・ セルフチェックシート</div>
+        <h1>愛犬からの<em>ラブレター</em>、<br>受け取れていますか？💌</h1>
+        <p class="header-sub">管理栄養士×飼い主マインドの専門家 きいちゃん 監修 🌻</p>
+        <div class="header-avatar"><img src="kiichan-dog.png" alt="わんこ"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+        <!-- Dog illustration -->
+        <div class="dog-illo">
+            <img src="kiichan-dog.png" alt="わんこイラスト">
+        </div>
+
+        <!-- Intro -->
+        <div class="intro">
+            このチェックシートは、特典動画でお伝えした<strong>「鏡の法則」</strong>を使って、
+            愛犬の行動と飼い主さんの心のつながりを<strong>セルフチェック</strong>するためのものです。
+            正解・不正解はありません。正直な気持ちで○をつけてみてくださいね🌻
+        </div>
+
+        <!-- Step 1 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-num s1">1</div>
+                <div class="step-title">愛犬の気になる行動チェック 🐕 <small>あてはまるものに ✓</small></div>
+            </div>
+            <div class="checklist">
+                <div class="check-item green"><div class="check-box"></div><span>食ムラがある / 食べてくれない</span></div>
+                <div class="check-item green"><div class="check-box"></div><span>落ち着きがない / そわそわする</span></div>
+                <div class="check-item green"><div class="check-box"></div><span>吠える / 唸ることがある</span></div>
+                <div class="check-item green"><div class="check-box"></div><span>分離不安がある（留守番で大暴れ）</span></div>
+                <div class="check-item green"><div class="check-box"></div><span>体調不良を繰り返す</span></div>
+                <div class="check-item green"><div class="check-box"></div><span>その他（　　　　　　　　　）</span></div>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-num s2">2</div>
+                <div class="step-title">飼い主さんの「こじらせ度」チェック 💛 <small>正直に ✓</small></div>
+            </div>
+            <div class="checklist">
+                <div class="check-item blue"><div class="check-box"></div><span>愛犬に「ごめんね」とよく言う</span></div>
+                <div class="check-item blue"><div class="check-box"></div><span>フードや健康に常に不安がある</span></div>
+                <div class="check-item blue"><div class="check-box"></div><span>愛犬のことで自分を責めてしまう</span></div>
+                <div class="check-item blue"><div class="check-box"></div><span>最近リラックスできていない</span></div>
+                <div class="check-item blue"><div class="check-box"></div><span>誰かに相談したいけど我慢している</span></div>
+                <div class="check-item blue"><div class="check-box"></div><span>「ちゃんとやらなきゃ」と自分を追い込む</span></div>
+            </div>
+            <div class="hint">
+                💡 3つ以上チェックがついた方へ：それは「こじらせ飼い主マインド」のサインかもしれません。でも大丈夫、それは愛情が深い証拠です🌻
+            </div>
+        </div>
+
+        <!-- Step 3: Vagus nerve science column -->
+        <div class="step nutrition-section">
+            <div class="step-header">
+                <div class="step-num s3">3</div>
+                <div class="step-title">知ってた？自律神経のヒミツ 🧠</div>
+            </div>
+            <div class="nutrition-grid">
+                <div class="nutrition-card">
+                    <div class="nc-icon">🧠</div>
+                    <div class="nc-title">迷走神経とは？</div>
+                    <div class="nc-body">
+                        副交感神経の一つで<br><strong>コミュニケーション機能</strong>を<br>司る大切な神経。<br>
+                        働くには<strong>「安心・安全」</strong>が必要🐾
+                    </div>
+                </div>
+                <div class="nutrition-card">
+                    <div class="nc-icon">😊</div>
+                    <div class="nc-title">笑顔は科学的根拠</div>
+                    <div class="nc-body">
+                        口角UP・眉UP・目を開く<br>＝<strong>副交感神経が良好</strong>な証拠。<br>
+                        怒った顔は犬にとって<br><strong>「危険」の認識</strong>です
+                    </div>
+                </div>
+                <div class="nutrition-card">
+                    <div class="nc-icon">🐕</div>
+                    <div class="nc-title">犬は飼い主の鏡</div>
+                    <div class="nc-body">
+                        犬は<strong>表情で安全を判断</strong>。<br>
+                        子どもと同じで<br>お母さんの笑顔があれば<br><strong>怖いことも我慢できる</strong>🌻
+                    </div>
+                </div>
+            </div>
+            <div class="nutrition-note">
+                💡 しつけ・栄養・医療も大事。でも飼い主さんの自律神経が整っていなければ、愛犬には届きません
+            </div>
+        </div>
+
+        <!-- Step 4: Translation -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-num s4" style="background:linear-gradient(135deg, var(--lavender), #9a8bc0);">4</div>
+                <div class="step-title">愛犬からのラブレターを翻訳してみよう 💌</div>
+            </div>
+            <div class="translate-box">
+                <div class="translate-row">
+                    <span class="translate-label dog">🐕 愛犬の行動：</span>
+                    <div class="translate-blank"></div>
+                </div>
+                <div class="translate-arrow">▼ もしかして…</div>
+                <div class="translate-row">
+                    <span class="translate-label me">💛 私の心：</span>
+                    <div class="translate-blank"></div>
+                </div>
+                <div class="translate-result">
+                    「あぁ、<strong style="color:var(--lavender);">私にこれを気づかせるために見せてくれていた</strong>のかも…」<br>
+                    と感じたなら、それが愛犬からのラブレターです🌻
+                </div>
+            </div>
+            <div class="hint">
+                💡 ヒント：動画で紹介した翻訳例 →「犬が落ち着きがない」＝「私が何かに追われて焦っている」
+            </div>
+        </div>
+
+        <!-- Step 5: CTA -->
+        <div class="step">
+            <div class="step-header">
+                <div class="step-num s5">5</div>
+                <div class="step-title">ここで行き詰まったら… 🌻</div>
+            </div>
+            <div class="cta-section">
+                <div style="display:inline-block;background:var(--coral);color:#fff;font-size:10px;font-weight:900;padding:3px 14px;border-radius:20px;margin-bottom:10px;letter-spacing:1px;">🌟 モニター限定 ●名様</div>
+                <h3>一人で翻訳するのは難しいですよね。<br><em>きいちゃん</em>が一緒に読み解きます💌</h3>
+                <p>
+                    「こじらせ飼い主マインド」を紐解く<br>
+                    個別セッション（栄養面＋マインド面）
+                </p>
+                <div style="margin:10px 0 6px;">
+                    <span style="font-size:12px;color:#999;text-decoration:line-through;">通常価格 ¥XX,XXX</span>
+                    <span style="font-size:10px;color:var(--coral);font-weight:700;margin-left:4px;">→</span>
+                    <span style="font-size:18px;color:var(--coral-deep);font-weight:900;margin-left:4px;">モニター価格 ¥X,XXX</span>
+                </div>
+                <div class="cta-btn-fake">
+                    🐾 モニターセッションに申し込む 💛
+                </div>
+                <p class="cta-note">
+                    ※ モニターのため、簡単なアンケートにご協力いただきます 🌻<br>
+                    ※ 無理な勧誘は一切いたしません<br>
+                    ※ LINEからお気軽にお問い合わせください
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        © きいちゃん ｜ 管理栄養士×飼い主マインドの専門家 🌻 ｜ 無断転載・複製を禁じます
+    </div>
+</div>
+
+</body>
+</html>

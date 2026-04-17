@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【限定募集】愛犬ラブレター個別紐解きセッション</title>
+<style>
+  :root {
+    --primary: #f472b6;       /* Soft Pink */
+    --primary-dark: #db2777;
+    --background: #fff0f5;    /* Lavender Blush */
+    --surface: #ffffff;
+    --text: #334155;
+    --text-light: #64748b;
+    --accent: #fcd34d;        /* Golden Yellow */
+  }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--background);
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--surface);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    min-height: 100vh;
+  }
+  .hero {
+    background: linear-gradient(135deg, var(--primary), #fb7185);
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    line-height: 1.4;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  .hero p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #b45309;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .content {
+    padding: 40px 30px;
+  }
+  h2 {
+    color: var(--primary-dark);
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 10px;
+    margin-top: 40px;
+  }
+  .problem-box {
+    background: #f8fafc;
+    border-left: 4px solid #cbd5e1;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .problem-box ul {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--text);
+  }
+  .problem-box li {
+    margin-bottom: 10px;
+  }
+  .solution-box {
+    background: #fff1f2;
+    border: 2px solid #fda4af;
+    padding: 25px;
+    border-radius: 8px;
+    margin: 30px 0;
+    text-align: center;
+  }
+  .solution-box h3 {
+    color: var(--primary-dark);
+    margin-top: 0;
+  }
+  .cta-area {
+    text-align: center;
+    padding: 40px 20px;
+    background: #fdf2f8;
+    margin-top: 40px;
+    border-top: 1px dashed #fbcfe8;
+  }
+  .price-strike {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    text-decoration: line-through;
+  }
+  .price-special {
+    font-size: 2.5rem;
+    color: var(--primary-dark);
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 15px 40px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 400px;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(244, 114, 182, 0.6);
+  }
+  .urgency {
+    color: #ef4444;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    animation: flash 2s infinite;
+  }
+  @keyframes flash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  .features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin: 30px 0;
+  }
+  .feature-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+  }
+  .feature-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  .testimonial {
+    background: #f8fafc;
+    font-style: italic;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    margin: 20px 0;
+  }
+  .testimonial::before {
+    content: "“";
+    font-size: 4rem;
+    color: #cbd5e1;
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    font-family: serif;
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="hero">
+    <div class="badge">毎月先着3名様限定</div>
+    <h1>自分を変えようと頑張るのは<br>もう終わりにしませんか？</h1>
+    <p>あなたの潜在意識のブロックを解除し、<br>言葉を超えた「本当の絆」を取り戻す</p>
+  </div>
+
+  <div class="content">
+    <p>特典動画（PDF）をご覧いただき、ありがとうございました。<br>
+    愛犬の問題行動や不調の原因が、実は「あなた自身の潜在意識（自律神経）」にあるという事実に、驚かれたかもしれません。</p>
+
+    <div class="problem-box">
+      <strong>こんな「負のループ」に陥っていませんか？</strong>
+      <ul>
+        <li>ネットや本で「正しいしつけ」を学んで実践しても効果がない。</li>
+        <li>「私がリラックスしなきゃ」と意識すればするほど、イライラしてしまう。</li>
+        <li>ドッグランや散歩中、周りの目が気になって犬を叱ってしまう。自己嫌悪に陥る。</li>
+        <li>「私のせいで、この子は苦しんでいるんじゃないか」と毎日不安だ。</li>
+      </ul>
+    </div>
+
+    <p>もし一つでも当てはまるなら、聞いてください。<br>
+    <strong>それは決して、あなたがダメな飼い主だからではありません。</strong></p>
+
+    <h2>なぜ、自力でマインドを変えるのは不可能なのか？</h2>
+    <p>「よし、明日から心を穏やかにしよう！」と頭（顕在意識）で決意しても、行動を支配しているのはあなたの過去の経験やトラウマから形成された「潜在意識（無意識）」です。</p>
+    <p>潜在意識は、自分自身にとって『盲点』です。<br>
+    自分の背中が自分では見えないように、自分一人で心のブレーキに気づき、解除することはほぼ不可能なのです。</p>
+
+    <div class="solution-box">
+      <h3>だからこそ、「プロの介入」が必要です。</h3>
+      <p>「愛犬からのラブレター紐解きセッション」では、専門のカウンセリング技術を用いて、あなたの奥底にある「本当の原因（盲点）」を見つけ出します。<br>
+      一人で何年も悩み続ける時間を、たった60分のセッションで一気にショートカットしませんか？</p>
+    </div>
+
+    <h2>セッションで手に入る3つの変化</h2>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <strong>① 愛犬の本当のメッセージが腑に落ちる</strong>
+        <p>問題行動の裏にある「ママ、無理しないで！」という愛犬のサインを正確に受け取れるようになります。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔓</div>
+        <strong>② 潜在意識のブレーキ解除</strong>
+        <p>「私がしっかりしなきゃ」という長年のプレッシャーから解放され、心からリラックスできるようになります。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💞</div>
+        <strong>③ アイコンタクトだけで通じ合う関係</strong>
+        <p>あなたの自律神経が整うことで、愛犬の緊張も解け、指示出しをしなくても以心伝心で繋がれるようになります。</p>
+      </div>
+    </div>
+
+    <div class="cta-area">
+      <h2>愛犬ラブレター<br>個別紐解きセッション<br>（60分・オンライン）</h2>
+      <p>あなたと愛犬だけの専用カルテを作成し、マンツーマンで潜在意識を分析します。</p>
+      
+      <div class="price-strike">通常価格 15,000円</div>
+      <div class="price-special">特別価格 3,300<span style="font-size:1.2rem">円(税込)</span></div>
+      
+      <div class="urgency">⚠️ 【毎月先着3名様のみ】</div>
+      <p style="font-size:0.9rem; color:var(--text-light);">※一人ひとりと深く向き合うため、人数を制限させていただいております。</p>
+      
+      <a href="#" class="btn" onclick="alert('実際の予約フォーム（LINE決済等）へ遷移します'); return false;">
+        今すぐ特別枠にお申し込みする
+      </a>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>犬のきもち知ってる？クイズ — 私たちの心の栄養診断</title>
+    <title>犬のきもち、わかってる？クイズ — 私たちの心の栄養診断</title>
     <meta name="description" content="管理栄養士が教える、愛犬の心と体の健康クイズ。3分であなたとワンちゃんの関係を見直すきっかけに。">
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -218,7 +218,7 @@
             font-size: 13px; line-height: 1.7;
         }
         .explain-card.wrong {
-            background: var(--peach-light);
+            background: #fef3ee;
             border-left-color: var(--peach);
         }
     </style>
@@ -228,7 +228,7 @@
         <div class="header">
             <div class="header-avatar">🐕</div>
             <div class="header-info">
-                <h3>🌻 犬のきもち知ってる？クイズ <span class="ai-badge">無料</span></h3>
+                <h3>🌻 犬のきもち、わかってる？クイズ <span class="ai-badge">無料</span></h3>
                 <p><span class="dot"></span> <span>愛犬の幸せ度チェック 🐾</span></p>
             </div>
         </div>
@@ -318,17 +318,17 @@ function botSays(messages, onDone) {
     next();
 }
 
-/* ━━━━━━ クイズデータ ━━━━━━ */
+/* ━━━━━━ クイズデータ（きいちゃん監修版） ━━━━━━ */
 const quizData = [
     {
-        q: '犬がしっぽを振っている時、<br>必ず「嬉しい」のでしょうか？',
+        q: '犬が寝ている時、<br>脚や瞼がピクピク動いている<br>ことはありませんか？<br><br>あれは<strong>レム睡眠</strong>といって<br>浅い睡眠でしょうか？',
         opts: [
-            { label: 'はい、嬉しい証拠です！' },
-            { label: 'いいえ、他の感情もあります' }
+            { label: 'はい、レム睡眠です！' },
+            { label: 'いいえ、深い眠りです' }
         ],
-        correct: 1,
-        explain: '実は、しっぽを振る＝嬉しいとは限らないんですよ。<br>不安や警戒でもしっぽは動きます。右寄りに振る時はポジティブ、左寄りはネガティブな感情かもしれない…という研究もあるんです。',
-        science: '犬のボディランゲージの誤解は、飼い主のストレス源にもなりやすいんです。'
+        correct: 0,
+        explain: '人は日中起きて過ごして夜間は寝ますが、犬は日中浅い眠りを繰り返す（うたた寝）をして過ごします。<br><br>ライフステージによっても違いますが、1日の睡眠時間は<strong>12〜14時間</strong>ともいわれています。',
+        science: '睡眠が体の回復や脳のリフレッシュになるのは人も犬も同じです。深い睡眠を補うために長い睡眠時間を確保してあげることで、ストレスケアにもつながりますよ🐾'
     },
     {
         q: '犬はあなたのストレスを<br>感じ取ることができると思いますか？',
@@ -337,30 +337,30 @@ const quizData = [
             { label: '科学的に証明されている' }
         ],
         correct: 1,
-        explain: 'スウェーデンの大学（2019年）の研究で、飼い主のコルチゾール（ストレスホルモン）レベルと、犬のコルチゾールが連動していることが証明されています！',
-        science: '「飼い主の心の状態が、愛犬の健康に直結する」ということを裏付けています。'
+        explain: 'スウェーデンの大学の研究で、飼い主のコルチゾール（ストレスホルモン）レベルと、犬のコルチゾールが<strong>連動している</strong>ことが証明されています！',
+        science: '「飼い主の心の状態が、愛犬の健康に直結する」ということを科学的に裏付けているんですよ🌻'
     },
     {
-        q: '犬が「あくび」するのは<br>眠いからでしょうか？',
+        q: '犬にとって大切な散歩ですが、<br><strong>脳トレにつながる散歩</strong>は<br>どれでしょう？',
         opts: [
-            { label: '眠いだけ' },
-            { label: 'ストレスサインのこともある' },
-            { label: '飼い主に甘えている' }
+            { label: 'とにかくたくさん歩く散歩' },
+            { label: 'いろんな匂いを嗅ぐ散歩' },
+            { label: '走って疲れさせる散歩' }
         ],
         correct: 1,
-        explain: '犬のあくびは「カーミングシグナル」と呼ばれるストレス緩和行動の一つでもあります。<br>緊張や不安を感じた時に、自分や相手を落ち着かせるために出ることがあるんですよ。',
-        science: '何気ない行動に隠された「きもち」を読み解けるようになると、飼い主さんも安心できますよ。'
+        explain: '匂いを嗅ぐことで<strong>リラックス効果と脳の活性化</strong>が期待でき、犬の認知症予防にもつながるといわれています🐾',
+        science: '犬にとって散歩の満足感は、目的地や距離よりも実は<strong>探索を楽しむこと</strong>。少しリードを緩めて嗅ぎ回れる散歩を取り入れて、楽しんでみてくださいね🌻'
     },
     {
-        q: '犬にとって最も大事な<br>栄養素は「タンパク質」でしょうか？',
+        q: '生存において最も大事な<br>栄養素は<strong>「タンパク質」</strong>でしょうか？',
         opts: [
             { label: 'はい、タンパク質が一番！' },
             { label: 'いいえ、水分が一番大事です' },
             { label: 'バランスが一番大事です' }
         ],
         correct: 1,
-        explain: 'もちろんタンパク質も大切ですが、体重の60〜70%を占める【水分】が最も重要です。<br>1日に必要な水分を少し失うだけで深刻な健康問題につながることもあるんです。',
-        science: '当たり前だと思っていた基準を少しだけ見直すことが、健康の第一歩です。'
+        explain: 'もちろんタンパク質も大切ですが、体重の<strong>60〜70%</strong>を占める【水分】が最も重要です。<br><br>体内の水分のたった<strong>10%</strong>を失うだけでも、死に至ることがあるからです。',
+        science: 'カロリーこそありませんが、栄養学では水分は<strong>重要な栄養素</strong>としてとらえます。当たり前すぎて見落としがちですが、ここがとても大切なんですよ🐾'
     },
     {
         q: '飼い主が「ごめんね」と<br>言い続けると、犬はどうなるでしょう？',
@@ -370,8 +370,8 @@ const quizData = [
             { label: '不安になることがある' }
         ],
         correct: 2,
-        explain: '犬は言葉の意味までは分かりませんが、飼い主の「感情のトーン」には非常に敏感です。<br>罪悪感を込めた声色は、犬に「何か悪いことが起きている」というシグナルとして伝わり、不安行動の原因になることもあるのです。',
-        science: 'あなたの感情が、目に見えない形で愛犬に影響しているんですよ。'
+        explain: '犬は言葉の意味までは分かりませんが、飼い主の<strong>「感情のトーン」</strong>には非常に敏感です。<br><br>罪悪感を込めた声色は、犬に「何か悪いことが起きている」というシグナルとして伝わり、不安行動の原因になることもあるのです。',
+        science: 'あなたの感情が、目に見えない形で愛犬に影響しているんですよ🌻'
     }
 ];
 
@@ -392,10 +392,19 @@ function startChat() {
     setTimeout(() => {
         botSays([
             'こんにちは！🌻<br><br><strong>きいちゃん</strong>です。<br>来てくださってありがとうございます🐾',
-            '「ごはんに迷ってしまう…」<br>「これで合っているのかな？」<br><br>そんな不安を感じたことはありませんか？🥺',
-            '実は、迷ってしまうのは<br><strong>「選び方の基準」</strong>が<br>明確ではないからかもしれません。',
-            'そこで今日は、<br>愛犬の気持ちを満たす<br><strong>「心の栄養」</strong>のヒントがわかる<br>5つのクイズをご用意しました！<br><br>少しだけお時間よろしいですか？🐾<br>まずは、お名前を教えてください！'
-        ], () => askName());
+            '「ごはんに迷ってしまう…」<br>「これで合っているのかな？」<br><br>そんな不安を感じたことはありませんか？🥺'
+        ], () => {
+            addOptions([
+                { label: 'あります！', emoji: '🥺', showLetter: false },
+                { label: '少しだけ…', emoji: '🐾', showLetter: false }
+            ], () => {
+                botSays([
+                    '実は、迷ってしまうのは<br><strong>「選び方の基準」</strong>が<br>明確ではないからかもしれません。',
+                    'そこで今日は、<br>愛犬の気持ちを満たす<br><strong>「心の栄養」</strong>のヒントがわかる<br>5つのクイズをご用意しました！',
+                    '少しだけお時間よろしいですか？🐾<br>まずは、お名前を教えてください！'
+                ], () => askName());
+            });
+        });
     }, 600);
 }
 
@@ -552,55 +561,82 @@ function showDiagResult() {
         botSays([
             `${userName}さん、<br>クイズはいかがでしたか？🐾`,
             `愛犬の「きもち」や行動の裏には、<br>目に見えない<strong>『心の栄養』</strong>が<br>大きく関わっているんです。`,
-            `「こんなに気を遣っているのに、どうして…」<br><br>そんな風に悩んだことはありませんか？`,
-            `実は私、<br>管理栄養士として1,000人以上の飼い主さんを見てきて、1つ気づいたことがあるんです。`,
-            `フードも変えた。<br>環境も整えた。<br>お散歩も頑張った。<br><br>栄養を全部やっても、<br>ダメな子がいる、と。`,
-            `何が『心の栄養』を<br>左右していたと思いますか？🐾`
+            `「こんなに気を遣っているのに、どうして…」<br><br>そんな風に悩んだことはありませんか？`
         ], () => {
             addOptions([
-                { label: 'フードの質でしょうか？', emoji: '🍚', showLetter: false },
-                { label: '犬種や体質でしょうか？', emoji: '🧬', showLetter: false },
-                { label: '飼い主の気持ちでしょうか？', emoji: '💛', showLetter: false },
-            ], (val, opt) => {
-                if (opt.emoji === '💛') {
-                    botSays([
-                        `${userName}さん…<br>おっしゃる通りです。<br><br>そう、<strong>正解</strong>です。`,
-                        `でも、どうして<br>それが正解なのか、<br>私の話を少しだけ聞いていただけますか？🐾`
-                    ], () => showStory());
-                } else {
-                    botSays([
-                        `うんうん、それもとても大切です！<br><br>でもね、実は<br>もっと根っこにあるものに気づいたんです。`,
-                        `私も最初は、<br>信じられませんでした。<br><br>少しだけ、私の体験を聞いていただけますか？🐾`
-                    ], () => showStory());
-                }
+                { label: 'あります…😢', emoji: '🐾', showLetter: false },
+                { label: 'どういうことですか？', emoji: '🌻', showLetter: false }
+            ], () => {
+                botSays([
+                    `実は私、<br>管理栄養士として1,000人以上の飼い主さんを見てきて、1つ気づいたことがあるんです。`,
+                    `フードも変えた。<br>環境も整えた。<br>お散歩も頑張った。<br><br>栄養を全部やっても、<br>ダメな子がいる、と。`,
+                    `何が『心の栄養』を<br>左右していたと思いますか？🐾`
+                ], () => {
+                    addOptions([
+                        { label: 'フードの質でしょうか？', emoji: '🍚', showLetter: false },
+                        { label: '犬種や体質でしょうか？', emoji: '🧬', showLetter: false },
+                        { label: '飼い主の気持ちでしょうか？', emoji: '💛', showLetter: false },
+                    ], (val, opt) => {
+                        if (opt.emoji === '💛') {
+                            botSays([
+                                `${userName}さん…<br>おっしゃる通りです。<br><br>そう、<strong>正解</strong>です。`,
+                                `でも、どうして<br>それが正解なのか、<br>私の話を少しだけ聞いていただけますか？🐾`
+                            ], () => showStory());
+                        } else {
+                            botSays([
+                                `うんうん、それもとても大切です！<br><br>でもね、実は<br>もっと根っこにあるものに気づいたんです。`,
+                                `私も最初は、<br>信じられませんでした。<br><br>少しだけ、私の体験を聞いていただけますか？🐾`
+                            ], () => showStory());
+                        }
+                    });
+                });
             });
         });
     }, 1500);
 }
 
-/* ━━━ きいちゃんの原体験 ━━━ */
+/* ━━━ きいちゃんの原体験ストーリー ━━━ */
 function showStory() {
     botSays([
-        `私の犬がね、<br>急に<strong>血を吐いた</strong>んです。<br><br>お尻からも出血して、<br>もう本当にパニックでした。`,
-        `管理栄養士として<br>栄養の知識はあったし、<br>フードも最善を尽くしていました。<br><br>「栄養のプロなのに、どうして？」って。`,
-        `心配で心配で<br>片時も離れられませんでした。<br><br>ずっとそばにいて、<br>「大丈夫？大丈夫？」って<br>声をかけ続けて…`,
-        `でもある日、<br>気づいたんです。<br><br>「この子は、<br>　<strong>この子の人生</strong>なんだ」<br><br>そう思って、<br>私の過度な心配を手放して、<br><strong>気持ちを切り離した</strong>瞬間…`,
-        `犬が、<strong>自分から<br>水を飲みに行った</strong>んです🥺<br><br>そこから劇的に回復しました。<br><br>栄養だけではありませんでした。<br>私の<strong>心配というエネルギー</strong>が、<br>犬に伝わってしまっていたのだと思います。`,
-        `だから、<br>私が今お伝えしているのは<br><br>「<strong>正しい栄養の知識</strong>」と<br>「<strong>飼い主マインド</strong>」の<br><strong>両方</strong>が必要<br><br>ということなんです。<br>どちらか1つだけでは、足りないのですよ🌻`
+        `私の愛犬がね、<br><strong>急性膵炎</strong>になったんです。<br><br>しかも<strong>劇症膵炎</strong>で、<br>かなり状態が厳しくて…`,
+        `治療の観察中に、<br><strong>大量の下血</strong>があって。<br><br>もうダメかもしれない…<br>本当にそう思いました。`,
+        `栄養のプロなのに、<br>最善を尽くしているのに、<br>なぜ？って。<br><br>自分を責めました。<br>ずっと、ずっと。`
     ], () => {
         addOptions([
-            { label: 'もっと詳しく知りたいです！', emoji: '💛', showLetter: false },
-            { label: '少し考えたいです…', emoji: '😔', showLetter: false },
-        ], (idx, opt) => {
-            if (opt.emoji === '😔') {
-                botSays([
-                    `大丈夫ですよ、無理なさらないでくださいね🐾<br><br>でも…<br>${userDogName}ちゃんのために<br><strong>心の栄養レシピ</strong>だけでも<br>受け取ってみませんか？🎁<br><br>読むだけで、きっとヒントになるはずです💛`
-                ], () => showCTA());
-            } else {
-                botSays([
-                    `うれしいです！💛<br><br>${userName}さんと<br>${userDogName}ちゃんのために、<br>特別な<strong>心の栄養レシピ</strong>を<br>プレゼントさせてください🎁`
-                ], () => showCTA());
-            }
+            { label: 'それは辛かったですね…', emoji: '😢', showLetter: false },
+            { label: '続きを聞かせてください', emoji: '🐾', showLetter: false }
+        ], () => {
+            botSays([
+                `「お願いだから、いかないで…」<br><br>片時もそばを離れないで、<br>心配し続ける毎日でした。<br><br>「この子は命をかけて、<br>　何を伝えようとしているんだろう」<br>ずっと考え続けました。`,
+                `そしてある日、<br>こう考えてみたんです。<br><br>「もし、この病気で旅立つことを<br>　<strong>この子自身が決めていたとしたら？</strong>」<br><br>そう仮定して、<br>胸がちぎれそうでしたけれど…`,
+                `「できるだけのことをしよう。<br>　でも、<strong>あとはこの子に任せよう</strong>」<br><br>そう決めたんです。`
+            ], () => {
+                addOptions([
+                    { label: '……うんうん', emoji: '🌻', showLetter: false }
+                ], () => {
+                    botSays([
+                        `心配し続ける時間を手放して、<br>看病をしながら、<br><strong>自分自身のケアも取り入れていく</strong><br>と決めました。`,
+                        `するとね…<br><br>愛犬が、<strong>自分から<br>水を飲みに行った</strong>んです🥺<br><br>そこから劇的に回復しました。`,
+                        `栄養だけではなかった。<br><br>私の<strong>心配というエネルギー</strong>が、<br>愛犬に伝わってしまっていたのだと思います。<br><br>愛犬は<strong>命をかけて<br>教えてくれた先生</strong>でした🌻`,
+                        `だから、私が今お伝えしているのは<br>「<strong>正しい栄養の知識</strong>」と<br>「<strong>飼い主マインド</strong>」の両方が必要。<br><br>ということなんです。`
+                    ], () => {
+                        addOptions([
+                            { label: 'もっと詳しく知りたいです！', emoji: '💛', showLetter: false },
+                            { label: '少し考えたいです…', emoji: '😔', showLetter: false },
+                        ], (idx, opt) => {
+                            if (opt.emoji === '😔') {
+                                botSays([
+                                    `大丈夫ですよ、無理なさらないでくださいね🐾<br><br>でも…<br>${userDogName}ちゃんのために<br>ひとつだけ、<br><strong>特別な動画</strong>をお届けしたくて🎁<br><br>観るだけで、きっとヒントになるはずです💛`
+                                ], () => showCTA());
+                            } else {
+                                botSays([
+                                    `うれしいです！💛<br><br>${userName}さんと<br>${userDogName}ちゃんのために、<br>特別な<strong>動画プレゼント</strong>を<br>ご用意しています🎁`
+                                ], () => showCTA());
+                            }
+                        });
+                    });
+                });
+            });
         });
     });
 }
@@ -612,12 +648,15 @@ function showCTA() {
             <div class="result-card" style="text-align:center;padding:24px;">
                 <div style="font-size:10px;color:var(--honey-deep);letter-spacing:3px;font-weight:700;margin-bottom:8px;">🎁 ${userName}さん専用プレゼント</div>
                 <div style="font-size:15px;font-weight:900;color:var(--text);line-height:1.6;margin-bottom:10px;">
-                    獣医さんが教えてくれない<br>フード選びと飼い主マインド
+                    犬が感じる<br>飼い主さんのストレス行動
                 </div>
-                <div style="font-size:12px;color:#999;line-height:1.7;margin-bottom:14px;">
-                    🎥 分子栄養学の視点での選び方<br>
-                    📝 犬を安心させる心の作り方<br>
-                    ✨ ここでは話せない「マインド」の秘密
+                <div style="font-size:11px;color:#888;line-height:1.8;margin-bottom:14px;text-align:left;">
+                    <div style="margin-bottom:6px;">🎥 <strong>動画でわかりやすく解説</strong></div>
+                    <div style="padding-left:4px;">
+                        ✅ 犬は飼い主さんのココを見ている<br>
+                        ✅ 犬がストレスを感じない<br>　　飼い主さんのトリセツ<br>
+                        ✅ ここでは話せない<br>　　「マインド」の秘密
+                    </div>
                 </div>
                 <div style="background:linear-gradient(135deg,var(--honey-light),#fff0e0);border:2px solid var(--honey);border-radius:14px;padding:12px;margin-bottom:14px;">
                     <div style="font-size:11px;color:var(--honey-deep);font-weight:900;margin-bottom:4px;">🌻 管理栄養士×飼い主マインドの専門家が監修</div>
@@ -626,7 +665,7 @@ function showCTA() {
                     </div>
                 </div>
                 <a href="#" onclick="alert('ここからLINE登録へ接続します');return false;" class="cta-btn">
-                    🐾 LINEで心の栄養レシピを受け取る 💛
+                    🐾 LINEで無料動画を受け取る 💛
                 </a>
                 <div style="font-size:10px;color:var(--muted);margin-top:8px;line-height:1.6;">
                     ※ 無理な勧誘は一切いたしません 🌻<br>
@@ -639,8 +678,8 @@ function showCTA() {
     setTimeout(() => {
         botSays([
             `${userName}さん、<br>ここまでお付き合いくださって<br>本当にありがとうございました 🐾`,
-            `一番大切なのは、<br><strong>あなた自身の心の状態</strong>です🌻`,
-            `あなたが穏やかでいられたら、<br>${userDogName}ちゃんも穏やかになれる。<br><br>一人で抱え込まなくて大丈夫ですよ。<br>私が全力で寄り添いますからね 🐕💛`
+            `一番大切なのは、<br><strong>あなた自身の心の状態</strong>です🌻<br><br>もし飼い主さんが<br>笑顔になれない時は、<br>まず<strong>自分のケアを最優先</strong>に<br>してあげてください。`,
+            `巡り巡って、<br>それが${userDogName}ちゃんの<br>健康に届くことになります🐕💛<br><br>あなたが穏やかでいられたら、<br>${userDogName}ちゃんも穏やかになれる。<br><br>一人で抱え込まなくて大丈夫ですよ。<br>私が全力で寄り添いますからね🌻`
         ]);
     }, 500);
 }
