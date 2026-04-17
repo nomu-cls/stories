@@ -1013,6 +1013,14 @@
           });
           await dbSaveAssets();
         }
+        // ストレングスTOP10がなければ強制追加
+        if (!assets.find(a => a.title.includes('ストレングス'))) {
+          assets.push({
+            id: gid(), icon: '🔥', title: 'きいちゃん ストレングスTOP10', desc: 'クリフトンストレングスの診断結果と勝ちパターンの活用戦略',
+            links: [{ name: '📄 ストレングスTOP10を開く', url: 'docs/きいちゃん_ストレングスTOP10.md' }]
+          });
+          await dbSaveAssets();
+        }
       } else {
         console.log('[Portal] Seeding initial assets to DB...');
         assets = initialAssets;
