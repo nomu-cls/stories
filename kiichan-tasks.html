@@ -924,9 +924,16 @@
             id: gid(),
             date: '2026-04-17',
             topic: '診断LPの確認と、特典からの個別セッション導線設計',
-            content: '1. 診断チャットLPの最終確認と修正指示\n   URL: kiichan-shindan.html\n\n2. 「マインドセット」から「プロの介入必須化」へのシナリオ転換\n   参考: ../.gemini/antigravity/brain/ac4549f9-b098-4b9e-b914-1f77d21789ec/funnel_scenario_draft.md\n   フロントLP: kiichan-session-lp.html\n\n3. 今後のマイルストーン（次回ミーティング日程）の決定\n   ※次回の全体設計についてもすり合わせします。'
+            content: '1. 診断チャットLPの最終確認と修正指示\n   URL: kiichan-shindan.html\n   ヒアリングシート: https://docs.google.com/document/d/1uoR56vp095KlojO4HC-FUKaC4X0q8OObP4KDadPQV0E/edit?tab=t.0\n\n2. 「マインドセット」から「プロの介入必須化」へのシナリオ転換\n   参考: ../.gemini/antigravity/brain/ac4549f9-b098-4b9e-b914-1f77d21789ec/funnel_scenario_draft.md\n   フロントLP: kiichan-session-lp.html\n\n3. 今後のマイルストーン（次回ミーティング日程）の決定\n   ※次回の全体設計についてもすり合わせします。'
           });
           await dbSaveAgendas();
+        } else {
+          // すでに4/17がある場合でもGoogle Docsのリンクがなければ追記
+          const idx = agendas.findIndex(a => a.date === '2026-04-17');
+          if (idx !== -1 && agendas[idx].content && !agendas[idx].content.includes('1uoR56vp095KlojO4HC-FUKaC4X0q8OObP4KDadPQV0E')) {
+             agendas[idx].content = agendas[idx].content.replace('URL: kiichan-shindan.html', 'URL: kiichan-shindan.html\n   ヒアリングシート: https://docs.google.com/document/d/1uoR56vp095KlojO4HC-FUKaC4X0q8OObP4KDadPQV0E/edit?tab=t.0');
+             await dbSaveAgendas();
+          }
         }
       } else {
         console.log('[Portal] Seeding initial agendas to DB...');
@@ -938,6 +945,14 @@
       const dbAst = await dbLoadAssets();
       if (dbAst !== null) {
         assets = dbAst;
+        // ヒアリングシートのリンクがなければ強制追加
+        if (!assets.find(a => a.desc && a.desc.includes('きいちゃんが書いてくれたアイデア'))) {
+          assets.unshift({
+            id: gid(), icon: '📝', title: '犬の気持ち_ヒアリングシート', desc: 'きいちゃんが書いてくれたアイデア',
+            links: [{ name: '📄 Google Docs', url: 'https://docs.google.com/document/d/1uoR56vp095KlojO4HC-FUKaC4X0q8OObP4KDadPQV0E/edit?tab=t.0' }]
+          });
+          await dbSaveAssets();
+        }
       } else {
         console.log('[Portal] Seeding initial assets to DB...');
         assets = initialAssets;
