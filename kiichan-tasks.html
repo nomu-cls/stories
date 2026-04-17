@@ -680,8 +680,8 @@
     {
       id: gid(), icon: '💞', title: '個別セッション・ファネル設計', desc: '「自己完結」を防ぎ、プロの介入を必然化するための特典動画ストーリーとセッション募集LPです。',
       links: [
-        { name: '📋 ミーティングアジェンダ', url: '../.gemini/antigravity/brain/ac4549f9-b098-4b9e-b914-1f77d21789ec/meeting_agenda.md' },
-        { name: '🎬 特典教育シナリオ原案', url: '../.gemini/antigravity/brain/ac4549f9-b098-4b9e-b914-1f77d21789ec/funnel_scenario_draft.md' },
+        { name: '📋 ミーティングアジェンダ', url: 'docs/きいちゃん_meeting_agenda.md' },
+        { name: '🎬 特典教育シナリオ原案', url: 'docs/きいちゃん_funnel_scenario_draft.md' },
         { name: 'セールスLP（フロントエンド）', url: 'kiichan-session-lp.html' }
       ]
     },
@@ -924,7 +924,7 @@
             id: gid(),
             date: '2026-04-17',
             topic: '診断LPの確認と、特典からの個別セッション導線設計',
-            content: '1. 診断チャットLPの最終確認と修正指示\n   URL: kiichan-shindan.html\n   ヒアリングシート: https://docs.google.com/document/d/1uoR56vp095KlojO4HC-FUKaC4X0q8OObP4KDadPQV0E/edit?tab=t.0\n\n2. 「マインドセット」から「プロの介入必須化」へのシナリオ転換\n   参考: ../.gemini/antigravity/brain/ac4549f9-b098-4b9e-b914-1f77d21789ec/funnel_scenario_draft.md\n   フロントLP: kiichan-session-lp.html\n\n3. 今後のマイルストーン（次回ミーティング日程）の決定\n   ※次回の全体設計についてもすり合わせします。'
+            content: '1. 診断チャットLPの最終確認と修正指示\n   URL: kiichan-shindan.html\n   ヒアリングシート: https://docs.google.com/document/d/1uoR56vp095KlojO4HC-FUKaC4X0q8OObP4KDadPQV0E/edit?tab=t.0\n\n2. 「マインドセット」から「プロの介入必須化」へのシナリオ転換\n   参考: docs/きいちゃん_funnel_scenario_draft.md\n   フロントLP: kiichan-session-lp.html\n\n3. 今後のマイルストーン（次回ミーティング日程）の決定\n   ※次回の全体設計についてもすり合わせします。'
           });
           await dbSaveAgendas();
         } else {
@@ -962,6 +962,27 @@
       // Yoshuku
       const dbY = await dbLoadYoshuku();
       if (dbY) yoshukuData = dbY;
+
+      // 古い.geminiリンクの自動修正パッチ
+      let needsPatch = false;
+      assets.forEach(a => {
+        (a.links || []).forEach(l => {
+          if (l.url.includes('.gemini/antigravity/')) {
+            l.url = l.url.includes('meeting_agenda') ? 'docs/きいちゃん_meeting_agenda.md' : 'docs/きいちゃん_funnel_scenario_draft.md';
+            needsPatch = true;
+          }
+        });
+      });
+      if (needsPatch) await dbSaveAssets();
+
+      let needsAgendaPatch = false;
+      agendas.forEach(a => {
+        if (a.content && a.content.includes('.gemini/antigravity/')) {
+          a.content = a.content.replace(/\.\.\/\.gemini\/antigravity\/brain\/[a-zA-Z0-9-]+\/funnel_scenario_draft\.md/g, 'docs/きいちゃん_funnel_scenario_draft.md');
+          needsAgendaPatch = true;
+        }
+      });
+      if (needsAgendaPatch) await dbSaveAgendas();
 
       renderBoard();
       renderLogs();
