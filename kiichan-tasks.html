@@ -963,35 +963,7 @@
       const dbA = await dbLoadAgendas();
       if (dbA !== null) {
         agendas = dbA;
-        // 一度だけ 4/17のアジェンダを強制追加するハック（すでに存在しなければ）
-        if (!agendas.find(a => a.date === '2026-04-17')) {
-          agendas.unshift({
-            id: gid(),
-            date: '2026-04-17',
-            topic: '（初期コンセプト設計）と診断LPの確認',
-            content: '0. 【最重要】コンセプトと提供内容の設計\n   URL: docs/きいちゃん_コンセプト設計シート.md\n   自己紹介原案: docs/きいちゃん_プロフィール原案.md\n\n1. 診断チャットLPの最終確認と修正指示\n   URL: kiichan-shindan.html\n   ヒアリングシート: https://docs.google.com/document/d/1uoR56vp095KlojO4HC-FUKaC4X0q8OObP4KDadPQV0E/edit?tab=t.0\n\n2. 「マインドセット」から「プロの介入必須化」へのシナリオ転換\n   参考: docs/きいちゃん_funnel_scenario_draft.md\n   フロントLP: kiichan-session-lp.html\n\n3. 今後のマイルストーン（次回ミーティング日程）の決定\n   ※次回の全体設計についてもすり合わせします。'
-          });
-          await dbSaveAgendas();
-        } else {
-          // すでに4/17がある場合でもGoogle Docsのリンクなどがなければ追記
-          const idx = agendas.findIndex(a => a.date === '2026-04-17');
-          if (idx !== -1 && agendas[idx].content) {
-            let updated = false;
-            if (!agendas[idx].content.includes('1uoR56vp095KlojO4HC-FUKaC4X0q8OObP4KDadPQV0E')) {
-               agendas[idx].content = agendas[idx].content.replace('URL: kiichan-shindan.html', 'URL: kiichan-shindan.html\n   ヒアリングシート: https://docs.google.com/document/d/1uoR56vp095KlojO4HC-FUKaC4X0q8OObP4KDadPQV0E/edit?tab=t.0');
-               updated = true;
-            }
-            if (!agendas[idx].content.includes('コンセプト')) {
-               agendas[idx].content = "0. 【最重要】コンセプトと提供内容の設計\n   URL: docs/きいちゃん_コンセプト設計シート.md\n   自己紹介原案: docs/きいちゃん_プロフィール原案.md\n\n" + agendas[idx].content;
-               agendas[idx].topic = "【最重要】コンセプト設計・" + agendas[idx].topic;
-               updated = true;
-            } else if (!agendas[idx].content.includes('プロフィール原案')) {
-               agendas[idx].content = agendas[idx].content.replace('URL: docs/きいちゃん_コンセプト設計シート.md', 'URL: docs/きいちゃん_コンセプト設計シート.md\n   自己紹介原案: docs/きいちゃん_プロフィール原案.md');
-               updated = true;
-            }
-            if (updated) await dbSaveAgendas();
-          }
-        }
+        agendas = dbA;
       } else {
         console.log('[Portal] Seeding initial agendas to DB...');
         agendas = initialAgendas;
