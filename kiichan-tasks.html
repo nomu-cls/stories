@@ -280,6 +280,19 @@
   .log-date { font-weight: 900; font-size: 16px; color: #C4A24E; }
   .log-topic { font-size: 14px; font-weight: 700; color: #3D3226; }
   .log-content { font-size: 13px; line-height: 1.8; color: #555; white-space: pre-wrap; }
+  /* Override styles for parsed markdown inside logs */
+  .log-content.markdown-body {
+    white-space: normal;
+    padding: 0;
+    background: transparent;
+    line-height: 1.5;
+  }
+  .log-content.markdown-body p { margin-bottom: 6px; }
+  .log-content.markdown-body ul, .log-content.markdown-body ol { margin-bottom: 6px; padding-left: 20px; }
+  .log-content.markdown-body li { margin-bottom: 2px; }
+  .log-content.markdown-body h1 { font-size: 16px; margin: 12px 0 6px; border-bottom: 1px dashed rgba(196,162,78,0.3); padding-bottom: 4px; }
+  .log-content.markdown-body h2 { font-size: 15px; margin: 10px 0 4px; border:none; padding:0; }
+  .log-content.markdown-body h3 { font-size: 14px; margin: 8px 0 4px; }
   .add-log-btn {
     align-self: flex-start;
     margin-bottom: 20px;
