@@ -329,6 +329,7 @@
   
   <div class="main-tabs">
     <button class="tab-btn active" onclick="switchTab('board')">📋 タスク</button>
+    <button class="tab-btn" onclick="switchTab('agenda')">📋 アジェンダ</button>
     <button class="tab-btn" onclick="switchTab('assets')">📎 資料・リンク</button>
     <button class="tab-btn" onclick="switchTab('logs')">📝 議事録</button>
   </div>
@@ -481,58 +482,19 @@
 <!-- VIEW 2: ASSETS & LINKS                     -->
 <!-- ========================================== -->
 <div class="view-container" id="view-assets">
-  <div class="assets-container">
-    
-    <div class="asset-card">
-      <div class="asset-icon">🧩</div>
-      <div class="asset-title">診断チャット</div>
-      <div class="asset-desc">リード獲得用のLP。「心の栄養」を切り口に、潜在意識と迷走神経への興味を惹きます。</div>
-      <div class="asset-links">
-        <a href="kiichan-shindan.html" target="_blank" class="asset-link">👁️ プレビューを見る</a>
-        <a href="#" class="asset-link">✏️ 編集画面を開く</a>
-      </div>
-    </div>
+  <button class="btn primary add-log-btn" onclick="openAssetModal()">＋ 資料・リンクを追加</button>
+  <div class="assets-container" id="assetsList">
+    <!-- Assets will be rendered here -->
+  </div>
+</div>
 
-    <div class="asset-card">
-      <div class="asset-icon">🎁</div>
-      <div class="asset-title">LINE特典</div>
-      <div class="asset-desc">LINE登録者に配布する小冊子（PDF）と教育動画のフロー図です。</div>
-      <div class="asset-links">
-        <a href="kiichan-checksheet.html" target="_blank" class="asset-link">📄 チェックシートPDF</a>
-        <a href="kiichan-tokuten-flow.svg" target="_blank" class="asset-link">📉 動画構成ロジックツリー</a>
-      </div>
-    </div>
-
-    <div class="asset-card">
-      <div class="asset-icon">🗺️</div>
-      <div class="asset-title">事業全体設計</div>
-      <div class="asset-desc">ペットショップ閉店から0期スタートまでのスケジュールとファネル構造全体図です。</div>
-      <div class="asset-links">
-        <a href="kiichan-funnel.svg" target="_blank" class="asset-link">🗺️ ファネル＆ロードマップ</a>
-        <a href="kiichan-proposal.html" target="_blank" class="asset-link">📑 ご提案書を見る</a>
-      </div>
-    </div>
-
-    <div class="asset-card" style="border-color: #f472b6;">
-      <div class="asset-icon">💞</div>
-      <div class="asset-title">個別セッション・ファネル設計</div>
-      <div class="asset-desc">「自己完結」を防ぎ、プロの介入を必然化するための特典動画ストーリーとセッション募集LPです。</div>
-      <div class="asset-links">
-        <a href="../.gemini/antigravity/brain/ac4549f9-b098-4b9e-b914-1f77d21789ec/meeting_agenda.md" target="_blank" class="asset-link">📋 ミーティングアジェンダ</a>
-        <a href="../.gemini/antigravity/brain/ac4549f9-b098-4b9e-b914-1f77d21789ec/funnel_scenario_draft.md" target="_blank" class="asset-link">🎬 特典教育シナリオ原案</a>
-        <a href="kiichan-session-lp.html" target="_blank" class="asset-link">セールスLP（フロントエンド）</a>
-      </div>
-    </div>
-
-    <div class="asset-card">
-      <div class="asset-icon">📺</div>
-      <div class="asset-title">YouTube / SNS</div>
-      <div class="asset-desc">認知拡大からリスト取りへの要となる媒体。しつけ系の層を狙ってポジショニングします。</div>
-      <div class="asset-links">
-        <a href="https://www.youtube.com/@itokimiko-pet" target="_blank" class="asset-link">▶️ きいちゃんねる</a>
-      </div>
-    </div>
-
+<!-- ========================================== -->
+<!-- VIEW 4: AGENDAS                            -->
+<!-- ========================================== -->
+<div class="view-container" id="view-agenda">
+  <button class="btn primary add-log-btn" onclick="openAgendaModal()">＋ アジェンダを追加</button>
+  <div class="logs-container" id="agendaList">
+    <!-- Agendas will be rendered here -->
   </div>
 </div>
 
@@ -567,6 +529,59 @@
     <div class="modal-actions">
       <button class="btn" onclick="closeLogModal()">キャンセル</button>
       <button class="btn primary" onclick="saveLog()">保存する 🌻</button>
+    </div>
+  </div>
+</div>
+
+<!-- Agenda Modal -->
+<div class="modal-overlay" id="agendaModal">
+  <div class="modal wide">
+    <h2 id="agendaModalTitle">📋 ミーティングアジェンダ</h2>
+    <input type="hidden" id="editAgendaId" value="">
+    <div class="form-group">
+      <label>次回予定日 / 日付 <span style="color:#ef4444">*</span></label>
+      <input type="date" id="agendaDate" required>
+    </div>
+    <div class="form-group">
+      <label>メインテーマ <span style="color:#ef4444">*</span></label>
+      <input type="text" id="agendaTopic" placeholder="例: 0期の価格決定と特典動画の構成" required>
+    </div>
+    <div class="form-group">
+      <label>話し合う項目（内容）</label>
+      <textarea id="agendaContent" placeholder="- 特典から個別セッションへの導線&#10;- スケジュール確認"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeAgendaModal()">キャンセル</button>
+      <button class="btn primary" onclick="saveAgenda()">保存する 🌻</button>
+    </div>
+  </div>
+</div>
+
+<!-- Asset Modal -->
+<div class="modal-overlay" id="assetModal">
+  <div class="modal wide">
+    <h2 id="assetModalTitle">🔗 資料ファイルの追加・編集</h2>
+    <input type="hidden" id="editAssetId" value="">
+    <div class="form-group">
+      <label>アイコン（絵文字） <span style="color:#ef4444">*</span></label>
+      <input type="text" id="assetIcon" placeholder="例: 🧩" required>
+    </div>
+    <div class="form-group">
+      <label>タイトル <span style="color:#ef4444">*</span></label>
+      <input type="text" id="assetTitle" placeholder="例: 診断チャット" required>
+    </div>
+    <div class="form-group">
+      <label>説明文 <span style="color:#ef4444">*</span></label>
+      <input type="text" id="assetDesc" placeholder="例: リード獲得用のLP" required>
+    </div>
+    <div class="form-group">
+      <label>リンク（表示名|URL）複数登録可 <span style="color:#ef4444">*</span></label>
+      <textarea id="assetLinksArea" placeholder="👁️ プレビューを見る|kiichan-shindan.html&#10;✏️ 編集画面を開く|#"></textarea>
+      <p style="font-size:10px; color:#888; margin-top:4px;">1行につき1つのリンク。「表示名|URL」の形式で入力してください。</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeAssetModal()">キャンセル</button>
+      <button class="btn primary" onclick="saveAsset()">保存する 🌻</button>
     </div>
   </div>
 </div>
@@ -622,10 +637,54 @@
     }
   ];
 
+  const initialAgendas = [
+    {
+      id: gid(),
+      date: '2026-04-25',
+      topic: '0期の価格決定と特典動画の構成見直し',
+      content: '- 特典から個別セッションへの導線（今回のシナリオ内容）\n- LPの微修正ポイント\n- セッション募集の開始時期'
+    },
+    {
+      id: gid(),
+      date: '2026-05-10',
+      topic: '個別セッションの振り返りと0期カリキュラム調整',
+      content: '- 申し込み状況の共有\n- モニターでわかった参加者の悩み\n- 0期資料への反映'
+    }
+  ];
+
+  const initialAssets = [
+    {
+      id: gid(), icon: '🧩', title: '診断チャット', desc: 'リード獲得用のLP。「心の栄養」を切り口に、潜在意識と迷走神経への興味を惹きます。',
+      links: [{ name: '👁️ プレビューを見る', url: 'kiichan-shindan.html' }]
+    },
+    {
+      id: gid(), icon: '🎁', title: 'LINE特典', desc: 'LINE登録者に配布する小冊子（PDF）と教育動画のフロー図です。',
+      links: [{ name: '📄 チェックシートPDF', url: 'kiichan-checksheet.html' }, { name: '📉 動画構成ロジックツリー', url: 'kiichan-tokuten-flow.svg' }]
+    },
+    {
+      id: gid(), icon: '🗺️', title: '事業全体設計', desc: 'ペットショップ閉店から0期スタートまでのスケジュールとファネル構造全体図です。',
+      links: [{ name: '🗺️ ファネル＆ロードマップ', url: 'kiichan-funnel.svg' }]
+    },
+    {
+      id: gid(), icon: '💞', title: '個別セッション・ファネル設計', desc: '「自己完結」を防ぎ、プロの介入を必然化するための特典動画ストーリーとセッション募集LPです。',
+      links: [
+        { name: '📋 ミーティングアジェンダ', url: '../.gemini/antigravity/brain/ac4549f9-b098-4b9e-b914-1f77d21789ec/meeting_agenda.md' },
+        { name: '🎬 特典教育シナリオ原案', url: '../.gemini/antigravity/brain/ac4549f9-b098-4b9e-b914-1f77d21789ec/funnel_scenario_draft.md' },
+        { name: 'セールスLP（フロントエンド）', url: 'kiichan-session-lp.html' }
+      ]
+    },
+    {
+      id: gid(), icon: '📺', title: 'YouTube / SNS', desc: '認知拡大からリスト取りへの要となる媒体。しつけ系の層を狙ってポジショニングします。',
+      links: [{ name: '▶️ きいちゃんねる', url: 'https://www.youtube.com/@itokimiko-pet' }]
+    }
+  ];
+
   function gid() { return Math.random().toString(36).substr(2, 9); }
 
   let tasks = [];
   let logs = [];
+  let agendas = [];
+  let assets = [];
   let yoshukuData = null;
   let draggedTaskId = null;
 
@@ -741,10 +800,44 @@
     } catch(e) { console.warn('[Portal] Update log failed:', e); }
   }
 
-  async function dbDeleteLog(id) {
+  // --- DB: Agendas ---
+  async function dbLoadAgendas() {
+    if (!db()) return null;
+    try {
+      const { data, error } = await db().from('portal_yoshuku')
+        .select('text').eq('project_id', PROJECT_ID + '-agendas').maybeSingle();
+      if (error) throw error;
+      return data ? JSON.parse(data.text) : null;
+    } catch(e) { console.warn('[Portal] Load agendas failed:', e); return null; }
+  }
+
+  async function dbSaveAgendas() {
     if (!db()) return;
-    try { await db().from('portal_logs').delete().eq('id', id); }
-    catch(e) { console.warn('[Portal] Delete log failed:', e); }
+    try {
+      await db().from('portal_yoshuku').upsert({
+        project_id: PROJECT_ID + '-agendas', text: JSON.stringify(agendas), updated_at: new Date().toISOString()
+      }, { onConflict: 'project_id' });
+    } catch(e) { console.warn('[Portal] Save agendas failed:', e); }
+  }
+
+  // --- DB: Assets ---
+  async function dbLoadAssets() {
+    if (!db()) return null;
+    try {
+      const { data, error } = await db().from('portal_yoshuku')
+        .select('text').eq('project_id', PROJECT_ID + '-assets').maybeSingle();
+      if (error) throw error;
+      return data ? JSON.parse(data.text) : null;
+    } catch(e) { console.warn('[Portal] Load assets failed:', e); return null; }
+  }
+
+  async function dbSaveAssets() {
+    if (!db()) return;
+    try {
+      await db().from('portal_yoshuku').upsert({
+        project_id: PROJECT_ID + '-assets', text: JSON.stringify(assets), updated_at: new Date().toISOString()
+      }, { onConflict: 'project_id' });
+    } catch(e) { console.warn('[Portal] Save assets failed:', e); }
   }
 
   // --- DB: Yoshuku ---
@@ -809,12 +902,45 @@
         }
       }
 
+      // Agendas
+      const dbA = await dbLoadAgendas();
+      if (dbA !== null) {
+        agendas = dbA;
+        // 一度だけ 4/17のアジェンダを強制追加するハック（すでに存在しなければ）
+        if (!agendas.find(a => a.date === '2026-04-17')) {
+          agendas.unshift({
+            id: gid(),
+            date: '2026-04-17',
+            topic: '診断LPの確認と、特典からの個別セッション導線設計',
+            content: '1. 診断チャットLPの最終確認と修正指示\n   URL: kiichan-shindan.html\n\n2. 「マインドセット」から「プロの介入必須化」へのシナリオ転換\n   参考: ../.gemini/antigravity/brain/ac4549f9-b098-4b9e-b914-1f77d21789ec/funnel_scenario_draft.md\n   フロントLP: kiichan-session-lp.html\n\n3. 今後のマイルストーン（次回ミーティング日程）の決定\n   ※次回の全体設計についてもすり合わせします。'
+          });
+          await dbSaveAgendas();
+        }
+      } else {
+        console.log('[Portal] Seeding initial agendas to DB...');
+        agendas = initialAgendas;
+        await dbSaveAgendas();
+      }
+
+      // Assets
+      const dbAst = await dbLoadAssets();
+      if (dbAst !== null) {
+        assets = dbAst;
+      } else {
+        console.log('[Portal] Seeding initial assets to DB...');
+        assets = initialAssets;
+        await dbSaveAssets();
+      }
+
       // Yoshuku
       const dbY = await dbLoadYoshuku();
       if (dbY) yoshukuData = dbY;
 
       renderBoard();
       renderLogs();
+      renderAgendas();
+      renderAssets();
+      renderYoshuku();
       renderYoshuku();
       updateSyncStatus('online');
     } catch(e) {
@@ -978,6 +1104,17 @@
     });
   }
 
+  // --- Text Linkify Helper ---
+  function linkify(text) {
+    if (!text) return '（内容なし）';
+    // URLや拡張子付きファイル名、相対パスのMarkdownなどを抽出してリンク化
+    const urlRegex = /(https?:\/\/[^\s]+|[\w-]+\.html|[\w-]+\.svg|(?:\.\.\/)+[^\s]+\.md)/g;
+    return text.replace(urlRegex, function(url) {
+      if(url.startsWith('http')) return `<a href="${url}" target="_blank" style="color:#C4A24E;text-decoration:underline;">${url}</a>`;
+      return `<a href="${url}" target="_blank" style="color:#C4A24E;text-decoration:underline;">📋 ${url.split('/').pop()}</a>`;
+    });
+  }
+
   // --- Meeting Logs 操作 ---
   function renderLogs() {
     const container = document.getElementById('logsList');
@@ -1001,7 +1138,7 @@
           </div>
         </div>
         <div class="log-topic">📌 ${l.topic}</div>
-        <div class="log-content">${l.content || '（内容なし）'}</div>
+        <div class="log-content">${linkify(l.content)}</div>
       `;
       container.appendChild(card);
     });
@@ -1099,6 +1236,173 @@
       if (Date.now() < end) requestAnimationFrame(frame);
     }());
     setTimeout(() => { overlay.style.opacity = '0'; setTimeout(() => overlay.remove(), 1000); }, 4000);
+  }
+
+  // --- Agendas 操作 ---
+  function renderAgendas() {
+    const container = document.getElementById('agendaList');
+    if(!container) return;
+    container.innerHTML = '';
+    if (agendas.length === 0) {
+      container.innerHTML = '<div class="empty-state">アジェンダはまだありません📋</div>';
+      return;
+    }
+    const sorted = [...agendas].sort((a, b) => b.date.localeCompare(a.date));
+    sorted.forEach(a => {
+      const card = document.createElement('div');
+      card.className = 'log-card';
+      card.innerHTML = `
+        <div class="log-header">
+          <div class="log-date">${a.date}</div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn" style="padding:4px 8px; font-size:11px;" onclick="openAgendaModal('${a.id}')">編集</button>
+            <button class="btn" style="padding:4px 8px; font-size:11px;" onclick="deleteAgenda('${a.id}')">削除</button>
+          </div>
+        </div>
+        <div class="log-topic">🎯 ${a.topic}</div>
+        <div class="log-content">${linkify(a.content)}</div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function openAgendaModal(id = null) {
+    const modal = document.getElementById('agendaModal');
+    document.getElementById('agendaModalTitle').textContent = id ? '📋 アジェンダを編集' : '📋 新しいアジェンダ';
+    document.getElementById('editAgendaId').value = id || '';
+    if (id) {
+      const a = agendas.find(x => x.id === id);
+      if (a) {
+        document.getElementById('agendaDate').value = a.date;
+        document.getElementById('agendaTopic').value = a.topic;
+        document.getElementById('agendaContent').value = a.content || '';
+      }
+    } else {
+      document.getElementById('agendaDate').value = '';
+      document.getElementById('agendaTopic').value = '';
+      document.getElementById('agendaContent').value = '';
+    }
+    modal.classList.add('active');
+  }
+
+  function closeAgendaModal() { document.getElementById('agendaModal').classList.remove('active'); }
+
+  async function saveAgenda() {
+    const id = document.getElementById('editAgendaId').value;
+    const date = document.getElementById('agendaDate').value;
+    const topic = document.getElementById('agendaTopic').value.trim();
+    const content = document.getElementById('agendaContent').value.trim();
+    if (!date || !topic) return alert('日付とトピックは必須です');
+
+    if (id) {
+      const idx = agendas.findIndex(a => a.id === id);
+      if (idx > -1) { agendas[idx].date = date; agendas[idx].topic = topic; agendas[idx].content = content; }
+    } else {
+      agendas.push({ id: gid(), date, topic, content });
+    }
+    closeAgendaModal();
+    renderAgendas();
+    dbSaveAgendas();
+  }
+
+  function deleteAgenda(id) {
+    if (confirm('このアジェンダを削除しますか？')) {
+      agendas = agendas.filter(a => a.id !== id);
+      renderAgendas();
+      dbSaveAgendas();
+    }
+  }
+
+  // --- Assets 操作 ---
+  function renderAssets() {
+    const container = document.getElementById('assetsList');
+    if(!container) return;
+    container.innerHTML = '';
+    
+    if (assets.length === 0) return;
+
+    assets.forEach(a => {
+      const linksHtml = (a.links || []).map(link => 
+        `<a href="${link.url}" target="_blank" class="asset-link">${link.name}</a>`
+      ).join('');
+
+      const card = document.createElement('div');
+      card.className = 'asset-card';
+      card.style.position = 'relative';
+      card.innerHTML = `
+        <div style="position:absolute; top:12px; right:12px; display:flex; gap:4px;">
+          <button class="delete-btn" onclick="openAssetModal('${a.id}')">✏️</button>
+          <button class="delete-btn" onclick="deleteAsset('${a.id}')">🗑️</button>
+        </div>
+        <div class="asset-icon">${a.icon || '🔗'}</div>
+        <div class="asset-title">${a.title}</div>
+        <div class="asset-desc">${a.desc || ''}</div>
+        <div class="asset-links">${linksHtml}</div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function openAssetModal(id = null) {
+    const modal = document.getElementById('assetModal');
+    document.getElementById('assetModalTitle').textContent = id ? '🔗 資料ファイルの編集' : '🔗 資料ファイルの追加';
+    document.getElementById('editAssetId').value = id || '';
+    if (id) {
+      const a = assets.find(x => x.id === id);
+      if (a) {
+        document.getElementById('assetIcon').value = a.icon || '';
+        document.getElementById('assetTitle').value = a.title || '';
+        document.getElementById('assetDesc').value = a.desc || '';
+        document.getElementById('assetLinksArea').value = (a.links || []).map(l => `${l.name}|${l.url}`).join('\n');
+      }
+    } else {
+      document.getElementById('assetIcon').value = '';
+      document.getElementById('assetTitle').value = '';
+      document.getElementById('assetDesc').value = '';
+      document.getElementById('assetLinksArea').value = '';
+    }
+    modal.classList.add('active');
+  }
+
+  function closeAssetModal() { document.getElementById('assetModal').classList.remove('active'); }
+
+  async function saveAsset() {
+    const id = document.getElementById('editAssetId').value;
+    const icon = document.getElementById('assetIcon').value.trim();
+    const title = document.getElementById('assetTitle').value.trim();
+    const desc = document.getElementById('assetDesc').value.trim();
+    const linksRaw = document.getElementById('assetLinksArea').value.trim();
+    
+    if (!title) return alert('タイトルは必須です');
+
+    const links = [];
+    if (linksRaw) {
+      const lines = linksRaw.split('\n');
+      for (const line of lines) {
+        const parts = line.split('|');
+        if (parts.length === 2) {
+          links.push({ name: parts[0].trim(), url: parts[1].trim() });
+        }
+      }
+    }
+
+    if (id) {
+      const idx = assets.findIndex(a => a.id === id);
+      if (idx > -1) { assets[idx] = { id, icon, title, desc, links }; }
+    } else {
+      assets.push({ id: gid(), icon, title, desc, links });
+    }
+    closeAssetModal();
+    renderAssets();
+    dbSaveAssets();
+  }
+
+  function deleteAsset(id) {
+    if (confirm('この資料・リンクを削除しますか？')) {
+      assets = assets.filter(a => a.id !== id);
+      renderAssets();
+      dbSaveAssets();
+    }
   }
 
   init();
