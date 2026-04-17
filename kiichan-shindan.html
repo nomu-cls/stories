@@ -468,7 +468,7 @@ function askDogName() {
 /* ── クイズ処理 ── */
 function renderQuestion() {
     if (currentQ >= quizData.length) {
-        showDiagResult();
+        showFinalMessage();
         return;
     }
     const q = quizData[currentQ];
@@ -511,7 +511,7 @@ function handleAnswer(selectedIdx) {
                 nextBtn.className = 'submit-btn';
                 nextBtn.style.display = 'block';
                 nextBtn.style.width = '100%';
-                nextBtn.textContent = currentQ < quizData.length - 1 ? '次の問題へ →' : '結果を見る 🐾';
+                nextBtn.textContent = currentQ < quizData.length - 1 ? '次の問題へ →' : 'メッセージを読む 💌';
                 nextBtn.onclick = () => {
                     nextBtnWrap.remove();
                     currentQ++;
@@ -523,6 +523,32 @@ function handleAnswer(selectedIdx) {
              }, 800);
         });
     }, 400);
+}
+
+function showFinalMessage() {
+    botSays([
+        `${userName}さん、<br>ここまでお付き合いくださって<br>本当にありがとうございました 🐾`,
+        `一番大切なのは、<br><strong>あなた自身の心の状態</strong>です🌻<br><br>もし飼い主さんが笑顔になれない時は、まず自分のケアを最優先にしてあげてください。`,
+        `あなたが穏やかでいられたら、<br>${userDogName}ちゃんも穏やかになれる。<br><br>一人で抱え込まなくて大丈夫ですよ。<br>一緒に、<strong>「3年後もハグする未来」</strong>を<br>作っていきましょう🐾💛`
+    ], () => {
+        setTimeout(() => {
+            const nextBtnWrap = document.createElement('div');
+            nextBtnWrap.className = 'options-wrap';
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'submit-btn';
+            nextBtn.style.display = 'block';
+            nextBtn.style.width = '100%';
+            nextBtn.style.background = 'var(--honey)';
+            nextBtn.textContent = '🐾 クイズの診断結果を見る';
+            nextBtn.onclick = () => {
+                nextBtnWrap.remove();
+                showDiagResult();
+            };
+            nextBtnWrap.appendChild(nextBtn);
+            chatArea.appendChild(nextBtnWrap);
+            scrollToBottom();
+        }, 800);
+    });
 }
 
 /* ━━━ 診断結果とストーリー展開 ━━━ */
@@ -675,14 +701,8 @@ function showCTA() {
             </div>
         </div>`;
     addCustomHTML(ctaCard);
-
-    setTimeout(() => {
-        botSays([
-            `${userName}さん、<br>ここまでお付き合いくださって<br>本当にありがとうございました 🐾`,
-            `一番大切なのは、<br><strong>あなた自身の心の状態</strong>です🌻<br><br>もし飼い主さんが<br>笑顔になれない時は、<br>まず<strong>自分のケアを最優先</strong>に<br>してあげてください。`,
-            `あなたが穏やかでいられたら、<br>${userDogName}ちゃんも穏やかになれる。<br><br>一人で抱え込まなくて大丈夫ですよ。<br>一緒に、<strong>「3年後もハグする未来」</strong>を<br>作っていきましょう🐾💛`
-        ]);
-    }, 500);
+    
+    setTimeout(scrollToBottom, 500);
 }
 
 /* ── Start ── */
