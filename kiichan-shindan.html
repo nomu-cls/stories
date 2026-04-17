@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>犬のきもち、わかってる？クイズ — 私たちの心の栄養診断</title>
-    <meta name="description" content="管理栄養士が教える、愛犬の心と体の健康クイズ。3分であなたとワンちゃんの関係を見直すきっかけに。">
+    <meta name="description" content="栄養×飼い主マインドの専門家が教える、愛犬の心と体の健康クイズ。3分であなたとワンちゃんの関係を見直すきっかけに。">
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -385,22 +385,23 @@ function startChat() {
                 犬のきもち、わかってる？<br>「心の栄養」充足度クイズ
             </div>
             <div style="width:40px;height:2px;background:linear-gradient(90deg,var(--honey),var(--peach));margin:12px auto;border-radius:1px;"></div>
-            <div style="font-size:11px;color:var(--muted);line-height:1.6;">無料 ／ 全5問 ／ 管理栄養士監修 🌻</div>
+            <div style="font-size:11px;color:var(--muted);line-height:1.6;">無料 ／ 全5問 ／ 栄養×飼い主マインドの専門家監修 🌻</div>
         </div>`;
     addCustomHTML(ticket);
 
     setTimeout(() => {
         botSays([
-            'こんにちは！🌻<br><br><strong>きいちゃん</strong>です。<br>来てくださってありがとうございます🐾',
-            '「ごはんに迷ってしまう…」<br>「これで合っているのかな？」<br><br>そんな不安を感じたことはありませんか？🥺'
+            'こんにちは！🌻<br><br>栄養×飼い主マインドの専門家、<br><strong>きいちゃん先生</strong>です。<br>来てくださってありがとうございます🐾',
+            '「病院食を食べてくれない…」<br>「いろいろ試したけど、良くならない…」<br><br>愛犬の病気や健康への漠然とした不安、<br>治療に行き詰まりを感じたことはありませんか？🥺'
         ], () => {
             addOptions([
                 { label: 'あります！', emoji: '🥺', showLetter: false },
                 { label: '少しだけ…', emoji: '🐾', showLetter: false }
             ], () => {
                 botSays([
-                    '実は、迷ってしまうのは<br><strong>「選び方の基準」</strong>が<br>明確ではないからかもしれません。',
-                    'そこで今日は、<br>愛犬の気持ちを満たす<br><strong>「心の栄養」</strong>のヒントがわかる<br>5つのクイズをご用意しました！',
+                    '一生懸命に愛しているからこそ、<br>「なんで良くなってくれないの？」と<br>自分を責めて、怖い顔を見せてしまったり…',
+                    '実は、うまくいかないのは<br>目に見えない<strong>「心の栄養」</strong>が<br>見落とされているからかもしれません。',
+                    'そこで今日は、愛犬の気持ちを満たす<br>「心の栄養」のヒントがわかる<br>5つのクイズをご用意しました！',
                     '少しだけお時間よろしいですか？🐾<br>まずは、お名前を教えてください！'
                 ], () => askName());
             });
@@ -568,8 +569,8 @@ function showDiagResult() {
                 { label: 'どういうことですか？', emoji: '🌻', showLetter: false }
             ], () => {
                 botSays([
-                    `実は私、<br>管理栄養士として1,000人以上の飼い主さんを見てきて、1つ気づいたことがあるんです。`,
-                    `フードも変えた。<br>環境も整えた。<br>お散歩も頑張った。<br><br>栄養を全部やっても、<br>ダメな子がいる、と。`,
+                    `実は私、<br>過去の自分と同じように悩む飼い主さんをたくさん見てきて、1つ気づいたことがあるんです。`,
+                    `フードも変えた。<br>環境も整えた。<br>話題の療法も全部試した。<br><br>それでも良くならない…<br>そんな子がいる、と。`,
                     `何が『心の栄養』を<br>左右していたと思いますか？🐾`
                 ], () => {
                     addOptions([
@@ -600,7 +601,7 @@ function showStory() {
     botSays([
         `私の愛犬がね、<br><strong>急性膵炎</strong>になったんです。<br><br>しかも<strong>劇症膵炎</strong>で、<br>かなり状態が厳しくて…`,
         `治療の観察中に、<br><strong>大量の下血</strong>があって。<br><br>もうダメかもしれない…<br>本当にそう思いました。`,
-        `栄養のプロなのに、<br>最善を尽くしているのに、<br>なぜ？って。<br><br>自分を責めました。<br>ずっと、ずっと。`
+        `栄養のプロとして<br>「これをあげればいい」というのを<br>全部試してもダメで。<br><br>なぜ？って。<br>自分を激しく責めました。`
     ], () => {
         addOptions([
             { label: 'それは辛かったですね…', emoji: '😢', showLetter: false },
@@ -617,8 +618,8 @@ function showStory() {
                     botSays([
                         `心配し続ける時間を手放して、<br>看病をしながら、<br><strong>自分自身のケアも取り入れていく</strong><br>と決めました。`,
                         `するとね…<br><br>愛犬が、<strong>自分から<br>水を飲みに行った</strong>んです🥺<br><br>そこから劇的に回復しました。`,
-                        `栄養だけではなかった。<br><br>私の<strong>心配というエネルギー</strong>が、<br>愛犬に伝わってしまっていたのだと思います。<br><br>愛犬は<strong>命をかけて<br>教えてくれた先生</strong>でした🌻`,
-                        `だから、私が今お伝えしているのは<br>「<strong>正しい栄養の知識</strong>」と<br>「<strong>飼い主マインド</strong>」の両方が必要。<br><br>ということなんです。`
+                        `栄養だけではなかった。<br><br><strong>ストレスは栄養泥棒</strong>。<br>私の「心配というエネルギー」が<br>愛犬に伝わってしまっていたんです。<br><br>愛犬は命をかけて教えてくれた先生でした🌻`,
+                        `だから、私が今お伝えしているのは<br>数値改善への執着を手放し、<br>「<strong>本来の絆とマインド</strong>」を取り戻すこと。<br><br>ということなんです。`
                     ], () => {
                         addOptions([
                             { label: 'もっと詳しく知りたいです！', emoji: '💛', showLetter: false },
@@ -659,7 +660,7 @@ function showCTA() {
                     </div>
                 </div>
                 <div style="background:linear-gradient(135deg,var(--honey-light),#fff0e0);border:2px solid var(--honey);border-radius:14px;padding:12px;margin-bottom:14px;">
-                    <div style="font-size:11px;color:var(--honey-deep);font-weight:900;margin-bottom:4px;">🌻 管理栄養士×飼い主マインドの専門家が監修</div>
+                    <div style="font-size:11px;color:var(--honey-deep);font-weight:900;margin-bottom:4px;">🌻 栄養×飼い主マインドの専門家が監修</div>
                     <div style="font-size:14px;font-weight:900;color:var(--text);line-height:1.6;">
                         今だけ <span style="color:var(--coral-deep);font-size:16px;">無料</span> でプレゼント
                     </div>
@@ -679,7 +680,7 @@ function showCTA() {
         botSays([
             `${userName}さん、<br>ここまでお付き合いくださって<br>本当にありがとうございました 🐾`,
             `一番大切なのは、<br><strong>あなた自身の心の状態</strong>です🌻<br><br>もし飼い主さんが<br>笑顔になれない時は、<br>まず<strong>自分のケアを最優先</strong>に<br>してあげてください。`,
-            `巡り巡って、<br>それが${userDogName}ちゃんの<br>健康に届くことになります🐕💛<br><br>あなたが穏やかでいられたら、<br>${userDogName}ちゃんも穏やかになれる。<br><br>一人で抱え込まなくて大丈夫ですよ。<br>私が全力で寄り添いますからね🌻`
+            `あなたが穏やかでいられたら、<br>${userDogName}ちゃんも穏やかになれる。<br><br>一人で抱え込まなくて大丈夫ですよ。<br>一緒に、<strong>「3年後もハグする未来」</strong>を<br>作っていきましょう🐾💛`
         ]);
     }, 500);
 }
