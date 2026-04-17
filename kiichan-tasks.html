@@ -1243,9 +1243,13 @@
     
     // 日付の降順
     const sorted = [...logs].sort((a, b) => b.date.localeCompare(a.date));
-    sorted.forEach(l => {
+    sorted.forEach((l, idx) => {
       const card = document.createElement('div');
       card.className = 'log-card';
+      
+      const htmlContent = typeof marked !== 'undefined' ? marked.parse(l.content) : linkify(l.content);
+      const isOpen = idx === 0 ? 'open' : ''; // 最新の1件目だけ開いておく
+
       card.innerHTML = `
         <div class="log-header">
           <div class="log-date">${l.date}</div>
@@ -1254,11 +1258,48 @@
             <button class="btn" style="padding:4px 8px; font-size:11px;" onclick="deleteLog('${l.id}')">削除</button>
           </div>
         </div>
-        <div class="log-topic">📌 ${l.topic}</div>
-        <div class="log-content markdown-body" style="margin-top: 12px;">${typeof marked !== 'undefined' ? marked.parse(l.content) : linkify(l.content)}</div>
+        <details ${isOpen} style="margin-top: 8px;">
+          <summary class="log-topic" style="cursor:pointer; display:flex; align-items:center; justify-content:space-between; list-style:none; padding: 4px 0;">
+            <span style="font-weight:900;">📌 ${l.topic}</span>
+            <span style="font-size:10px; color:#c4a24e;">▼ 開く/閉じる</span>
+          </summary>
+          <div class="log-content markdown-body" style="margin-top: 12px; padding-top:12px; border-top:1px dashed rgba(196,162,78,0.2);">${htmlContent}</div>
+        </details>
       `;
       container.appendChild(card);
+
+      // Markdown生成のチェックボックスにイベントを付与する
+      const checkboxes = card.querySelectorAll('.log-content input[type="checkbox"]');
+      checkboxes.forEach((cb, index) => {
+        cb.removeAttribute('disabled');
+        cb.style.cursor = 'pointer';
+        cb.onchange = (e) => toggleLogCheckbox(l.id, index, e.target.checked);
+      });
     });
+  }
+
+  function toggleLogCheckbox(id, checkboxIndex, isChecked) {
+    const logIndex = logs.findIndex(x => x.id === id);
+    if (logIndex < 0) return;
+    
+    let content = logs[logIndex].content;
+    let currentIdx = 0;
+    
+    content = content.replace(/- \[[ xX]\]/g, (match) => {
+      if (currentIdx === checkboxIndex) {
+        currentIdx++;
+        return isChecked ? '- [x]' : '- [ ]';
+      }
+      currentIdx++;
+      return match;
+    });
+    
+    logs[logIndex].content = content;
+    
+    if (typeof dbUpdateLog === 'function') {
+      const l = logs[logIndex];
+      dbUpdateLog(l.id, { date: l.date, topic: l.topic, content: l.content });
+    }
   }
 
   function openLogModal(id = null) {
