@@ -653,11 +653,15 @@ function showStory() {
                         ], (idx, opt) => {
                             if (opt.emoji === '😔') {
                                 botSays([
-                                    `大丈夫ですよ、無理なさらないでくださいね🐾<br><br>でも…<br>${userDogName}ちゃんのために<br>ひとつだけ、<br><strong>特別な動画</strong>をお届けしたくて🎁<br><br>観るだけで、きっとヒントになるはずです💛`
+                                    `大丈夫ですよ、無理なさらないでくださいね🐾<br>一人で抱え込まず、ご自身のペースを大切にしてください。`,
+                                    `${userName}さんがここまで${userDogName}ちゃんに<br>向き合っていること、それ自体が<br>もう立派な愛情の証拠ですよ🌻`,
+                                    `でも…<br>${userDogName}ちゃんのために<br>ひとつだけ、<br><strong>特別な動画</strong>をお届けしたくて🎁<br><br>観るだけで、きっと心が軽くなるはずです💛`
                                 ], () => showCTA());
                             } else {
                                 botSays([
-                                    `うれしいです！💛<br><br>${userName}さんと<br>${userDogName}ちゃんのために、<br>特別な<strong>動画プレゼント</strong>を<br>ご用意しています🎁`
+                                    `うれしいです！💛`,
+                                    `大切なのは、病気と闘うことよりも<br>${userName}さんが笑顔でいられること。<br><br>${userName}さんがここまで${userDogName}ちゃんに<br>向き合っている想い、絶対に伝わっています🐾`,
+                                    `そんな${userName}さんと<br>${userDogName}ちゃんのために、<br>特別な<strong>動画プレゼント</strong>を<br>ご用意しました🎁`
                                 ], () => showCTA());
                             }
                         });
