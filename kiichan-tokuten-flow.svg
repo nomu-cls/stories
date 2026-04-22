@@ -133,12 +133,12 @@
   <rect x="120" y="1105" width="760" height="270" rx="18" fill="#fff" stroke="#85bdd9" stroke-width="2" filter="url(#shadow)"/>
   <rect x="120" y="1105" width="760" height="38" rx="18" fill="url(#skyGrad)"/>
   <rect x="120" y="1125" width="760" height="18" fill="url(#skyGrad)"/>
-  <text x="150" y="1130" fill="#fff" font-size="14" font-weight="900">💎 Part 3：愛犬からのラブレター — 鏡の法則（3〜4分）</text>
+  <text x="150" y="1130" fill="#fff" font-size="14" font-weight="900">💎 Part 3：愛犬からのメッセージ — 思考のクセ（3〜4分）</text>
   <text x="150" y="1165" fill="#4a3a2a" font-size="12" font-weight="700">🎯 目的：問題の捉え方を180度変える</text>
 
   <text x="150" y="1195" fill="#4a3a2a" font-size="12">「不安になりたくてなっているわけじゃないですよね。</text>
   <text x="158" y="1213" fill="#4a3a2a" font-size="12">実は、愛犬の行動は…</text>
-  <text x="158" y="1235" fill="#d4a017" font-size="14" font-weight="900">『あなた自身の心の投影＝愛犬からのラブレター💌』</text>
+  <text x="158" y="1235" fill="#d4a017" font-size="14" font-weight="900">『あなた自身の心の投影＝愛犬からのメッセージ💌』</text>
 
   <rect x="150" y="1255" width="340" height="55" rx="12" fill="#edf5fa" stroke="#85bdd9" stroke-width="1"/>
   <text x="170" y="1275" fill="#4a3a2a" font-size="11" font-weight="700">🐕 犬が落ち着きがない → ⬇️</text>
@@ -199,7 +199,7 @@
 
   <rect x="130" y="1845" width="740" height="50" rx="14" fill="url(#honeyGrad)" opacity="0.15"/>
   <text x="500" y="1865" text-anchor="middle" fill="#d4a017" font-size="11" font-weight="700" letter-spacing="3">🌟 モニター限定 ●名様</text>
-  <text x="500" y="1888" text-anchor="middle" fill="#4a3a2a" font-size="18" font-weight="900">愛犬からのラブレター翻訳セッション 💌</text>
+  <text x="500" y="1888" text-anchor="middle" fill="#4a3a2a" font-size="18" font-weight="900">愛犬からのメッセージ翻訳セッション 💌</text>
 
   <text x="170" y="1925" fill="#4a3a2a" font-size="12" font-weight="700">セッションで得られること：</text>
 
@@ -228,7 +228,7 @@
   <text x="200" y="2248" fill="#777" font-size="11">「ハッ！私やってる…」→ 当事者意識</text>
 
   <text x="150" y="2271" fill="#4a3a2a" font-size="11" font-weight="700">Part 3</text>
-  <text x="200" y="2271" fill="#777" font-size="11">「犬は鏡。ラブレターだった」→ パラダイムシフト</text>
+  <text x="200" y="2271" fill="#777" font-size="11">「犬は鏡。行動はメッセージだった」→ パラダイムシフト</text>
 
   <text x="150" y="2294" fill="#4a3a2a" font-size="11" font-weight="700">Part 4</text>
   <text x="200" y="2294" fill="#777" font-size="11">「笑顔でいればいい？→無理→潜在意識→一人じゃ見えない」→ 自然なCTA</text>
@@ -236,7 +236,7 @@
   <!-- Bottom bar -->
   <rect x="150" y="2340" width="700" height="25" rx="8" fill="none" stroke="#d4a017" stroke-width="1" stroke-dasharray="4,3"/>
   <text x="500" y="2358" text-anchor="middle" fill="#a09080" font-size="10" font-weight="600">
-    科学（迷走神経）→ 気づき（ストレス行動）→ 転換（ラブレター）→ 潜在意識（一人じゃ無理）→ 予約
+    科学（迷走神経）→ 気づき（ストレス行動）→ 転換（メッセージ）→ 潜在意識（一人じゃ無理）→ 予約
   </text>
 </svg>
 

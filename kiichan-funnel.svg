@@ -84,7 +84,7 @@
 
   <rect x="195" y="535" width="295" height="50" rx="10" fill="#edf5fa" stroke="#85bdd9" stroke-width="1"/>
   <text x="215" y="557" fill="#4a3a2a" font-size="10" font-weight="700">🎥 特典動画（10-15分）</text>
-  <text x="215" y="573" fill="#777" font-size="9">鏡の法則 → 限界提示 → セッション案内</text>
+  <text x="215" y="573" fill="#777" font-size="9">思考のクセ → 限界提示 → セッション案内</text>
 
   <rect x="510" y="535" width="295" height="50" rx="10" fill="#edf5fa" stroke="#85bdd9" stroke-width="1"/>
   <text x="530" y="557" fill="#4a3a2a" font-size="10" font-weight="700">📝 PDF チェックシート</text>
@@ -103,7 +103,7 @@
   <rect x="185" y="702" width="630" height="18" fill="url(#lavGrad)"/>
   <text x="215" y="710" fill="#fff" font-size="13" font-weight="900">💌 個別モニターセッション</text>
   <text x="680" y="710" text-anchor="end" fill="#fff" font-size="10" font-weight="600">モニター限定●名</text>
-  <text x="215" y="747" fill="#4a3a2a" font-size="11" font-weight="700">愛犬からのラブレター翻訳（栄養面＋マインド面）</text>
+  <text x="215" y="747" fill="#4a3a2a" font-size="11" font-weight="700">愛犬からのメッセージ翻訳（栄養面＋マインド面）</text>
   <text x="215" y="767" fill="#777" font-size="10">• こじらせマインドを一緒に紐解く個別セッション</text>
   <text x="215" y="787" fill="#777" font-size="10">• セッション後アンケートで事例・声を収集</text>
   <text x="215" y="808" fill="#d4a017" font-size="10" font-weight="700">💰 通常価格 ¥XX,XXX → モニター特別価格 ¥X,XXX</text>
