@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>共感マップ — こじらせ飼い主マインド</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --honey: #f5c542; --honey-deep: #d4a017; --honey-light: #fff9e6;
+            --peach: #f7b89c; --peach-deep: #e8926e;
+            --coral: #f2988e; --coral-deep: #e06b6b;
+            --sage: #8cb88a; --sage-light: #eef6ee;
+            --sky: #85bdd9; --sky-light: #edf5fa;
+            --lavender: #b8a9d8; --lavender-light: #f3f0fa;
+            --brown: #c49a6c; --brown-light: #faf1e6;
+            --bg: #fffcf5; --text: #4a3a2a; --muted: #a09080;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Zen Maru Gothic', sans-serif;
+            background: linear-gradient(180deg, #fffcf5 0%, #fff5e8 50%, #fef0e0 100%);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        /* ── Header ── */
+        .page-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .page-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--honey), var(--peach));
+            color: #fff; font-size: 10px; font-weight: 700;
+            padding: 4px 16px; border-radius: 20px;
+            letter-spacing: 3px; margin-bottom: 12px;
+        }
+        .page-header h1 {
+            font-size: 28px; font-weight: 900;
+            line-height: 1.5;
+        }
+        .page-header h1 em {
+            font-style: normal;
+            background: linear-gradient(transparent 60%, rgba(245,197,66,0.3) 60%);
+        }
+        .page-header .sub {
+            font-size: 13px; color: var(--muted); margin-top: 8px; line-height: 1.6;
+        }
+
+        /* ── Persona Card ── */
+        .persona-card {
+            max-width: 800px; margin: 0 auto 32px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 24px 28px;
+            box-shadow: 0 4px 24px rgba(245,197,66,0.1);
+            border: 2px solid rgba(245,197,66,0.15);
+            display: flex; align-items: center; gap: 20px;
+        }
+        .persona-avatar {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--honey-light), #fff0e0);
+            border: 3px solid var(--honey);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 40px; flex-shrink: 0;
+        }
+        .persona-info { flex: 1; }
+        .persona-name { font-size: 18px; font-weight: 900; margin-bottom: 4px; }
+        .persona-desc { font-size: 12px; color: var(--muted); line-height: 1.7; }
+        .persona-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+        .persona-tag {
+            font-size: 10px; font-weight: 700;
+            padding: 3px 10px; border-radius: 20px;
+            background: var(--honey-light); color: var(--honey-deep);
+            border: 1px solid rgba(245,197,66,0.3);
+        }
+
+        /* ── Empathy Grid ── */
+        .empathy-grid {
+            max-width: 1100px; margin: 0 auto 32px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 16px;
+        }
+        .empathy-cell {
+            background: #fff;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .empathy-cell:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+        .empathy-cell::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px; border-radius: 20px 20px 0 0;
+        }
+        .cell-think::before { background: linear-gradient(90deg, #e06b6b, #f2988e); }
+        .cell-see::before { background: linear-gradient(90deg, #85bdd9, #6bb3d9); }
+        .cell-hear::before { background: linear-gradient(90deg, #8cb88a, #6baf69); }
+        .cell-say::before { background: linear-gradient(90deg, #f5c542, #f7b89c); }
+        .cell-pain { grid-column: 1; }
+        .cell-pain::before { background: linear-gradient(90deg, #b8a9d8, #9a8bc0); }
+        .cell-gain { grid-column: 2; }
+        .cell-gain::before { background: linear-gradient(90deg, #f5c542, #d4a017); }
+
+        .cell-header {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 16px;
+        }
+        .cell-icon {
+            width: 40px; height: 40px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; flex-shrink: 0;
+        }
+        .cell-think .cell-icon { background: #fef0f0; }
+        .cell-see .cell-icon { background: var(--sky-light); }
+        .cell-hear .cell-icon { background: var(--sage-light); }
+        .cell-say .cell-icon { background: var(--honey-light); }
+        .cell-pain .cell-icon { background: var(--lavender-light); }
+        .cell-gain .cell-icon { background: #fffde6; }
+
+        .cell-title {
+            font-size: 15px; font-weight: 900;
+        }
+        .cell-think .cell-title { color: var(--coral-deep); }
+        .cell-see .cell-title { color: #5a9ab5; }
+        .cell-hear .cell-title { color: #5a9a58; }
+        .cell-say .cell-title { color: var(--honey-deep); }
+        .cell-pain .cell-title { color: #8a7bb0; }
+        .cell-gain .cell-title { color: var(--honey-deep); }
+
+        .cell-subtitle {
+            font-size: 10px; color: var(--muted); font-weight: 500;
+        }
+
+        /* ── Items ── */
+        .item-list { list-style: none; }
+        .item-list li {
+            display: flex; align-items: flex-start; gap: 8px;
+            padding: 8px 12px; margin-bottom: 6px;
+            border-radius: 10px; font-size: 13px; line-height: 1.7;
+            transition: background 0.15s;
+        }
+        .item-list li:hover { background: rgba(245,197,66,0.06); }
+        .item-list li .bullet {
+            flex-shrink: 0; margin-top: 3px; font-size: 14px;
+        }
+        .item-list .quote {
+            font-style: italic; color: #888;
+            font-size: 12px; margin-top: 2px;
+        }
+        .item-list .source {
+            font-size: 10px; color: var(--muted);
+            font-weight: 700; letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        /* Pain/Gain special */
+        .cell-pain li {
+            background: rgba(184,169,216,0.08);
+            border-left: 3px solid rgba(184,169,216,0.4);
+        }
+        .cell-gain li {
+            background: rgba(245,197,66,0.08);
+            border-left: 3px solid rgba(245,197,66,0.4);
+        }
+
+        /* ── Insight Section ── */
+        .insight-section {
+            max-width: 1100px; margin: 0 auto 32px;
+        }
+        .insight-card {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff0e0 50%, #fce8d8 100%);
+            border: 2px solid rgba(245,197,66,0.25);
+            border-radius: 20px;
+            padding: 28px 32px;
+        }
+        .insight-card h2 {
+            font-size: 18px; font-weight: 900;
+            margin-bottom: 16px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .insight-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px;
+        }
+        .insight-item {
+            background: #fff;
+            border-radius: 14px;
+            padding: 18px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+        }
+        .insight-item .ii-icon {
+            font-size: 28px; margin-bottom: 8px;
+        }
+        .insight-item .ii-title {
+            font-size: 13px; font-weight: 900; color: var(--honey-deep);
+            margin-bottom: 6px;
+        }
+        .insight-item .ii-desc {
+            font-size: 11px; color: #777; line-height: 1.7;
+        }
+
+        /* ── Journey connection ── */
+        .journey-connect {
+            max-width: 1100px; margin: 0 auto 32px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 28px 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        }
+        .journey-connect h2 {
+            font-size: 18px; font-weight: 900;
+            margin-bottom: 16px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .jc-table {
+            width: 100%; border-collapse: collapse; font-size: 12px;
+        }
+        .jc-table th {
+            background: linear-gradient(135deg, var(--honey-light), #fff0e0);
+            padding: 10px 14px; text-align: left; font-weight: 700;
+            color: var(--honey-deep);
+            border-bottom: 2px solid rgba(245,197,66,0.2);
+        }
+        .jc-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #f5f0e8;
+            vertical-align: top; line-height: 1.7;
+        }
+        .jc-table tr:last-child td { border-bottom: none; }
+        .jc-table .emotion-tag {
+            display: inline-block;
+            font-size: 10px; font-weight: 700;
+            padding: 2px 8px; border-radius: 10px;
+            margin: 2px;
+        }
+        .emotion-tag.negative { background: #fef0f0; color: var(--coral-deep); }
+        .emotion-tag.positive { background: #eef6ee; color: #5a9a58; }
+        .emotion-tag.neutral { background: var(--sky-light); color: #5a9ab5; }
+
+        /* ── Footer ── */
+        .footer {
+            text-align: center; padding: 32px;
+            font-size: 11px; color: var(--muted);
+        }
+
+        @media (max-width: 768px) {
+            .empathy-grid {
+                grid-template-columns: 1fr;
+            }
+            .cell-pain, .cell-gain { grid-column: 1; }
+            .insight-grid { grid-template-columns: 1fr; }
+            .persona-card { flex-direction: column; text-align: center; }
+            .persona-tags { justify-content: center; }
+        }
+
+        @media print {
+            body { background: #fff; padding: 10px; }
+            .empathy-cell { box-shadow: none; border: 1px solid #eee; }
+            .empathy-cell:hover { transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="page-header">
+        <div class="page-badge">🐾 EMPATHY MAP</div>
+        <h1>「<em>こじらせ飼い主マインド</em>」<br>共感マップ</h1>
+        <p class="sub">治療に行き詰まった飼い主さんの世界を理解する 🌻</p>
+    </div>
+
+    <!-- Persona -->
+    <div class="persona-card">
+        <div class="persona-avatar">👩</div>
+        <div class="persona-info">
+            <div class="persona-name">過去のきいちゃん（= 理想のお客様像）</div>
+            <div class="persona-desc">
+                40代半ば。小型犬（ミニチュアシュナウザー）シニア前後の1匹飼い。<br>
+                シングル or 子どもの手がかからない世代。ワンちゃんが子ども代わり。<br>
+                フードもサプリも自然療法も試したけれど、良くならない。安心を探して彷徨っている。
+            </div>
+            <div class="persona-tags">
+                <span class="persona-tag">40代半ば</span>
+                <span class="persona-tag">小型犬 1匹飼い</span>
+                <span class="persona-tag">シニア犬（8〜10歳）</span>
+                <span class="persona-tag">治療に行き詰まり</span>
+                <span class="persona-tag">ネット検索で情報収集</span>
+                <span class="persona-tag">孤立感</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empathy Grid -->
+    <div class="empathy-grid">
+
+        <!-- Think & Feel -->
+        <div class="empathy-cell cell-think">
+            <div class="cell-header">
+                <div class="cell-icon">🧠</div>
+                <div>
+                    <div class="cell-title">考えていること・感じていること</div>
+                    <div class="cell-subtitle">THINK & FEEL</div>
+                </div>
+            </div>
+            <ul class="item-list">
+                <li>
+                    <span class="bullet">😰</span>
+                    <div>
+                        <strong>「こんなに頑張っているのに、なんで良くならないの？」</strong>
+                        <div class="quote">→ 努力と結果のギャップに苦しんでいる</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">😢</span>
+                    <div>
+                        <strong>「私はダメな飼い主なんだ」</strong>
+                        <div class="quote">→ 深い自己否定。怖い顔を見せてしまった後悔</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">😟</span>
+                    <div>
+                        <strong>「この病気はこう進行するよね…」パターンが見えてしまう</strong>
+                        <div class="quote">→ 知識があるからこそ先が見えて、不安が増幅</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">🥺</span>
+                    <div>
+                        <strong>「お願いだから、いかないで…」</strong>
+                        <div class="quote">→ 片時も離れられない愛犬依存の状態</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">💭</span>
+                    <div>
+                        <strong>「治療の選択に自信が持てない」</strong>
+                        <div class="quote">→ 他人の意見に振り回される。自分基準がない</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">🔄</span>
+                    <div>
+                        <strong>「治らない＝効果がない」と思い込んでいる</strong>
+                        <div class="quote">→ 現状維持＝成功という視点がない</div>
+                        <div class="source">SESSION INSIGHT</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- See -->
+        <div class="empathy-cell cell-see">
+            <div class="cell-header">
+                <div class="cell-icon">👁️</div>
+                <div>
+                    <div class="cell-title">見ているもの</div>
+                    <div class="cell-subtitle">SEE</div>
+                </div>
+            </div>
+            <ul class="item-list">
+                <li>
+                    <span class="bullet">📱</span>
+                    <div>
+                        <strong>ネット検索の似たような情報の繰り返し</strong>
+                        <div class="quote">→ 腎臓ならこのフード、膵炎ならあれ…パターン化された情報</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">🏥</span>
+                    <div>
+                        <strong>獣医さんの「こういうものです」という態度</strong>
+                        <div class="quote">→ 踏み込んだアドバイスがもらえない</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">🐕</span>
+                    <div>
+                        <strong>療法食を拒否する愛犬の姿</strong>
+                        <div class="quote">→ 「美味しくないご飯」を前に食べない犬を見る毎日</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">📊</span>
+                    <div>
+                        <strong>下がらない検査数値、進行するステージ</strong>
+                        <div class="quote">→ 努力が数字に表れない絶望感</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">🐶</span>
+                    <div>
+                        <strong>SNSで幸せそうな犬と飼い主の投稿</strong>
+                        <div class="quote">→ 「うちはなぜ…」という比較と落ち込み</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">😨</span>
+                    <div>
+                        <strong>ガリガリに痩せていく愛犬、食べない姿</strong>
+                        <div class="quote">→ 目に見える衰えが恐怖を加速させる</div>
+                        <div class="source">SESSION INSIGHT</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Hear -->
+        <div class="empathy-cell cell-hear">
+            <div class="cell-header">
+                <div class="cell-icon">👂</div>
+                <div>
+                    <div class="cell-title">聞いていること</div>
+                    <div class="cell-subtitle">HEAR</div>
+                </div>
+            </div>
+            <ul class="item-list">
+                <li>
+                    <span class="bullet">🩺</span>
+                    <div>
+                        <strong>獣医「まぁ、これはこういうものですよ」</strong>
+                        <div class="quote">→ 突き放された感覚。もっと寄り添ってほしい</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">👨‍👩‍👦</span>
+                    <div>
+                        <strong>家族「そんなに心配しなくても…」</strong>
+                        <div class="quote">→ 温度差。自分だけが真剣で孤立する</div>
+                        <div class="source">SESSION INSIGHT</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">💬</span>
+                    <div>
+                        <strong>ネットの矛盾する情報「これがいい」「いやダメ」</strong>
+                        <div class="quote">→ 信頼できる情報源がない不安</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">🐕‍🦺</span>
+                    <div>
+                        <strong>トレーナー「飼い主さんがちゃんとしないと」</strong>
+                        <div class="quote">→ 方法は教えてもらえない。ダメ出しだけされる</div>
+                        <div class="source">TTP先（飯村氏）</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">👥</span>
+                    <div>
+                        <strong>周囲「うちの子は元気だよ〜」</strong>
+                        <div class="quote">→ 悩みを共有できる相手がいない</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">🔇</span>
+                    <div>
+                        <strong>自分の内なる声「もっとやれたはず…」</strong>
+                        <div class="quote">→ 終わらない自分責めのループ</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Say & Do -->
+        <div class="empathy-cell cell-say">
+            <div class="cell-header">
+                <div class="cell-icon">💬</div>
+                <div>
+                    <div class="cell-title">言っていること・やっていること</div>
+                    <div class="cell-subtitle">SAY & DO</div>
+                </div>
+            </div>
+            <ul class="item-list">
+                <li>
+                    <span class="bullet">🙇</span>
+                    <div>
+                        <strong>愛犬に「ごめんね」と繰り返し言う</strong>
+                        <div class="quote">→ 罪悪感の声色が犬に不安として伝わっている</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">🔍</span>
+                    <div>
+                        <strong>毎晩ネットで「犬 ○○ 治療法」を検索する</strong>
+                        <div class="quote">→ 安心を求めた終わりのない情報収集</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">💊</span>
+                    <div>
+                        <strong>サプリ・療法食・自然療法を次々と試す</strong>
+                        <div class="quote">→ 手当たり次第。試して→ダメ→次を探すループ</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">👀</span>
+                    <div>
+                        <strong>食事中もじっと愛犬を見張っている</strong>
+                        <div class="quote">→ 監視が犬のストレスになっていることに気づいていない</div>
+                        <div class="source">TTP先（飯村氏受講生事例）</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">😤</span>
+                    <div>
+                        <strong>イライラして怖い顔を見せてしまう</strong>
+                        <div class="quote">→ 「なんで良くならないの！」の後に自己嫌悪</div>
+                        <div class="source">SESSION INSIGHT（お客様の実例）</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">🤐</span>
+                    <div>
+                        <strong>深刻な悩みを誰にも言えず我慢する</strong>
+                        <div class="quote">→ 「こんなこと言っても理解されない」</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Pain -->
+        <div class="empathy-cell cell-pain">
+            <div class="cell-header">
+                <div class="cell-icon">💔</div>
+                <div>
+                    <div class="cell-title">痛み・フラストレーション</div>
+                    <div class="cell-subtitle">PAIN</div>
+                </div>
+            </div>
+            <ul class="item-list">
+                <li>
+                    <span class="bullet">⚡</span>
+                    <div>
+                        <strong>何をやっても良くならない無力感</strong>
+                        <div class="quote">フード変更→サプリ→自然療法→全部ダメ…の果て</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">⚡</span>
+                    <div>
+                        <strong>「怖い顔を見せてしまった」という後悔</strong>
+                        <div class="quote">最期の時間を笑顔で過ごせなかった罪悪感</div>
+                        <div class="source">お客様実例（がんで旅立った子）</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">⚡</span>
+                    <div>
+                        <strong>家族との温度差・ドクターへの不信感</strong>
+                        <div class="quote">真剣なのは自分だけ。味方がいない孤独</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">⚡</span>
+                    <div>
+                        <strong>自分を責め続ける地獄のループ</strong>
+                        <div class="quote">「もっとやれたのに」→自己否定→さらに焦る→犬に伝わる</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">⚡</span>
+                    <div>
+                        <strong>病気の進行パターンが見えてしまう恐怖</strong>
+                        <div class="quote">「この先こうなる」のが分かるから、怖くて動けない</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">⚡</span>
+                    <div>
+                        <strong>飼い主のストレスが犬に伝わる負のスパイラル</strong>
+                        <div class="quote">心配→怖い顔→犬が不安→症状悪化→さらに心配…</div>
+                        <div class="source">コルチゾール連動（科学的根拠）</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Gain -->
+        <div class="empathy-cell cell-gain">
+            <div class="cell-header">
+                <div class="cell-icon">🌟</div>
+                <div>
+                    <div class="cell-title">望んでいること・得たいもの</div>
+                    <div class="cell-subtitle">GAIN</div>
+                </div>
+            </div>
+            <ul class="item-list">
+                <li>
+                    <span class="bullet">✨</span>
+                    <div>
+                        <strong>治療の選択に自信を持ちたい</strong>
+                        <div class="quote">「自分基準でちゃんと選べた」という納得感</div>
+                        <div class="source">SESSION INSIGHT</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">✨</span>
+                    <div>
+                        <strong>犬の寿命を受け入れられるようになりたい</strong>
+                        <div class="quote">悲しみの中ではなく、愛の中で看取れる状態</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">✨</span>
+                    <div>
+                        <strong>3年後もハグできる未来を作りたい</strong>
+                        <div class="quote">余力を残した穏やかな関係の構築</div>
+                        <div class="source">きいちゃんのコンセプト</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">✨</span>
+                    <div>
+                        <strong>「病気を治すこと」へのこだわりから解放されたい</strong>
+                        <div class="quote">→ 犬の命を肯定し、本来の絆を取り戻す</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">✨</span>
+                    <div>
+                        <strong>犬が本当に伝えたいメッセージを受け取りたい</strong>
+                        <div class="quote">問題行動の裏にある「ラブレター」に気づける状態</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="bullet">✨</span>
+                    <div>
+                        <strong>自分自身が楽になりたい</strong>
+                        <div class="quote">不安でいっぱいの日々から、穏やかで笑顔の日々へ</div>
+                        <div class="source">SESSION INSIGHT</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- Key Insight -->
+    <div class="insight-section">
+        <div class="insight-card">
+            <h2>🔑 核心インサイト — 「こじらせ飼い主マインド」が生まれるメカニズム</h2>
+            <div class="insight-grid">
+                <div class="insight-item">
+                    <div class="ii-icon">💛</div>
+                    <div class="ii-title">深い愛情がある</div>
+                    <div class="ii-desc">
+                        大切な存在だからこそ<br>
+                        「なんとかしたい」が止まらない。<br>
+                        一生懸命に愛しているからこそ<br>
+                        苦しんでいる。
+                    </div>
+                </div>
+                <div class="insight-item">
+                    <div class="ii-icon">🔄</div>
+                    <div class="ii-title">努力が裏目に出る</div>
+                    <div class="ii-desc">
+                        フード変更・サプリ・療法…<br>
+                        試すほどに焦りが増し、<br>
+                        <strong>ストレスが栄養泥棒</strong>になる。<br>
+                        犬にも伝わる負のスパイラル。
+                    </div>
+                </div>
+                <div class="insight-item">
+                    <div class="ii-icon">🪞</div>
+                    <div class="ii-title">犬は飼い主の鏡</div>
+                    <div class="ii-desc">
+                        飼い主がイライラ → 犬も不安。<br>
+                        飼い主が笑顔 → 犬も穏やか。<br>
+                        <strong>犬の問題 ≠ 犬だけの問題</strong><br>
+                        ここに気づくのが出発点。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Journey Connection -->
+    <div class="journey-connect">
+        <h2>🗺️ 共感マップ → コンテンツ設計への接続</h2>
+        <table class="jc-table">
+            <thead>
+                <tr>
+                    <th style="width:25%">ペルソナの感情</th>
+                    <th style="width:35%">刺さるコンテンツ（YouTube / Insta）</th>
+                    <th style="width:20%">狙う心理変化</th>
+                    <th style="width:20%">誘導先</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span class="emotion-tag negative">何をやってもダメ</span>
+                        <span class="emotion-tag negative">無力感</span>
+                    </td>
+                    <td>「犬が食べてくれない本当の理由、獣医さんは教えてくれません」</td>
+                    <td>
+                        <span class="emotion-tag neutral">驚き</span>
+                        <span class="emotion-tag neutral">希望</span>
+                    </td>
+                    <td>心の栄養クイズ →</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="emotion-tag negative">ごめんねの罪悪感</span>
+                    </td>
+                    <td>「愛犬に『ごめんね』って言い続けてませんか？ それ逆効果です」</td>
+                    <td>
+                        <span class="emotion-tag neutral">ドキッ</span>
+                        <span class="emotion-tag neutral">自分ごと化</span>
+                    </td>
+                    <td>心の栄養クイズ →</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="emotion-tag negative">イライラ → 自己嫌悪</span>
+                    </td>
+                    <td>「犬の問題行動は飼い主の●●が鏡のように映っています」</td>
+                    <td>
+                        <span class="emotion-tag neutral">ハッとする</span>
+                        <span class="emotion-tag positive">解決の糸口</span>
+                    </td>
+                    <td>LINE登録 →</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="emotion-tag negative">孤立感・誰にも言えない</span>
+                    </td>
+                    <td>「私の愛犬が劇症膵炎に…栄養のプロなのに何もできなかった話」</td>
+                    <td>
+                        <span class="emotion-tag positive">共感</span>
+                        <span class="emotion-tag positive">信頼</span>
+                    </td>
+                    <td>LINE登録 →</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="emotion-tag negative">治療の選択に自信がない</span>
+                    </td>
+                    <td>「こじらせ飼い主チェック」（チェックリスト型Reel）</td>
+                    <td>
+                        <span class="emotion-tag neutral">当事者意識</span>
+                        <span class="emotion-tag positive">名前がつく安心</span>
+                    </td>
+                    <td>セッション →</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        🐾 共感マップ — こじらせ飼い主マインド ｜ きいちゃん 事業設計 ｜ Inside Story<br>
+        前回セッション（2026/04/17）の内容 ＋ TTP先分析 をもとに作成
+    </div>
+
+</body>
+</html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>犬のきもち、わかってる？クイズ — 私たちの心の栄養診断</title>
-    <meta name="description" content="栄養×飼い主マインドの専門家が教える、愛犬の心と体の健康クイズ。3分であなたとワンちゃんの関係を見直すきっかけに。">
+    <meta name="description" content="ペット栄養管理士・管理栄養士が教える、愛犬の心と体の健康クイズ。3分であなたとワンちゃんの関係を見直すきっかけに。">
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -226,7 +226,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="header-avatar"><img src="kiichan.jpeg" style="width:100%; height:100%; object-fit:cover;"></div>
+            <div class="header-avatar"><img src="b323df8f-74fb-45ec-ac26-8ace96ad06de.jpeg" style="width:100%; height:100%; object-fit:cover;"></div>
             <div class="header-info">
                 <h3>🌻 犬のきもち、わかってる？クイズ <span class="ai-badge">無料</span></h3>
                 <p><span class="dot"></span> <span>愛犬の幸せ度チェック 🐾</span></p>
@@ -239,7 +239,7 @@
     </div>
 
 <script>
-const AVATAR = '<img src="kiichan.jpeg" style="width:100%; height:100%; object-fit:cover;">';
+const AVATAR = '<img src="b323df8f-74fb-45ec-ac26-8ace96ad06de.jpeg" style="width:100%; height:100%; object-fit:cover;">';
 
 /* ── State ── */
 let userName = '';
@@ -385,13 +385,13 @@ function startChat() {
                 犬のきもち、わかってる？<br>「心の栄養」充足度クイズ
             </div>
             <div style="width:40px;height:2px;background:linear-gradient(90deg,var(--honey),var(--peach));margin:12px auto;border-radius:1px;"></div>
-            <div style="font-size:11px;color:var(--muted);line-height:1.6;">無料 ／ 全5問 ／ 栄養×飼い主マインドの専門家監修 🌻</div>
+            <div style="font-size:11px;color:var(--muted);line-height:1.6;">無料 ／ 全5問 ／ ペット栄養管理士・管理栄養士監修 🌻</div>
         </div>`;
     addCustomHTML(ticket);
 
     setTimeout(() => {
         botSays([
-            'こんにちは！🌻<br><br>栄養×飼い主マインドの専門家、<br><strong>きいちゃん先生</strong>です。<br>来てくださってありがとうございます🐾',
+            'こんにちは！🌻<br><br>ペット栄養管理士・管理栄養士の<br><strong>きいちゃん先生</strong>です。<br>来てくださってありがとうございます🐾',
             '「病院食を食べてくれない…」<br>「いろいろ試したけど、良くならない…」<br><br>愛犬の病気や健康への漠然とした不安、<br>治療に行き詰まりを感じたことはありませんか？🥺'
         ], () => {
             addOptions([
@@ -487,10 +487,13 @@ function handleAnswer(selectedIdx) {
     const isCorrect = selectedIdx === q.correct;
     if (isCorrect) score += 20;
 
+    const correctReplies = ['✅ 大正解！', '✅ その通りです✨', '✅ さすがです！', '✅ 素晴らしいです🐾'];
+    const wrongReplies = ['惜しい！正解は「', 'なるほどです！正解は「', 'そう思いがちですよね☺️ 正解は「', '実は違うんです🐾 正解は「'];
+
     const explainHtml = `
         <div class="explain-card ${isCorrect ? '' : 'wrong'}">
             <div style="font-weight:900; color:${isCorrect ? 'var(--sage)' : 'var(--peach-deep)'}; margin-bottom:8px;">
-                ${isCorrect ? '✅ 大正解！' : '惜しい！正解は「' + q.opts[q.correct].label + '」です'}
+                ${isCorrect ? correctReplies[currentQ % correctReplies.length] : wrongReplies[currentQ % wrongReplies.length] + q.opts[q.correct].label + '」です'}
             </div>
             ${q.explain}
             <div style="margin-top:10px; padding-top:8px; border-top:1px dashed rgba(0,0,0,0.1); font-size:11px; color:#666;">
@@ -527,9 +530,8 @@ function handleAnswer(selectedIdx) {
 
 function showFinalMessage() {
     botSays([
-        `${userName}さん、<br>ここまでお付き合いくださって<br>本当にありがとうございました 🐾`,
-        `一番大切なのは、<br><strong>あなた自身の心の状態</strong>です🌻<br><br>もし飼い主さんが笑顔になれない時は、まず自分のケアを最優先にしてあげてください。`,
-        `あなたが穏やかでいられたら、<br>${userDogName}ちゃんも穏やかになれる。<br><br>一人で抱え込まなくて大丈夫ですよ。<br>一緒に、<strong>「3年後もハグする未来」</strong>を<br>作っていきましょう🐾💛`
+        `${userName}さん、<br>全問クリアお疲れ様でした！🐾`,
+        `さっそく、${userDogName}ちゃんへの<br>「心の栄養」充足度を見てみましょう🌻`
     ], () => {
         setTimeout(() => {
             const nextBtnWrap = document.createElement('div');
@@ -587,87 +589,39 @@ function showDiagResult() {
     setTimeout(() => {
         botSays([
             `${userName}さん、<br>クイズはいかがでしたか？🐾`,
-            `愛犬の「きもち」や行動の裏には、<br>目に見えない<strong>『心の栄養』</strong>が<br>大きく関わっているんです。`,
-            `「こんなに気を遣っているのに、どうして…」<br><br>そんな風に悩んだことはありませんか？`
+            `愛犬の行動の裏には、<br>目に見えない<strong>『心の栄養』</strong>が<br>大きく関わっています。`,
+            `実は私自身も、<br>それに気づけずに深く悩んだ経験があるんです。`
         ], () => {
             addOptions([
-                { label: 'あります…😢', emoji: '🐾', showLetter: false },
-                { label: 'どういうことですか？', emoji: '🌻', showLetter: false }
-            ], () => {
-                botSays([
-                    `実は私、<br>過去の自分と同じように悩む飼い主さんをたくさん見てきて、1つ気づいたことがあるんです。`,
-                    `フードも変えた。<br>環境も整えた。<br>話題の療法も全部試した。<br><br>それでも良くならない…<br>そんな子がいる、と。`,
-                    `何が『心の栄養』を<br>左右していたと思いますか？🐾`
-                ], () => {
-                    addOptions([
-                        { label: 'フードの質でしょうか？', emoji: '🍚', showLetter: false },
-                        { label: '犬種や体質でしょうか？', emoji: '🧬', showLetter: false },
-                        { label: '飼い主の気持ちでしょうか？', emoji: '💛', showLetter: false },
-                    ], (val, opt) => {
-                        if (opt.emoji === '💛') {
-                            botSays([
-                                `${userName}さん…<br>おっしゃる通りです。<br><br>そう、<strong>正解</strong>です。`,
-                                `でも、どうして<br>それが正解なのか、<br>私の話を少しだけ聞いていただけますか？🐾`
-                            ], () => showStory());
-                        } else {
-                            botSays([
-                                `うんうん、それもとても大切です！<br><br>でもね、実は<br>もっと根っこにあるものに気づいたんです。`,
-                                `私も最初は、<br>信じられませんでした。<br><br>少しだけ、私の体験を聞いていただけますか？🐾`
-                            ], () => showStory());
-                        }
-                    });
-                });
-            });
+                { label: 'きいちゃん先生の経験…？', emoji: '🐾', showLetter: false },
+                { label: '詳しく知りたいです', emoji: '🌻', showLetter: false }
+            ], () => showStory());
         });
     }, 1500);
 }
 
-/* ━━━ きいちゃんの原体験ストーリー ━━━ */
+/* ━━━ きいちゃん先生の原体験ストーリー ━━━ */
 function showStory() {
     botSays([
-        `私の愛犬がね、<br><strong>急性膵炎</strong>になったんです。<br><br>しかも<strong>劇症膵炎</strong>で、<br>かなり状態が厳しくて…`,
-        `治療の観察中に、<br><strong>大量の下血</strong>があって。<br><br>もうダメかもしれない…<br>本当にそう思いました。`,
-        `栄養のプロとして<br>「これをあげればいい」というのを<br>全部試してもダメで。<br><br>なぜ？って。<br>自分を激しく責めました。`
+        `私の愛犬が、<strong>劇症膵炎</strong>で<br>大量の下血をした時。<br><br>栄養のプロとして<br>あらゆることを試してもダメで、<br>自分を激しく責めました。`,
+        `でも、私が「心配」を手放し、<br>自分自身の心を整えた結果…<br><br>愛犬は、<strong>自分から<br>水を飲みに行った</strong>んです🥺`,
+        `栄養だけではダメだった。<br><strong>ストレスは栄養泥棒</strong>。<br><br>私の「心配というエネルギー」が<br>愛犬に伝わってしまっていたんです。<br><br>飼い主さんの心の状態が犬に<br>どれだけ大きな影響を与えるのか、<br>愛犬は命をかけて教えてくれた先生でした🌻<br><br>だから・・・`
     ], () => {
         addOptions([
-            { label: 'それは辛かったですね…', emoji: '😢', showLetter: false },
-            { label: '続きを聞かせてください', emoji: '🐾', showLetter: false }
-        ], () => {
-            botSays([
-                `「お願いだから、いかないで…」<br><br>片時もそばを離れないで、<br>心配し続ける毎日でした。<br><br>「この子は命をかけて、<br>　何を伝えようとしているんだろう」<br>ずっと考え続けました。`,
-                `そしてある日、<br>こう考えてみたんです。<br><br>「もし、この病気で旅立つことを<br>　<strong>この子自身が決めていたとしたら？</strong>」<br><br>そう仮定して、<br>胸がちぎれそうでしたけれど…`,
-                `「できるだけのことをしよう。<br>　でも、<strong>あとはこの子に任せよう</strong>」<br><br>そう決めたんです。`
-            ], () => {
-                addOptions([
-                    { label: '……うんうん', emoji: '🌻', showLetter: false }
-                ], () => {
-                    botSays([
-                        `心配し続ける時間を手放して、<br>看病をしながら、<br><strong>自分自身のケアも取り入れていく</strong><br>と決めました。`,
-                        `するとね…<br><br>愛犬が、<strong>自分から<br>水を飲みに行った</strong>んです🥺<br><br>そこから劇的に回復しました。`,
-                        `栄養だけではなかった。<br><br><strong>ストレスは栄養泥棒</strong>。<br>私の「心配というエネルギー」が<br>愛犬に伝わってしまっていたんです。<br><br>愛犬は命をかけて教えてくれた先生でした🌻`,
-                        `だから、私が今お伝えしているのは<br>数値改善への執着を手放し、<br>「<strong>本来の絆とマインド</strong>」を取り戻すこと。<br><br>ということなんです。`
-                    ], () => {
-                        addOptions([
-                            { label: 'もっと詳しく知りたいです！', emoji: '💛', showLetter: false },
-                            { label: '少し考えたいです…', emoji: '😔', showLetter: false },
-                        ], (idx, opt) => {
-                            if (opt.emoji === '😔') {
-                                botSays([
-                                    `大丈夫ですよ、無理なさらないでくださいね🐾<br>一人で抱え込まず、ご自身のペースを大切にしてください。`,
-                                    `${userName}さんがここまで${userDogName}ちゃんに<br>向き合っていること、それ自体が<br>もう立派な愛情の証拠ですよ🌻`,
-                                    `でも…<br>${userDogName}ちゃんのために<br>ひとつだけ、<br><strong>特別な動画</strong>をお届けしたくて🎁<br><br>観るだけで、きっと心が軽くなるはずです💛`
-                                ], () => showCTA());
-                            } else {
-                                botSays([
-                                    `うれしいです！💛`,
-                                    `大切なのは、病気と闘うことよりも<br>${userName}さんが笑顔でいられること。<br><br>${userName}さんがここまで${userDogName}ちゃんに<br>向き合っている想い、絶対に伝わっています🐾`,
-                                    `そんな${userName}さんと<br>${userDogName}ちゃんのために、<br>特別な<strong>動画プレゼント</strong>を<br>ご用意しました🎁`
-                                ], () => showCTA());
-                            }
-                        });
-                    });
-                });
-            });
+            { label: 'だから…？', emoji: '💛', showLetter: false },
+            { label: '少し考えたいです…', emoji: '😔', showLetter: false },
+        ], (idx, opt) => {
+            if (opt.emoji === '😔') {
+                botSays([
+                    `大丈夫ですよ☺️ あなたのペースを大切にしてくださいね。`,
+                    `でも…${userName}さんに<br>ひとつだけ、<br><strong>特別な限定動画</strong>をお届けしたくて🎁`
+                ], () => showCTA());
+            } else {
+                botSays([
+                    `うれしいです！💛`,
+                    `「こじらせ飼い主マインド」から抜け出す秘訣について、<br>特別な<strong>限定動画プレゼント</strong>をご用意しました🎁`
+                ], () => showCTA());
+            }
         });
     });
 }
