@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1000" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fffcf5"/>
+      <stop offset="100%" stop-color="#fff5e8"/>
+    </linearGradient>
+    <linearGradient id="honeyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5c542"/>
+      <stop offset="100%" stop-color="#f7b89c"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8cb88a"/>
+      <stop offset="100%" stop-color="#6baf69"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b8a9d8"/>
+      <stop offset="100%" stop-color="#9a8bc0"/>
+    </linearGradient>
+    <linearGradient id="coralGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7b89c"/>
+      <stop offset="100%" stop-color="#e8926e"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#f5c542" flood-opacity="0.1"/>
+    </filter>
+    <filter id="cardShadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.04"/>
+    </filter>
+  </defs>
+  
+  <rect width="900" height="1000" fill="url(#bgGrad)"/>
+  
+  <g font-family="Zen Maru Gothic, sans-serif">
+    <!-- Title Banner -->
+    <rect x="50" y="40" width="800" height="85" rx="16" fill="url(#honeyGrad)" filter="url(#shadow)"/>
+    <text x="450" y="85" text-anchor="middle" fill="#fff" font-size="24" font-weight="900" letter-spacing="2">アカウント移行と価値教育の『段階設計』プロセス</text>
+    <text x="450" y="110" text-anchor="middle" fill="#fff" opacity="0.95" font-size="13" font-weight="700">いきなり新アカウントへ飛ばさず、防衛本能を解きながら「パラダイムシフト」を起こす戦略</text>
+
+    <!-- STEP 1 -->
+    <rect x="80" y="160" width="740" height="160" rx="20" fill="#fff" stroke="#f5c542" stroke-width="2" filter="url(#cardShadow)"/>
+    <circle cx="150" cy="240" r="45" fill="#fff9e6"/>
+    <text x="150" y="255" text-anchor="middle" font-size="36">🧭</text>
+    
+    <rect x="220" y="185" width="80" height="26" rx="13" fill="url(#honeyGrad)"/>
+    <text x="260" y="203" text-anchor="middle" fill="#fff" font-size="13" font-weight="900">STEP 1</text>
+    <text x="315" y="205" fill="#4a3a2a" font-size="18" font-weight="900">旧アカウントからのフック（診断導入）</text>
+    
+    <rect x="220" y="222" width="50" height="20" rx="4" fill="#fdf4e3"/>
+    <text x="245" y="236" text-anchor="middle" fill="#d4a017" font-size="11" font-weight="900">行動</text>
+    <text x="280" y="237" fill="#4a3a2a" font-size="14" font-weight="700">新アカウントへの直接誘導を避け、「フードを変えても解決しない本当の理由」</text>
+    <text x="280" y="257" fill="#4a3a2a" font-size="14" font-weight="700">というテーマで、まずは診断（チャットLP）へ誘導する。</text>
+
+    <rect x="220" y="275" width="50" height="20" rx="4" fill="#f5f0e8"/>
+    <text x="245" y="289" text-anchor="middle" fill="#a09080" font-size="11" font-weight="900">心理</text>
+    <text x="280" y="290" fill="#665" font-size="13">「私のせいで…」という防衛本能を刺激せず、今の悩みをそのままフックにする。</text>
+    <text x="280" y="310" fill="#665" font-size="13">LPの中のきいちゃん自身のストーリーで、「実は『心』が原因？」と気づきを与える。</text>
+
+    <!-- Arrow 1 to 2 -->
+    <path d="M 450 320 L 450 365" stroke="#f5c542" stroke-width="4" stroke-dasharray="6,4" fill="none"/>
+    <polygon points="440,360 460,360 450,375" fill="#f5c542"/>
+
+    <!-- STEP 2 -->
+    <rect x="80" y="375" width="740" height="160" rx="20" fill="#fff" stroke="#8cb88a" stroke-width="2" filter="url(#cardShadow)"/>
+    <circle cx="150" cy="455" r="45" fill="#eef6ee"/>
+    <text x="150" y="470" text-anchor="middle" font-size="36">💡</text>
+    
+    <rect x="220" y="400" width="80" height="26" rx="13" fill="url(#greenGrad)"/>
+    <text x="260" y="418" text-anchor="middle" fill="#fff" font-size="13" font-weight="900">STEP 2</text>
+    <text x="315" y="420" fill="#4a3a2a" font-size="18" font-weight="900">LINEでの客観的教育（成功事例の活用）</text>
+    
+    <rect x="220" y="437" width="50" height="20" rx="4" fill="#eef6ee"/>
+    <text x="245" y="451" text-anchor="middle" fill="#5a9a58" font-size="11" font-weight="900">行動</text>
+    <text x="280" y="452" fill="#4a3a2a" font-size="14" font-weight="700">診断からLINEへ登録した方へ、第三者の「成功事例（Before/After）」と</text>
+    <text x="280" y="472" fill="#4a3a2a" font-size="14" font-weight="700">「専門家としてのマインド解説（迷走神経など）」のステップ配信を行う。</text>
+
+    <rect x="220" y="490" width="50" height="20" rx="4" fill="#f5f0e8"/>
+    <text x="245" y="504" text-anchor="middle" fill="#a09080" font-size="11" font-weight="900">心理</text>
+    <text x="280" y="505" fill="#665" font-size="13">「他人の事例」として見せることで、否定されたと感じず防衛本能が下がる。</text>
+    <text x="280" y="525" fill="#665" font-size="13">「なるほど、お母さんの思考のクセって本当に犬に伝わるんだ」と客観的に受け入れる。</text>
+
+    <!-- Arrow 2 to 3 -->
+    <path d="M 450 535 L 450 580" stroke="#8cb88a" stroke-width="4" stroke-dasharray="6,4" fill="none"/>
+    <polygon points="440,575 460,575 450,590" fill="#8cb88a"/>
+
+    <!-- STEP 3 -->
+    <rect x="80" y="590" width="740" height="160" rx="20" fill="#fff" stroke="#b8a9d8" stroke-width="2" filter="url(#cardShadow)"/>
+    <circle cx="150" cy="670" r="45" fill="#f3f0fa"/>
+    <text x="150" y="685" text-anchor="middle" font-size="36">💌</text>
+    
+    <rect x="220" y="615" width="80" height="26" rx="13" fill="url(#purpleGrad)"/>
+    <text x="260" y="633" text-anchor="middle" fill="#fff" font-size="13" font-weight="900">STEP 3</text>
+    <text x="315" y="635" fill="#4a3a2a" font-size="18" font-weight="900">対象の自分ごと化 ＆ モニター募集</text>
+    
+    <rect x="220" y="652" width="50" height="20" rx="4" fill="#f3f0fa"/>
+    <text x="245" y="666" text-anchor="middle" fill="#8a7bb0" font-size="11" font-weight="900">行動</text>
+    <text x="280" y="667" fill="#4a3a2a" font-size="14" font-weight="700">「他人の事例の次は、あなたへのメッセージを翻訳してみませんか？」と</text>
+    <text x="280" y="687" fill="#4a3a2a" font-size="14" font-weight="700">1対1で向き合う「無料の個別モニターセッション」をオファーする。</text>
+
+    <rect x="220" y="705" width="50" height="20" rx="4" fill="#f5f0e8"/>
+    <text x="245" y="719" text-anchor="middle" fill="#a09080" font-size="11" font-weight="900">心理</text>
+    <text x="280" y="720" fill="#665" font-size="13">これまでの教育で深く納得しているため、「自分責め」の段階を抜け出し、</text>
+    <text x="280" y="740" fill="#665" font-size="13">「自分の思考のクセを知りたい！」「愛犬のメッセージを受け取りたい」という欲求に変わる。</text>
+
+    <!-- Arrow 3 to 4 -->
+    <path d="M 450 750 L 450 795" stroke="#b8a9d8" stroke-width="4" stroke-dasharray="6,4" fill="none"/>
+    <polygon points="440,790 460,790 450,805" fill="#b8a9d8"/>
+
+    <!-- STEP 4 -->
+    <rect x="80" y="805" width="740" height="160" rx="20" fill="#fff" stroke="#e8926e" stroke-width="2" filter="url(#cardShadow)"/>
+    <circle cx="150" cy="885" r="45" fill="#fef0e0"/>
+    <text x="150" y="900" text-anchor="middle" font-size="36">🚀</text>
+    
+    <rect x="220" y="830" width="80" height="26" rx="13" fill="url(#coralGrad)"/>
+    <text x="260" y="848" text-anchor="middle" fill="#fff" font-size="13" font-weight="900">STEP 4</text>
+    <text x="315" y="850" fill="#4a3a2a" font-size="18" font-weight="900">新アカウント（世界観）へのスムーズな移行</text>
+    
+    <rect x="220" y="867" width="50" height="20" rx="4" fill="#fef0e0"/>
+    <text x="245" y="881" text-anchor="middle" fill="#d47050" font-size="11" font-weight="900">行動</text>
+    <text x="280" y="882" fill="#4a3a2a" font-size="14" font-weight="700">個別セッション実施後や、LINEの中で十分にコンセプトが伝わった層に対して、</text>
+    <text x="280" y="902" fill="#4a3a2a" font-size="14" font-weight="700">「マインド面に特化した新インスタ/YouTube」のフォローを促す。</text>
+
+    <rect x="220" y="920" width="50" height="20" rx="4" fill="#f5f0e8"/>
+    <text x="245" y="934" text-anchor="middle" fill="#a09080" font-size="11" font-weight="900">心理</text>
+    <text x="280" y="935" fill="#665" font-size="13">「いきなり」ではなく「この先生の話をもっと聞きたい！」という高い熱量で案内されるため、</text>
+    <text x="280" y="955" fill="#665" font-size="13">新アカウントが初期から “驚くほど濃く、質の高いリスト（ファン）” で形成される。</text>
+
+  </g>
+</svg>
