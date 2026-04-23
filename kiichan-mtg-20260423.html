@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>きいちゃんプロジェクト MTG議事録 — 2026/04/23</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --honey: #f5c542; --honey-deep: #d4a017; --honey-light: #fff9e6;
+            --peach: #f7b89c; --coral: #f2988e; --coral-deep: #e06b6b;
+            --sage: #8cb88a; --sage-light: #eef6ee;
+            --sky: #85bdd9; --sky-light: #edf5fa;
+            --lavender: #b8a9d8; --lavender-light: #f3f0fa;
+            --bg: #fffcf5; --text: #4a3a2a; --muted: #a09080;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family:'Zen Maru Gothic',sans-serif;
+            background: linear-gradient(180deg,#fffcf5 0%,#fff5e8 50%,#fef0e0 100%);
+            color:var(--text); min-height:100vh; padding:24px;
+        }
+        .container { max-width:860px; margin:0 auto; }
+
+        /* Header */
+        .header { text-align:center; margin-bottom:32px; }
+        .badge {
+            display:inline-block;
+            background:linear-gradient(135deg,var(--honey),var(--peach));
+            color:#fff; font-size:10px; font-weight:700;
+            padding:4px 16px; border-radius:20px; letter-spacing:3px; margin-bottom:12px;
+        }
+        .header h1 { font-size:24px; font-weight:900; line-height:1.5; }
+        .header h1 em { font-style:normal; background:linear-gradient(transparent 60%,rgba(245,197,66,.3) 60%); }
+        .meta { font-size:12px; color:var(--muted); margin-top:8px; line-height:1.7; }
+
+        /* Section card */
+        .section {
+            background:#fff; border-radius:20px; padding:28px 32px;
+            box-shadow:0 4px 20px rgba(0,0,0,.04); margin-bottom:20px;
+            position:relative; overflow:hidden;
+        }
+        .section::before {
+            content:''; position:absolute; top:0; left:0; right:0;
+            height:5px; border-radius:20px 20px 0 0;
+        }
+        .section.honey::before { background:linear-gradient(90deg,var(--honey),var(--peach)); }
+        .section.sage::before { background:linear-gradient(90deg,var(--sage),#6baf69); }
+        .section.lavender::before { background:linear-gradient(90deg,var(--lavender),#9a8bc0); }
+        .section.coral::before { background:linear-gradient(90deg,var(--coral),var(--coral-deep)); }
+        .section.sky::before { background:linear-gradient(90deg,var(--sky),#6bb3d9); }
+
+        .section h2 {
+            font-size:17px; font-weight:900; margin-bottom:14px;
+            display:flex; align-items:center; gap:8px;
+        }
+        .section h3 {
+            font-size:14px; font-weight:900; margin:16px 0 8px;
+            padding-left:12px; border-left:3px solid var(--honey);
+        }
+
+        /* Lists */
+        ul, ol { padding-left:20px; }
+        li { font-size:13px; line-height:1.8; margin-bottom:4px; }
+        li strong { color:var(--honey-deep); }
+
+        /* Highlight box */
+        .highlight {
+            background:var(--honey-light); border:1px solid rgba(245,197,66,.25);
+            border-radius:12px; padding:16px 20px; margin:12px 0;
+            font-size:13px; line-height:1.8;
+        }
+        .highlight.lavender { background:var(--lavender-light); border-color:rgba(184,169,216,.3); }
+        .highlight.sage { background:var(--sage-light); border-color:rgba(140,184,138,.3); }
+        .highlight.coral { background:#fef0f0; border-color:rgba(242,152,142,.3); }
+
+        /* Task table */
+        .task-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:12px; }
+        .task-table th {
+            background:linear-gradient(135deg,var(--honey-light),#fff0e0);
+            padding:10px 14px; text-align:left; font-weight:700;
+            color:var(--honey-deep); border-bottom:2px solid rgba(245,197,66,.2);
+        }
+        .task-table td {
+            padding:10px 14px; border-bottom:1px solid #f5f0e8;
+            vertical-align:top; line-height:1.7;
+        }
+        .task-table tr:last-child td { border-bottom:none; }
+        .who {
+            display:inline-block; font-size:10px; font-weight:700;
+            padding:2px 8px; border-radius:10px; margin-right:4px;
+        }
+        .who.kii { background:var(--honey-light); color:var(--honey-deep); }
+        .who.nomu { background:var(--lavender-light); color:#8a7bb0; }
+
+        /* Flow diagram */
+        .flow {
+            display:flex; align-items:center; gap:8px;
+            flex-wrap:wrap; margin:12px 0;
+        }
+        .flow-step {
+            background:#fff; border:2px solid var(--honey);
+            border-radius:12px; padding:8px 14px;
+            font-size:12px; font-weight:700; text-align:center;
+        }
+        .flow-arrow { color:var(--honey); font-size:18px; font-weight:900; }
+
+        /* Footer */
+        .footer {
+            text-align:center; padding:32px; font-size:11px; color:var(--muted);
+        }
+
+        @media(max-width:600px) {
+            body { padding:12px; }
+            .section { padding:20px 18px; }
+            .flow { flex-direction:column; }
+            .flow-arrow { transform:rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+        <div class="badge">🐾 MEETING MINUTES</div>
+        <h1>きいちゃんプロジェクト<br>MTG 議事録</h1>
+        <div class="meta">
+            📅 2026年4月23日（水）｜ 👥 きいちゃん × ノムさん<br>
+            🎯 テーマ：アカウント移行と顧客教育の段階設計戦略<br>
+            ⏱ 次回MTG：<strong>5月7日（水）10:00〜</strong>
+        </div>
+    </div>
+
+    <!-- 1. 段階移行の戦略 -->
+    <div class="section honey">
+        <h2>🚀 1. アカウント移行の戦略方針</h2>
+        <p style="font-size:13px;line-height:1.8;margin-bottom:12px;">
+            旧アカウントから新アカウント（栄養×飼い主マインド）への移行は、<strong>いきなり直接誘導しない</strong>ことが決定。
+            フォロワーは「飼い主マインド」という概念をまだ理解していないため、<strong>パラダイムシフト（気づき）を先に起こす</strong>必要がある。
+        </p>
+
+        <h3>決定した4ステップの段階設計</h3>
+        <div class="flow">
+            <div class="flow-step">STEP 1<br>旧アカウントから<br>診断LPへ誘導</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">STEP 2<br>LINE登録<br>＋ 特典動画で教育</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">STEP 3<br>個別モニター<br>セッション募集</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">STEP 4<br>新アカウント<br>フォロー誘導</div>
+        </div>
+
+        <div class="highlight">
+            💡 <strong>ポイント</strong>：心の問題だと直接言われると「防衛本能」が働く。
+            チャットLPできいちゃんのストーリーを体感 → 動画で科学的根拠を理解 → 「自分ごと化」が完了してから新アカウントへ案内する。
+            この順番が<strong>ファンの質と濃さ</strong>を最大化する。
+        </div>
+
+        <h3>旧アカウントでの投稿について</h3>
+        <ul>
+            <li>いきなり「新アカウント作りました」はNG</li>
+            <li>まずは<strong>「準備中です！楽しみにしててくださいね🌻」</strong>の予告投稿を数回</li>
+            <li>「愛犬のきもちクイズ（診断LP）を用意しているよ！」と匂わせるのはOK</li>
+            <li>動線が全部つながってから、本格的にチャットLPへの誘導投稿を開始する</li>
+        </ul>
+    </div>
+
+    <!-- 2. 特典動画のフィードバック -->
+    <div class="section coral">
+        <h2>🎬 2. 特典動画へのフィードバック（最重要）</h2>
+        <p style="font-size:13px;line-height:1.8;margin-bottom:12px;">
+            きいちゃんが作成したスライド資料（12ページ・約15分想定）を確認し、構成の修正方針をすり合わせた。
+            <strong>内容の質はすでに高い</strong>ので、構成の「順番」を入れ替えることで、さらに視聴者の心を掴む流れにする。
+        </p>
+
+        <h3>🔴 修正①：冒頭に「問題提起 ＋ 理想の未来」を追加する</h3>
+        <div class="highlight coral">
+            <strong>現状</strong>：自己紹介 → すぐに迷走神経の科学的な話に入っている<br>
+            <strong>問題</strong>：「講座感」が出てしまい、最初で離脱する人が出る可能性<br><br>
+            <strong>✅ 修正後の冒頭の流れ</strong>：<br>
+            ① 挨拶 ＋ 実績・資格の提示（権威性）<br>
+            ② <strong>問題提起</strong>：「フードを変えても、病院に通っても良くならない…それは努力の方向が違うから」<br>
+            ③ <strong>理想の未来ビジョン</strong>：「3年後もハグできる未来」「不安ではなく安心の中で愛犬と過ごせる世界」<br>
+            ④ <strong>「簡単ではない」と釘を刺す</strong>：「笑顔で接すればOK？ ←それだけでは根本は変わらない」<br>
+            ⑤ 「だからこそ、この動画を最後まで見てほしい」
+        </div>
+
+        <h3>🔴 修正②：迷走神経の科学的な話は「後半」に移動する</h3>
+        <div class="highlight coral">
+            <strong>理由</strong>：科学的根拠の話から入ると「お勉強感」が出て眠くなる人がいる（きいちゃん本人も同意）<br><br>
+            <strong>✅ 修正後の配置</strong>：<br>
+            ・前半 → きいちゃんの体験・共感できるエピソード・具体的な関わり方<br>
+            ・後半 → 迷走神経や自律神経の科学的根拠（「ちゃんとした裏付けがあるんだ！」と納得してもらう）
+        </div>
+
+        <h3>🔴 修正③：「愛犬からのメッセージ」の具体例を追加する</h3>
+        <div class="highlight coral">
+            <strong>現状</strong>：メッセージの概念は入っているが、具体的な「翻訳例」が少ない<br><br>
+            <strong>✅ 追加してほしいもの</strong>：<br>
+            ・きいちゃん自身のケース（劇症膵炎の愛犬が教えてくれたこと）をワーク形式でデモンストレーション<br>
+            ・よくある悩みのトップ3（食べない、下痢、問題行動など）をメッセージとして翻訳した例<br>
+            ・リズ・ブルボーの本の翻訳例なども参考にOK<br>
+            ・「他人の事例」として見せることで、視聴者が客観的に受け取りやすくなる
+        </div>
+
+        <h3>🔴 修正④：PDFチェックシートとの連動を強化する</h3>
+        <div class="highlight coral">
+            <strong>✅ 動画の中で</strong>：<br>
+            ・PDFの「愛犬の気になる行動チェック✓」と「こじらせ度チェック✓」を<strong>動画の序盤で一緒にやってもらう</strong>（自分ごと化させる）<br>
+            ・PDFの「翻訳ワーク」をきいちゃん自身のケースでデモンストレーション<br>
+            ・「一人でやるのは難しいから、きいちゃん先生と一緒にやりましょう！」→ モニターセッションへの誘導
+        </div>
+
+        <h3>🟢 変えなくてOKなところ</h3>
+        <ul>
+            <li>きいちゃんの<strong>言葉選び・伝え方のトーン</strong>はすでに素晴らしい → そのまま活かす</li>
+            <li>関係性がある方（知人モニター）がまず見る前提なので、<strong>完璧を目指さず「想いで語る」スタイルでOK</strong></li>
+            <li>事例は今後モニターが増えたら追加する → 最初はきいちゃん自身のケースだけで十分</li>
+        </ul>
+
+        <h3>📋 修正後の動画構成イメージ（推奨順番）</h3>
+        <table class="task-table">
+            <thead><tr><th style="width:30px">#</th><th>パート</th><th>内容</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td><strong>挨拶 ＋ 権威性</strong></td><td>自己紹介、保有資格、実績の提示</td></tr>
+                <tr><td>2</td><td><strong>問題提起</strong></td><td>フードを変えてもダメ、病院に通ってもダメ → なぜ？</td></tr>
+                <tr><td>3</td><td><strong>理想の未来</strong></td><td>3年後もハグ、不安から解放、犬も人も笑顔の世界</td></tr>
+                <tr><td>4</td><td><strong>簡易な変化のビジョン</strong></td><td>3つ程度の Before/After の簡単な紹介</td></tr>
+                <tr><td>5</td><td><strong>きいちゃんの体験談</strong></td><td>劇症膵炎 → 心配を手放した → 犬が回復した実体験</td></tr>
+                <tr><td>6</td><td><strong>チェックシート連動</strong></td><td>PDFの✓を一緒にやってもらい、自分ごと化させる</td></tr>
+                <tr><td>7</td><td><strong>具体的な関わり方</strong></td><td>愛犬の気持ちになって考えてみるワーク</td></tr>
+                <tr><td>8</td><td><strong>メッセージ翻訳デモ</strong></td><td>きいちゃんのケースでPDFのワークをデモンストレーション</td></tr>
+                <tr><td>9</td><td><strong>科学的根拠</strong></td><td>迷走神経・自律神経の解説（納得感を与える）</td></tr>
+                <tr><td>10</td><td><strong>CTA</strong></td><td>一人では難しい → モニターセッションのご案内</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 3. きいちゃんの変化の3ステップ -->
+    <div class="section lavender">
+        <h2>🔮 3. きいちゃん自身の「変化の3ステップ」（動画で伝える柱）</h2>
+        <p style="font-size:13px;line-height:1.8;margin-bottom:12px;">
+            MTG中に、きいちゃんがどのように「こじらせ飼い主」から変わっていったのかを深掘りした結果、以下の3ステップに整理された。
+        </p>
+
+        <div class="highlight lavender">
+            <strong>ステップ①：愛犬の気持ちになって考えてみた</strong><br>
+            自分が付きっきりで疲弊している姿を「犬の立場」から見たら → 大好きな飼い主がすり減っている姿はつらすぎる → 犬のためにならないと気づいた
+        </div>
+        <div class="highlight lavender">
+            <strong>ステップ②：すべてを受け入れる覚悟をした</strong><br>
+            「この子が旅立つことを自分で決めていたとしたら」 → 生きることも死ぬことも100%受け入れる → 犬への尊厳を持つ → 心配を手放すことができた
+        </div>
+        <div class="highlight lavender">
+            <strong>ステップ③：思考の見直しで最短ルートを見つけた</strong><br>
+            うまくいかない原因は犬ではなく自分の「思考のクセ」 → 自責・他責のループを断ち切る → 犬の症状にも変化が起きた → マインドの変化が現実を変える確信を持てた
+        </div>
+
+        <div class="highlight sage">
+            💡 <strong>動画で伝えるときのポイント</strong>：<br>
+            ・この3ステップを「理論」として語るのではなく、<strong>自分の体験として語る</strong>方がエネルギーが乗る<br>
+            ・知り合いに話す感覚で、想いを込めて語ることが今の段階では最も効果的<br>
+            ・スライドに頼りすぎず、<strong>ご本人の顔が見える時間を増やす</strong>（親しみ＋信頼感UP）
+        </div>
+    </div>
+
+    <!-- 4. モニターセッション予約フォーム -->
+    <div class="section sage">
+        <h2>📋 4. モニターセッション予約フォームの設計</h2>
+
+        <h3>Googleフォームの設計項目</h3>
+        <ul>
+            <li>フルネーム</li>
+            <li>メールアドレス</li>
+            <li>電話番号</li>
+            <li>希望日時（※本日より◯日以降を指定してください、と注記を入れる）</li>
+            <li>事前ヒアリング内容（愛犬の悩みを自由記述）</li>
+            <li>同意事項（栄養相談ではなくマインドのセッションであることの説明）</li>
+        </ul>
+
+        <h3>LINE連携の導線（3ステップ方式）</h3>
+        <div class="flow">
+            <div class="flow-step">STEP 1<br>ヒアリングフォーム<br>（Googleフォーム）に記入</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">STEP 2<br>LINEから<br>お名前をメッセージ送信</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">STEP 3<br>きいちゃん先生から<br>日程確定の連絡を待つ</div>
+        </div>
+
+        <div class="highlight sage">
+            💡 Googleフォーム送信完了画面に「LINEからお名前をお送りください」のメッセージ ＋ LINEのURLを表示するよう設定する。
+            ◯時間（日）以内に返信する旨も明記する。
+        </div>
+    </div>
+
+    <!-- 5. 次回までのアクション -->
+    <div class="section sky">
+        <h2>✅ 5. 次回MTG（5/7）までのアクション一覧</h2>
+
+        <table class="task-table">
+            <thead>
+                <tr>
+                    <th style="width:60px">担当</th>
+                    <th>タスク内容</th>
+                    <th style="width:80px">期限</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="who kii">きいちゃん</span></td>
+                    <td><strong>🎬 特典動画の構成修正 ＋ 撮影</strong><br>
+                        上記フィードバックを踏まえ、動画構成を修正して撮影する。<br>
+                        完璧を目指さず「想いで語る」スタイルでOK。顔出し多めに。
+                    </td>
+                    <td><strong>4/26（土）</strong></td>
+                </tr>
+                <tr>
+                    <td><span class="who kii">きいちゃん</span></td>
+                    <td><strong>📋 Googleフォーム（予約システム）設置</strong><br>
+                        上記の設計項目で作成。完了画面にLINE連携の案内を表示する。
+                    </td>
+                    <td>4/26まで</td>
+                </tr>
+                <tr>
+                    <td><span class="who kii">きいちゃん</span></td>
+                    <td><strong>📱 LINE公式アカウントの自動応答設定</strong><br>
+                        特定キーワードに対して特典（動画＋PDF）を自動送信する仕組みを設定。
+                    </td>
+                    <td>動画完成後</td>
+                </tr>
+                <tr>
+                    <td><span class="who kii">きいちゃん</span></td>
+                    <td><strong>🤝 知人へのモニター募集開始</strong><br>
+                        特典動画とPDFを先に見てもらった上で、セッションに申し込んでもらう流れ。
+                        まずは関係性のある方3〜5名からスタート。
+                    </td>
+                    <td>GW明けまで</td>
+                </tr>
+                <tr>
+                    <td><span class="who kii">きいちゃん</span></td>
+                    <td><strong>📄 0期説明資料（セッション後の講座案内用）の作成</strong><br>
+                        普段の講座案内スライドと同じ要領で作成。次回MTGで確認・フィードバック。
+                    </td>
+                    <td>5/7まで</td>
+                </tr>
+                <tr>
+                    <td><span class="who nomu">ノムさん</span></td>
+                    <td><strong>📝 チェックシートPDFの「きいちゃん先生」表記統一</strong><br>
+                        残っているかもしれない表記ゆれを最終修正。
+                    </td>
+                    <td>完了済み</td>
+                </tr>
+                <tr>
+                    <td><span class="who nomu">ノムさん</span></td>
+                    <td><strong>🎥 動画完成後のフィードバック提供</strong><br>
+                        きいちゃんから動画が届き次第、内容・構成・導線のチェックを行う。
+                    </td>
+                    <td>動画受領後</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 6. 本日の重要な決定事項 -->
+    <div class="section honey">
+        <h2>📌 6. 本日の重要な決定事項まとめ</h2>
+        <ul>
+            <li><strong>旧アカウントからの直接移行はしない</strong> → 診断LP → LINE → 動画教育 → 新アカウント の4段階方式</li>
+            <li><strong>SNS発信は急がない</strong> → モニターセッションの導線が完成してから開始</li>
+            <li><strong>動画の迷走神経パートは後半に移動</strong> → 前半はエピソードと共感で引き込む</li>
+            <li><strong>動画はスライドより「想い」で語る</strong> → 知り合いに話す感覚で、顔出し多めが効果的</li>
+            <li><strong>モニターは関係性のある方から3〜5名</strong> → 事例収集 ＋ 0期講座への誘導を並行</li>
+            <li><strong>チャットLPの肩書きは「栄養×飼い主マインドの専門家」</strong>に統一</li>
+            <li><strong>次回MTG：5月7日（水）10:00〜</strong> → モニター進捗 ＋ 0期説明資料の確認</li>
+        </ul>
+    </div>
+
+    <!-- 参考資料 -->
+    <div class="section lavender">
+        <h2>🔗 参考資料リンク</h2>
+        <ul>
+            <li>📊 <a href="kiichan-transition-strategy.svg" style="color:var(--honey-deep);">アカウント段階移行・教育戦略（SVG図）</a></li>
+            <li>🧠 <a href="kiichan-empathy-map.html" style="color:var(--honey-deep);">共感マップ — こじらせ飼い主マインド</a></li>
+            <li>🧩 <a href="kiichan-shindan.html" style="color:var(--honey-deep);">診断チャットLP</a></li>
+            <li>📝 <a href="kiichan-checksheet.html" style="color:var(--honey-deep);">セルフチェックシート</a></li>
+            <li>🗂 <a href="kiichan-tasks.html" style="color:var(--honey-deep);">プロジェクトポータル（タスク管理）</a></li>
+            <li>📈 <a href="kiichan-funnel.svg" style="color:var(--honey-deep);">ファネル設計図</a></li>
+            <li>🗺 <a href="kiichan-roadmap.svg" style="color:var(--honey-deep);">ロードマップ</a></li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        🐾 きいちゃんプロジェクト MTG議事録 ｜ 2026年4月23日 ｜ Inside Story
+    </div>
+
+</div>
+</body>
+</html>
