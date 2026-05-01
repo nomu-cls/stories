@@ -370,6 +370,49 @@
         }
 
         .step-num.s5 { background: linear-gradient(135deg, var(--honey), var(--peach)); }
+
+        /* ── Profile ── */
+        .profile-section {
+            background: #fff;
+            border: 1.5px solid rgba(245,197,66,0.3);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-top: 16px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .profile-avatar {
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--honey);
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(245,197,66,0.15);
+        }
+        .profile-info {
+            flex: 1;
+        }
+        .profile-name {
+            font-size: 13px; font-weight: 900; color: var(--text);
+            margin-bottom: 6px; border-bottom: 1px dashed rgba(245,197,66,0.3); padding-bottom: 4px;
+            display: inline-block;
+        }
+        .profile-name small {
+            font-size: 9px; color: var(--honey-deep); margin-left: 6px;
+        }
+        .profile-desc {
+            font-size: 10px; color: var(--text); line-height: 1.6;
+        }
+        .profile-desc .achievements {
+            font-weight: 700; color: var(--honey-deep); margin-bottom: 4px; font-size: 11px;
+        }
+        .profile-desc ul {
+            margin: 4px 0 0; padding-left: 16px; color: #777;
+        }
+        .profile-desc ul li {
+            margin-bottom: 2px;
+        }
     </style>
 </head>
 <body>
@@ -539,6 +582,25 @@
                     ※ 栄養面でのフォローはございません<br>
                     ※ LINEからお気軽にお問い合わせください
                 </p>
+            </div>
+        </div>
+
+        <!-- Profile -->
+        <div class="profile-section">
+            <img src="b323df8f-74fb-45ec-ac26-8ace96ad06de.jpeg" alt="きいちゃん先生" class="profile-avatar">
+            <div class="profile-info">
+                <div class="profile-name">きいちゃん先生<small>栄養×飼い主マインドの専門家</small></div>
+                <div class="profile-desc">
+                    <div class="achievements">🌻 栄養歴28年 ／ 動物看護師生750名以上に指導実績</div>
+                    <div><strong>【保有資格】</strong></div>
+                    <ul>
+                        <li>管理栄養士</li>
+                        <li>臨床分子栄養医学研究会認定カウンセラー</li>
+                        <li>栄養心理トレーナー（PNT）</li>
+                        <li>ペット栄養管理士</li>
+                        <li>南イリノイ大学(SIU)犬と猫の栄養コース履修</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
