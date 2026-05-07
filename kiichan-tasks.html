@@ -6,8 +6,7 @@
 <title>きいちゃん プロジェクトポータル 🌻</title>
 <!-- Supabase SDK & Config -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<!-- Confetti -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 <!-- Marked (Markdown Parser) -->
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
@@ -1056,7 +1055,7 @@
         tasks[taskIndex].status = newStatus;
         renderBoard();
         dbUpdateTask(tasks[taskIndex].id, { status: newStatus });
-        if (newStatus === 'done') fireCosmicCelebration(title + "<br>完了おめでとうございます！🌻");
+
       }
     }
   }
@@ -1331,7 +1330,7 @@
       yoshukuData = text + " 🌻✨";
       renderYoshuku();
       dbSaveYoshuku(yoshukuData);
-      fireCosmicCelebration(text + " 🌻✨");
+
     }
   }
 
@@ -1349,24 +1348,7 @@
     }
   }
 
-  function fireCosmicCelebration(messageText) {
-    const overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(255,249,230,0.9);backdrop-filter:blur(4px);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#333;overflow:hidden;transition:opacity 0.8s;';
-    overlay.innerHTML = `
-      <div style="position:relative; z-index:20; text-align:center;">
-        <div style="font-size:80px; margin-bottom:16px;">🐕🌻</div>
-        <h1 style="font-size:36px; font-weight:900; color:#C4A24E; text-shadow: 0 4px 15px rgba(196,162,78,0.3); line-height:1.4;">${messageText}</h1>
-      </div>
-    `;
-    document.body.appendChild(overlay);
-    const end = Date.now() + 2500;
-    (function frame() {
-      confetti({ particleCount: 8, angle: 60, spread: 60, origin: { x: 0.1, y: 0.8 }, colors: ['#F5C542', '#F29880', '#8CB88A', '#87CEEB'] });
-      confetti({ particleCount: 8, angle: 120, spread: 60, origin: { x: 0.9, y: 0.8 }, colors: ['#F5C542', '#F29880', '#8CB88A', '#87CEEB'] });
-      if (Date.now() < end) requestAnimationFrame(frame);
-    }());
-    setTimeout(() => { overlay.style.opacity = '0'; setTimeout(() => overlay.remove(), 1000); }, 4000);
-  }
+
 
   // --- Agendas 操作 ---
   function renderAgendas() {
@@ -1408,7 +1390,7 @@
       agendas[idx].completed = !agendas[idx].completed;
       renderAgendas();
       dbSaveAgendas();
-      if(agendas[idx].completed) fireCosmicCelebration(agendas[idx].topic.substring(0,20) + "...\n完了おめでとう！🌻");
+
     }
   }
 
