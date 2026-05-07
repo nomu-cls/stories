@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>飼い主マインド養成講座【0期】| きいちゃん</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    background: linear-gradient(180deg, #FFF9E6 0%, #FFF5F0 40%, #F0F7FC 70%, #F5F0FF 100%);
+    color: #3D3226;
+    line-height: 1.8;
+  }
+  .page { max-width: 780px; margin: 0 auto; padding: 40px 24px 60px; }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 60px 30px;
+    margin-bottom: 40px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #F5C542, #F29880, #B89FD8);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #F5C542, #F29880);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 5px 20px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .hero h1 { font-size: 28px; font-weight: 900; margin-bottom: 8px; }
+  .hero .sub { font-size: 15px; color: #8C7B6B; margin-bottom: 20px; }
+  .hero-meta {
+    display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;
+    font-size: 13px; color: #8C7B6B;
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 4px; }
+
+  /* Section Card */
+  .section {
+    background: rgba(255,255,255,0.92);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 28px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+  }
+  .section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 20px 20px 0 0;
+  }
+  .section.gold::before { background: linear-gradient(90deg, #F5C542, #F29880); }
+  .section.green::before { background: linear-gradient(90deg, #8CB88A, #6BAF69); }
+  .section.blue::before { background: linear-gradient(90deg, #87CEEB, #6BB3D9); }
+  .section.purple::before { background: linear-gradient(90deg, #B89FD8, #9B7FC4); }
+  .section h2 {
+    font-size: 18px; font-weight: 900; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section p { font-size: 14px; color: #5A4D40; margin-bottom: 12px; }
+
+  /* Do/Have/Be Grid */
+  .dhb-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 20px 0; }
+  @media (max-width: 640px) { .dhb-grid { grid-template-columns: 1fr; } }
+  .dhb-card {
+    padding: 24px 20px;
+    border-radius: 16px;
+    text-align: center;
+    position: relative;
+  }
+  .dhb-card .label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    padding: 3px 14px;
+    border-radius: 12px;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .dhb-card .icon { font-size: 36px; margin-bottom: 10px; }
+  .dhb-card h3 { font-size: 15px; font-weight: 900; margin-bottom: 8px; }
+  .dhb-card p { font-size: 12px; color: #5A4D40; line-height: 1.7; margin: 0; }
+
+  .dhb-do { background: #E8F5E8; }
+  .dhb-do .label { background: #6BAF69; }
+  .dhb-do h3 { color: #4a8a48; }
+
+  .dhb-have { background: #E6F4FA; }
+  .dhb-have .label { background: #6BB3D9; }
+  .dhb-have h3 { color: #4a8fad; }
+
+  .dhb-be { background: #F5EEFF; }
+  .dhb-be .label { background: #9B7FC4; }
+  .dhb-be h3 { color: #7a5faa; }
+
+  /* Curriculum Timeline */
+  .curriculum-item {
+    display: flex;
+    gap: 16px;
+    margin: 14px 0;
+    padding: 16px 20px;
+    border-radius: 14px;
+    background: #FAFAF5;
+    align-items: flex-start;
+    transition: transform 0.2s;
+  }
+  .curriculum-item:hover { transform: translateX(4px); }
+  .curriculum-item.is-qa {
+    background: #FFF9E6;
+    border: 1px dashed #F5C542;
+  }
+  .cur-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 900; font-size: 14px; flex-shrink: 0;
+  }
+  .cur-body { flex: 1; }
+  .cur-title { font-weight: 700; font-size: 14px; line-height: 1.5; }
+  .cur-sub { font-size: 12px; color: #8C7B6B; margin-top: 2px; }
+  .cur-tag {
+    display: inline-block;
+    font-size: 9px; font-weight: 700;
+    padding: 2px 8px; border-radius: 6px;
+    margin-top: 4px;
+  }
+  .tag-lecture { background: rgba(107,175,105,0.15); color: #4a8a48; }
+  .tag-qa { background: rgba(245,197,66,0.2); color: #b8922e; }
+  .tag-share { background: rgba(184,159,216,0.2); color: #7a5faa; }
+
+  /* Info Highlight */
+  .info-box {
+    background: #FFF9E6;
+    border-left: 4px solid #F5C542;
+    padding: 16px 20px;
+    border-radius: 0 12px 12px 0;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  .info-box.purple { background: #F5EEFF; border-color: #B89FD8; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px;
+    color: #B0A090;
+    font-size: 12px;
+  }
+
+  @media print {
+    body { background: #fff; }
+    .section { box-shadow: none; border: 1px solid #eee; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">🐾 0期 PROGRAM</div>
+    <h1>飼い主マインド養成講座</h1>
+    <p class="sub">〜 うちの子との"本当の絆"を科学的に取り戻す 〜</p>
+    <div class="hero-meta">
+      <span>📅 全7回（約3.5ヶ月）</span>
+      <span>⏱️ 1回 3〜4時間</span>
+      <span>🔄 2週間間隔</span>
+      <span>👥 3〜5名限定</span>
+    </div>
+  </div>
+
+  <!-- Do / Have / Be -->
+  <div class="section gold">
+    <h2>🌟 この講座で得られる結果</h2>
+    <p>飼い主マインド養成講座を修了した後、あなたに起こる3つの変化です。</p>
+
+    <div class="dhb-grid">
+      <div class="dhb-card dhb-do">
+        <div class="label">DO — できること</div>
+        <div class="icon">🔍</div>
+        <h3>愛犬の気持ちになって考え、自分の思考を見直せる</h3>
+        <p>「しつけが足りない」「獣医が悪い」と外に原因を探すのではなく、愛犬からのメッセージを翻訳し、自分の内面から紐解けるようになります。不安・心配・イライラの正体に気づき、最短ルートで向き合えます。</p>
+      </div>
+      <div class="dhb-card dhb-have">
+        <div class="label">HAVE — 手に入るもの</div>
+        <div class="icon">💞</div>
+        <h3>「3年後もハグする未来」と揺るがない信頼関係</h3>
+        <p>頑張る方向を間違えた努力をやめ、愛犬の100%を受け入れられる関係。病気や不調に振り回されず、落ち着いて最善の選択ができる自分と、本来の絆を取り戻します。</p>
+      </div>
+      <div class="dhb-card dhb-be">
+        <div class="label">BE — なれる自分</div>
+        <div class="icon">🌻</div>
+        <h3>愛犬にとっての「安全基地」でいられる飼い主</h3>
+        <p>神経をすり減らして尽くす飼い主から、自分を満たし、穏やかなエネルギーで関われる飼い主へ。何が起きても大丈夫な自分になれるから、愛犬だけでなく家族との関係や人生全体が好転していきます。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 変容の3ステップ -->
+  <div class="section purple">
+    <h2>🔑 変わるための3ステップ</h2>
+    <p>きいちゃん自身が愛犬との関係で行き詰まり、そこから抜け出した実体験をもとにした3つの転換点です。</p>
+
+    <div class="curriculum-item" style="background:#F5EEFF;">
+      <div class="cur-num" style="background:linear-gradient(135deg,#B89FD8,#9B7FC4)">1</div>
+      <div class="cur-body">
+        <div class="cur-title">視点の転換 — 愛犬の気持ちになって考える</div>
+        <div class="cur-sub">「自分がこの子の立場だったら、神経をすり減らしている飼い主を見てどう感じるだろう？」——この問いかけが、すべての始まりでした。</div>
+      </div>
+    </div>
+    <div class="curriculum-item" style="background:#F5EEFF;">
+      <div class="cur-num" style="background:linear-gradient(135deg,#B89FD8,#9B7FC4)">2</div>
+      <div class="cur-body">
+        <div class="cur-title">受容 — うちの子のすべてを受け入れる</div>
+        <div class="cur-sub">病気も、不調も、この子が決めてきたこと。コントロールを手放し、命の尊厳を持って「預かっている」というスタンスに変わると、不安が消えていきました。</div>
+      </div>
+    </div>
+    <div class="curriculum-item" style="background:#F5EEFF;">
+      <div class="cur-num" style="background:linear-gradient(135deg,#B89FD8,#9B7FC4)">3</div>
+      <div class="cur-body">
+        <div class="cur-title">思考の見直し — 最短ルートで自分のパターンを変える</div>
+        <div class="cur-sub">被害者意識や自責のループから脱却する具体的な方法を学び、実践します。理屈でわかっていても変われなかった人が、体感で変わる。それが飼い主マインドの養成です。</div>
+      </div>
+    </div>
+
+    <div class="info-box purple">
+      <strong>💡 気づいた日に、愛犬は変わりました</strong><br>
+      きいちゃん自身の経験では、マインドが切り替わったその日から愛犬に変化が現れました。知識ではなく「体感」で変わるからこそ、変化は速いのです。
+    </div>
+  </div>
+
+  <!-- Curriculum -->
+  <div class="section green">
+    <h2>📚 カリキュラム（全7回）</h2>
+    <p>講座5回 ＋ Q&A 2回の構成。2週間間隔で学びを深めます。</p>
+
+    <div class="curriculum-item">
+      <div class="cur-num" style="background:linear-gradient(135deg,#8CB88A,#6BAF69)">1</div>
+      <div class="cur-body">
+        <div class="cur-title">うちの子に影響する飼い主マインドのしくみ</div>
+        <div class="cur-sub">〜脳と思考、潜在意識を知る〜</div>
+        <span class="cur-tag tag-lecture">📖 講座</span>
+      </div>
+    </div>
+
+    <div class="curriculum-item is-qa">
+      <div class="cur-num" style="background:linear-gradient(135deg,#F5C542,#F29880)">2</div>
+      <div class="cur-body">
+        <div class="cur-title">Q&A セッション</div>
+        <div class="cur-sub">第1回の内容を深める質疑応答・実践シェア</div>
+        <span class="cur-tag tag-qa">💬 Q&A</span>
+      </div>
+    </div>
+
+    <div class="curriculum-item">
+      <div class="cur-num" style="background:linear-gradient(135deg,#8CB88A,#6BAF69)">3</div>
+      <div class="cur-body">
+        <div class="cur-title">愛犬に伝わる"安心感"と"緊張感"の違い</div>
+        <div class="cur-sub">〜意識の状態がペットに与える影響〜</div>
+        <span class="cur-tag tag-lecture">📖 講座</span>
+      </div>
+    </div>
+
+    <div class="curriculum-item is-qa">
+      <div class="cur-num" style="background:linear-gradient(135deg,#F5C542,#F29880)">4</div>
+      <div class="cur-body">
+        <div class="cur-title">Q&A セッション</div>
+        <div class="cur-sub">安心感・緊張感の実体験を共有・深掘り</div>
+        <span class="cur-tag tag-qa">💬 Q&A</span>
+      </div>
+    </div>
+
+    <div class="curriculum-item">
+      <div class="cur-num" style="background:linear-gradient(135deg,#8CB88A,#6BAF69)">5</div>
+      <div class="cur-body">
+        <div class="cur-title">うちの子を不安にさせない感情ケア</div>
+        <div class="cur-sub">〜不安・心配・イライラとの向き合い方〜</div>
+        <span class="cur-tag tag-lecture">📖 講座</span>
+      </div>
+    </div>
+
+    <div class="curriculum-item">
+      <div class="cur-num" style="background:linear-gradient(135deg,#87CEEB,#6BB3D9)">6</div>
+      <div class="cur-body">
+        <div class="cur-title">うちの子に安心を届けるエネルギーをだす</div>
+        <div class="cur-sub">〜自分を満たし、穏やかな関わりをつくる〜</div>
+        <span class="cur-tag tag-lecture">📖 講座</span>
+      </div>
+    </div>
+
+    <div class="curriculum-item">
+      <div class="cur-num" style="background:linear-gradient(135deg,#B89FD8,#9B7FC4)">7</div>
+      <div class="cur-body">
+        <div class="cur-title">変化のシェア会</div>
+        <div class="cur-sub">講座を通じた変化を分かち合い、次のステップへ</div>
+        <span class="cur-tag tag-share">🌻 シェア会</span>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>📌 講座の流れ</strong><br>
+      講座（3〜4時間） → 2週間の実践期間 → Q&A/次の講座<br>
+      学んだことを日常で実践し、Q&Aで振り返る。知識ではなく「体感」で変わる設計です。
+    </div>
+  </div>
+
+  <!-- Structure Overview -->
+  <div class="section blue">
+    <h2>🗓️ スケジュールイメージ</h2>
+    <table style="width:100%; border-collapse:collapse; font-size:13px; margin:12px 0;">
+      <thead>
+        <tr>
+          <th style="background:#E6F4FA; padding:10px; text-align:left; font-weight:700; color:#4a8fad; border-bottom:2px solid #87CEEB;">回</th>
+          <th style="background:#E6F4FA; padding:10px; text-align:left; font-weight:700; color:#4a8fad; border-bottom:2px solid #87CEEB;">時期（目安）</th>
+          <th style="background:#E6F4FA; padding:10px; text-align:left; font-weight:700; color:#4a8fad; border-bottom:2px solid #87CEEB;">内容</th>
+          <th style="background:#E6F4FA; padding:10px; text-align:center; font-weight:700; color:#4a8fad; border-bottom:2px solid #87CEEB;">時間</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:8px; border-bottom:1px solid #f0f0f0;">1</td><td style="padding:8px; border-bottom:1px solid #f0f0f0;">第1週</td><td style="padding:8px; border-bottom:1px solid #f0f0f0;">📖 飼い主マインドのしくみ</td><td style="padding:8px; text-align:center; border-bottom:1px solid #f0f0f0;">3〜4h</td></tr>
+        <tr><td style="padding:8px; border-bottom:1px solid #f0f0f0;">2</td><td style="padding:8px; border-bottom:1px solid #f0f0f0;">第3週</td><td style="padding:8px; border-bottom:1px solid #f0f0f0;">💬 Q&A</td><td style="padding:8px; text-align:center; border-bottom:1px solid #f0f0f0;">3〜4h</td></tr>
+        <tr><td style="padding:8px; border-bottom:1px solid #f0f0f0;">3</td><td style="padding:8px; border-bottom:1px solid #f0f0f0;">第5週</td><td style="padding:8px; border-bottom:1px solid #f0f0f0;">📖 安心感と緊張感の違い</td><td style="padding:8px; text-align:center; border-bottom:1px solid #f0f0f0;">3〜4h</td></tr>
+        <tr><td style="padding:8px; border-bottom:1px solid #f0f0f0;">4</td><td style="padding:8px; border-bottom:1px solid #f0f0f0;">第7週</td><td style="padding:8px; border-bottom:1px solid #f0f0f0;">💬 Q&A</td><td style="padding:8px; text-align:center; border-bottom:1px solid #f0f0f0;">3〜4h</td></tr>
+        <tr><td style="padding:8px; border-bottom:1px solid #f0f0f0;">5</td><td style="padding:8px; border-bottom:1px solid #f0f0f0;">第9週</td><td style="padding:8px; border-bottom:1px solid #f0f0f0;">📖 感情ケア</td><td style="padding:8px; text-align:center; border-bottom:1px solid #f0f0f0;">3〜4h</td></tr>
+        <tr><td style="padding:8px; border-bottom:1px solid #f0f0f0;">6</td><td style="padding:8px; border-bottom:1px solid #f0f0f0;">第11週</td><td style="padding:8px; border-bottom:1px solid #f0f0f0;">📖 安心のエネルギー</td><td style="padding:8px; text-align:center; border-bottom:1px solid #f0f0f0;">3〜4h</td></tr>
+        <tr><td style="padding:8px;">7</td><td style="padding:8px;">第13週</td><td style="padding:8px;">🌻 変化のシェア会</td><td style="padding:8px; text-align:center;">3〜4h</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box purple">
+      <strong>🌻 0期は「共創メンバー」として参加する特別な期です</strong><br>
+      3〜5名の少人数で、きいちゃんと一緒に講座を磨き上げていく仲間を募集します。
+    </div>
+  </div>
+
+  <div class="footer">
+    🐾 飼い主マインド養成講座【0期】<br>
+    きいちゃん — 栄養 × 飼い主マインド トレーナー
+  </div>
+
+</div>
+
+</body>
+</html>
