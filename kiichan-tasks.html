@@ -189,6 +189,9 @@
   .task-card:active { cursor: grabbing; transform: scale(0.98); }
   .task-card:hover { box-shadow: 4px 6px 16px rgba(0,0,0,0.08); }
   .task-card.dragging { opacity: 0.5; }
+  .task-card.done-compact { padding: 8px 12px; opacity: 0.7; background: #fafafa; }
+  .task-card.done-compact .task-title { margin-bottom: 0; font-size: 12px; color: #888; }
+  .task-card.done-compact:hover { opacity: 1; }
   .task-title { font-weight: 700; font-size: 13px; margin-bottom: 8px; line-height: 1.5; }
   .task-meta { display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #888; }
   .tag-area { display: flex; gap: 4px; margin-bottom: 6px; flex-wrap: wrap; }
@@ -1167,25 +1170,40 @@
       if(colTasks.length === 0) { listEl.innerHTML = '<div class="empty-state">タスクはありません 🐾</div>'; return; }
 
       colTasks.forEach(t => {
-        let tagHtml = '';
-        if (t.category && tagsMap[t.category]) { const c = tagsMap[t.category]; tagHtml = `<span class="badge-cat ${c.cls}">${c.label}</span>`; }
-        const phaseTag = t.phase ? `<span class="badge-phase ${t.phase}">${phaseLabels[t.phase] || ''}</span>` : '';
         const card = document.createElement('div');
-        card.className = 'task-card'; card.draggable = true;
+        card.draggable = true;
         card.ondragstart = (e) => dragStart(e, t.id); card.ondragend = dragEnd;
-        card.innerHTML = `
-          <div class="tag-area">${tagHtml}${phaseTag}</div>
-          <div class="task-title">${t.title.replace(/\n/g, '<br>')}</div>
-          ${t.description ? `<div style="font-size:10px; color:#aaa; margin-bottom:4px;">💭 ${t.description.substring(0,40)}${t.description.length>40?'...':''}</div>` : ''}
-          <div class="task-meta">
-            <span>📅 ${t.date}</span> ${t.assignee ? `<span>👤 ${t.assignee}</span>` : ''}
-            <div style="margin-left:auto; display:flex; gap:4px; align-items:center;">
-              <button class="delete-btn" onclick="toggleStar('${t.id}')" style="font-size:14px;">${t.title.startsWith('⭐') ? '⭐' : '☆'}</button>
-              <button class="delete-btn" onclick="openModal('${t.id}')">✏️</button>
-              <button class="delete-btn" onclick="deleteTask('${t.id}')">🗑️</button>
+
+        if (status === 'done') {
+          card.className = 'task-card done-compact';
+          card.innerHTML = `
+            <div class="task-title" style="display:flex; align-items:center; justify-content:space-between;">
+              <span>✅ ${t.title.replace(/\n/g, ' ')}</span>
+              <div style="display:flex; gap:4px; flex-shrink:0;">
+                <button class="delete-btn" onclick="openModal('${t.id}')">✏️</button>
+                <button class="delete-btn" onclick="deleteTask('${t.id}')">🗑️</button>
+              </div>
             </div>
-          </div>
-        `;
+          `;
+        } else {
+          let tagHtml = '';
+          if (t.category && tagsMap[t.category]) { const c = tagsMap[t.category]; tagHtml = `<span class="badge-cat ${c.cls}">${c.label}</span>`; }
+          const phaseTag = t.phase ? `<span class="badge-phase ${t.phase}">${phaseLabels[t.phase] || ''}</span>` : '';
+          card.className = 'task-card';
+          card.innerHTML = `
+            <div class="tag-area">${tagHtml}${phaseTag}</div>
+            <div class="task-title">${t.title.replace(/\n/g, '<br>')}</div>
+            ${t.description ? `<div style="font-size:10px; color:#aaa; margin-bottom:4px;">💭 ${t.description.substring(0,40)}${t.description.length>40?'...':''}</div>` : ''}
+            <div class="task-meta">
+              <span>📅 ${t.date}</span> ${t.assignee ? `<span>👤 ${t.assignee}</span>` : ''}
+              <div style="margin-left:auto; display:flex; gap:4px; align-items:center;">
+                <button class="delete-btn" onclick="toggleStar('${t.id}')" style="font-size:14px;">${t.title.startsWith('⭐') ? '⭐' : '☆'}</button>
+                <button class="delete-btn" onclick="openModal('${t.id}')">✏️</button>
+                <button class="delete-btn" onclick="deleteTask('${t.id}')">🗑️</button>
+              </div>
+            </div>
+          `;
+        }
         listEl.appendChild(card);
       });
     });
