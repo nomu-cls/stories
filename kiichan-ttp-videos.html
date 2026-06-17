@@ -86,6 +86,11 @@
   .tag-date { background:rgba(100,116,139,0.08); color:#64748b; border:1px solid rgba(100,116,139,0.15); }
   .tag-velocity { background:rgba(245,158,11,0.1); color:#b45309; border:1px solid rgba(245,158,11,0.2); font-weight:900; }
   .tag-outlier { background:rgba(99,102,241,0.08); color:#4f46e5; border:1px solid rgba(99,102,241,0.2); font-weight:900; }
+  .card-channel { font-size:11px; font-weight:700; color:#3b82f6; margin-bottom:8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .card-stats { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:8px; }
+  .cstat { background:#f9f7f2; border-radius:8px; padding:7px 10px; }
+  .cstat-n { display:block; font-size:13px; font-weight:900; color:var(--text); line-height:1.3; }
+  .cstat-l { display:block; font-size:9px; font-weight:700; color:var(--text-sub); letter-spacing:0.5px; margin-top:2px; }
   .yt-tags { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:8px; }
   .yt-tag { font-size:10px; font-weight:700; padding:2px 8px; border-radius:5px; background:rgba(178,120,233,0.08); color:#9b59b6; border:1px solid rgba(178,120,233,0.15); cursor:pointer; transition:all 0.15s; user-select:none; }
   .yt-tag:hover { background:rgba(178,120,233,0.18); transform:scale(1.05); }
@@ -274,6 +279,17 @@ function calcVelocity(viewCount, publishedAt) {
   return { formatted, heat, days };
 }
 
+function calcAge(publishedAt) {
+  if (!publishedAt) return null;
+  const days = Math.floor((Date.now() - new Date(publishedAt)) / 86400000);
+  if (days < 1) return '今日';
+  if (days < 7) return `${days}日前`;
+  if (days < 30) return `${Math.floor(days/7)}週間前`;
+  const months = Math.floor(days / 30);
+  if (months < 12) return `${months}ヶ月前`;
+  return `${Math.floor(months/12)}年前`;
+}
+
 function formatLikes(n) {
   n = parseInt(n);
   if (isNaN(n)) return null;
@@ -439,6 +455,7 @@ function renderCards() {
     const pubDate = formatDate(e.publishedAt);
     const velocity = calcVelocity(e.viewCount, e.publishedAt);
     const outlier = calcOutlier(e.viewCount);
+    const age = calcAge(e.publishedAt);
     const buzz = e.buzzRate != null ? e.buzzRate : null;
     const buzzColor = buzz >= 200 ? '#ef4444' : buzz >= 100 ? '#f97316' : buzz >= 50 ? '#eab308' : '#94a3b8';
     const buzzLabel = buzz >= 200 ? '🔥 爆バズ' : buzz >= 100 ? '⚡ バズ' : buzz >= 50 ? '📈 普通' : '🌱 低め';
@@ -460,13 +477,14 @@ function renderCards() {
           <div class="card-main">
             <div class="card-num">#${num}</div>
             <div class="card-title">${h(e.title||'—')}</div>
-            <div class="card-meta">
-              ${e.channel ? `<span class="meta-tag tag-channel">📺 ${h(e.channel)}</span>` : ''}
-              ${e.views ? `<span class="meta-tag tag-views">👁️ ${h(e.views)}</span>` : ''}
-              ${e.likes ? `<span class="meta-tag tag-likes">👍 ${h(e.likes)}</span>` : ''}
-              ${pubDate ? `<span class="meta-tag tag-date">📅 ${pubDate}投稿</span>` : '<span class="meta-tag tag-date" style="opacity:0.4">📅 取得中…</span>'}
-              ${velocity ? `<span class="meta-tag tag-velocity" title="${velocity.days}日間の平均再生ペース">${velocity.heat} ${velocity.formatted}</span>` : ''}
-              ${outlier ? `<span class="meta-tag tag-outlier" title="このリスト内の平均再生数との比率">📊 突出率 ${outlier}</span>` : ''}
+            ${e.channel ? `<div class="card-channel">📺 ${h(e.channel)}</div>` : ''}
+            <div class="card-stats">
+              ${e.views ? `<div class="cstat"><span class="cstat-n">👁 ${h(e.views)}</span><span class="cstat-l">再生数</span></div>` : ''}
+              ${velocity ? `<div class="cstat"><span class="cstat-n">${velocity.heat} ${velocity.formatted}</span><span class="cstat-l">再生ペース</span></div>` : ''}
+              ${pubDate
+                ? `<div class="cstat"><span class="cstat-n">📅 ${pubDate}</span><span class="cstat-l">${age || ''}</span></div>`
+                : `<div class="cstat" style="opacity:0.35"><span class="cstat-n" style="font-size:11px">—</span><span class="cstat-l">投稿日（取得中）</span></div>`}
+              ${outlier ? `<div class="cstat"><span class="cstat-n">${outlier}</span><span class="cstat-l">突出率</span></div>` : ''}
             </div>
             ${tagsHtml ? `<div class="yt-tags">${tagsHtml}</div>` : ''}
             <div class="card-actions-row">
@@ -676,8 +694,9 @@ function calcOutlier(viewCount) {
   if (all.length === 0 || !viewCount) return null;
   const avg = all.reduce((a,b) => a+b, 0) / all.length;
   const ratio = viewCount / avg;
-  const label = ratio >= 2 ? `${ratio.toFixed(1)}x 🚀` : ratio >= 1.2 ? `${ratio.toFixed(1)}x 📈` : `${ratio.toFixed(1)}x`;
-  return label;
+  if (ratio < 0.5) return null;
+  const emoji = ratio >= 3 ? '🚀' : ratio >= 1.5 ? '📈' : '📊';
+  return `${emoji} ${ratio.toFixed(1)}倍`;
 }
 
 load();
