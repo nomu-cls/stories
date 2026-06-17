@@ -84,6 +84,8 @@
   .tag-channel { background:rgba(59,130,246,0.08); color:#3b82f6; border:1px solid rgba(59,130,246,0.15); }
   .tag-views { background:rgba(139,195,74,0.08); color:#689f38; border:1px solid rgba(139,195,74,0.15); }
   .tag-likes { background:rgba(239,68,68,0.08); color:#ef4444; border:1px solid rgba(239,68,68,0.15); }
+  .tag-date { background:rgba(100,116,139,0.08); color:#64748b; border:1px solid rgba(100,116,139,0.15); }
+  .tag-velocity { background:rgba(245,158,11,0.1); color:#b45309; border:1px solid rgba(245,158,11,0.2); font-weight:900; }
   .yt-tags { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:8px; }
   .yt-tag { font-size:10px; font-weight:700; padding:2px 8px; border-radius:5px; background:rgba(178,120,233,0.08); color:#9b59b6; border:1px solid rgba(178,120,233,0.15); cursor:pointer; transition:all 0.15s; user-select:none; }
   .yt-tag:hover { background:rgba(178,120,233,0.18); transform:scale(1.05); }
@@ -274,6 +276,21 @@ function formatViews(n) {
   return n.toLocaleString() + '回';
 }
 
+function formatDate(iso) {
+  if (!iso) return null;
+  const d = new Date(iso);
+  return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function calcVelocity(viewCount, publishedAt) {
+  if (!publishedAt || !viewCount) return null;
+  const days = Math.max(1, Math.floor((Date.now() - new Date(publishedAt)) / 86400000));
+  const vpd = viewCount / days;
+  const formatted = vpd >= 10000 ? (vpd/10000).toFixed(1)+'万回/日' : Math.round(vpd).toLocaleString()+'回/日';
+  const heat = vpd >= 30000 ? '🔥' : vpd >= 10000 ? '⚡' : vpd >= 3000 ? '📈' : '🌱';
+  return { formatted, heat, days };
+}
+
 function formatLikes(n) {
   n = parseInt(n);
   if (isNaN(n)) return null;
@@ -394,6 +411,7 @@ async function fetchYouTubeAPI(videoId) {
     views: formatViews(vc),
     likes: formatLikes(item.statistics.likeCount),
     tags: (item.snippet.tags || []).slice(0, 8),
+    publishedAt: item.snippet.publishedAt || null,
   };
 }
 
@@ -451,6 +469,8 @@ function renderCards() {
     const statusOpts = Object.entries(statusLabels).map(([v,l])=>`<option value="${v}" ${e.status===v?'selected':''}>${l}</option>`).join('');
     const priOpts = Object.entries(priorityLabels).map(([v,l])=>`<option value="${v}" ${e.priority===v?'selected':''}>${l}</option>`).join('');
     const updStr = e.updatedAt ? new Date(e.updatedAt).toLocaleDateString('ja-JP') : null;
+    const pubDate = formatDate(e.publishedAt);
+    const velocity = calcVelocity(e.viewCount, e.publishedAt);
 
     return `
       <div class="video-card" data-id="${e.id}" data-priority="${e.priority||''}" data-status-val="${e.status}">
@@ -466,6 +486,8 @@ function renderCards() {
               ${e.channel ? `<span class="meta-tag tag-channel">📺 ${h(e.channel)}</span>` : ''}
               ${e.views ? `<span class="meta-tag tag-views">👁️ ${h(e.views)}</span>` : ''}
               ${e.likes ? `<span class="meta-tag tag-likes">👍 ${h(e.likes)}</span>` : ''}
+              ${pubDate ? `<span class="meta-tag tag-date">📅 ${pubDate}投稿</span>` : ''}
+              ${velocity ? `<span class="meta-tag tag-velocity" title="${velocity.days}日間の平均">${velocity.heat} ${velocity.formatted}</span>` : ''}
             </div>
             ${tagsHtml ? `<div class="yt-tags">${tagsHtml}</div>` : ''}
             <div class="card-actions-row">
