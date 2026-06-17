@@ -66,9 +66,6 @@
   /* Thumbnail */
   .card-thumb { width:260px; height:146px; border-radius:10px; overflow:hidden; background:#f0f0f0; flex-shrink:0; position:relative; }
   .card-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
-  .thumb-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.2s; }
-  .card-thumb:hover .thumb-overlay { opacity:1; }
-  .thumb-overlay .play-icon { color:#fff; font-size:32px; }
   .thumb-link { position:absolute; inset:0; z-index:1; }
   .thumb-dl-btn { position:absolute; bottom:7px; right:7px; z-index:2; background:rgba(0,0,0,0.65); color:#fff; border:none; border-radius:6px; padding:5px 9px; font-size:11px; font-weight:700; cursor:pointer; opacity:0; transition:opacity 0.2s,background 0.2s; font-family:inherit; }
   .card-thumb:hover .thumb-dl-btn { opacity:1; }
@@ -357,6 +354,8 @@ async function fetchYouTubeAPI(videoId) {
   if (!ytData?.items?.length) return null;
   const item = ytData.items[0];
   const vc = parseInt(item.statistics.viewCount || 0);
+  const sub = parseInt(ytData.subscriberCount || 0);
+  const buzzRate = sub > 0 ? Math.round(vc / sub * 100) : null;
   return {
     title: item.snippet.title,
     channel: item.snippet.channelTitle,
@@ -366,6 +365,8 @@ async function fetchYouTubeAPI(videoId) {
     likes: formatLikes(item.statistics.likeCount),
     tags: (item.snippet.tags || []).slice(0, 8),
     publishedAt: item.snippet.publishedAt || null,
+    subscriberCount: sub,
+    buzzRate,
   };
 }
 
@@ -407,10 +408,10 @@ function renderStats() {
 
 function renderCards() {
   const filtered = currentFilter === 'all' ? entries : entries.filter(e => e.status === currentFilter);
-  const po = { high:0, medium:1, low:2, '':3 };
   filtered.sort((a,b) => {
-    const d = (po[a.priority]??3) - (po[b.priority]??3);
-    return d !== 0 ? d : (b.viewCount||0) - (a.viewCount||0);
+    const pa = new Date(b.publishedAt || 0);
+    const pb = new Date(a.publishedAt || 0);
+    return pa - pb;
   });
 
   const container = document.getElementById('cardList');
@@ -434,13 +435,24 @@ function renderCards() {
     const pubDate = formatDate(e.publishedAt);
     const velocity = calcVelocity(e.viewCount, e.publishedAt);
     const outlier = calcOutlier(e.viewCount);
+    const buzz = e.buzzRate != null ? e.buzzRate : null;
+    const buzzColor = buzz >= 200 ? '#ef4444' : buzz >= 100 ? '#f97316' : buzz >= 50 ? '#eab308' : '#94a3b8';
+    const buzzLabel = buzz >= 200 ? '🔥 爆バズ' : buzz >= 100 ? '⚡ バズ' : buzz >= 50 ? '📈 普通' : '🌱 低め';
 
     return `
       <div class="video-card" data-id="${e.id}" data-priority="${e.priority||''}" data-status-val="${e.status}">
         <button class="delete-btn" onclick="deleteEntry('${e.id}')" title="削除">✕</button>
         <div class="card-inner">
-          <div class="card-thumb">
-            ${thumb ? `<img src="${h(thumb)}" alt="" onerror="this.style.display='none'"><div class="thumb-overlay"><span class="play-icon">▶</span></div>${ytUrl?`<a href="${h(ytUrl)}" target="_blank" rel="noopener noreferrer" class="thumb-link"></a>`:''}<button class="thumb-dl-btn" onclick="downloadThumb('${vid}','${h(e.title)}',event)" title="サムネをダウンロード">⬇ DL</button>` : ''}
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div class="card-thumb">
+              ${thumb ? `<img src="${h(thumb)}" alt="" onerror="this.style.display='none'">${ytUrl?`<a href="${h(ytUrl)}" target="_blank" rel="noopener noreferrer" class="thumb-link"></a>`:''}<button class="thumb-dl-btn" onclick="downloadThumb('${vid}','${h(e.title)}',event)" title="サムネをダウンロード">⬇ サムネDL</button>` : ''}
+            </div>
+            ${buzz != null ? `
+            <div style="background:#fff;border:2px solid ${buzzColor};border-radius:10px;padding:10px;text-align:center;">
+              <div style="font-size:10px;font-weight:700;color:#999;letter-spacing:1px;margin-bottom:2px;">バズ率</div>
+              <div style="font-size:28px;font-weight:900;color:${buzzColor};line-height:1;">${buzz}<span style="font-size:14px;">%</span></div>
+              <div style="font-size:11px;font-weight:700;color:${buzzColor};margin-top:2px;">${buzzLabel}</div>
+            </div>` : ''}
           </div>
           <div class="card-main">
             <div class="card-num">#${num}</div>
