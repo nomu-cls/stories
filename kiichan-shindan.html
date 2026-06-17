@@ -134,6 +134,17 @@
             box-shadow: 4px 4px 12px rgba(245,197,66,0.15);
         }
         .opt-btn:active { transform: scale(0.97); }
+        .opt-btn.skip {
+            border-style: dashed;
+            border-color: rgba(160,144,128,0.3);
+            color: var(--muted); font-size: 12px;
+            background: rgba(255,255,255,0.6);
+        }
+        .opt-btn.skip:hover {
+            border-color: rgba(160,144,128,0.5);
+            background: #f9f6f0; transform: none;
+            box-shadow: none;
+        }
         .opt-btn .letter-badge {
             background: var(--honey-light); color: var(--honey-deep);
             font-weight: 900; font-size: 12px;
@@ -290,7 +301,7 @@ function addOptions(options, callback) {
     options.forEach((opt, idx) => {
         const letters = ['A', 'B', 'C'];
         const btn = document.createElement('button');
-        btn.className = 'opt-btn';
+        btn.className = 'opt-btn' + (opt.isSkip ? ' skip' : '');
         const letterBadge = opt.showLetter !== false ? `<span class="letter-badge">${letters[idx]}</span>` : '';
         const emojiBadge = opt.emoji ? `<span class="opt-emoji">${opt.emoji}</span>` : '';
         
@@ -414,8 +425,16 @@ function startChat() {
         ], () => {
             addOptions([
                 { label: 'あります！', emoji: '🥺', showLetter: false },
-                { label: '少しだけ…', emoji: '🐾', showLetter: false }
-            ], () => {
+                { label: '少しだけ…', emoji: '🐾', showLetter: false },
+                { label: '特典動画・PDFをすぐ受け取りたい', emoji: '🎁', showLetter: false, isSkip: true }
+            ], (idx, opt) => {
+                if (opt.isSkip) {
+                    track('shindan_step', { step: 'skip_to_cta' });
+                    botSays([
+                        'もちろんです🎁<br>お名前だけ教えていただければ、<br>すぐに特典をお届けします！'
+                    ], () => askNameForCTA());
+                    return;
+                }
                 botSays([
                     '一生懸命に愛しているからこそ、<br>「なんで良くなってくれないの？」と<br>自分を責めて、怖い顔を見せてしまったり…',
                     '実は、うまくいかないのは<br>目に見えない<strong>「心の栄養」</strong>が<br>見落とされているからかもしれません。',
@@ -478,6 +497,35 @@ function askDogName() {
                 `<strong>${userDogName}</strong>ちゃんですね！🐕💛<br>とっても素敵なお名前です！`,
                 `それでは、${userName}さんと<br>${userDogName}ちゃんのために、<br><br><strong>心の栄養クイズ（全5問）</strong>を<br>スタートしますね！🐾<br><br>愛犬の気持ちを想像しながら<br>選んでみてください✨`
             ], () => renderQuestion());
+        }, 300);
+    };
+    submit.onclick = doSubmit;
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSubmit(); });
+    setTimeout(() => input.focus(), 500);
+}
+
+/* ── 診断スキップ → CTA直行 ── */
+function askNameForCTA() {
+    const wrap = document.createElement('div');
+    wrap.className = 'options-wrap';
+    wrap.innerHTML = `
+        <div style="display:flex;gap:8px;">
+            <input type="text" class="name-input" id="nameInput" placeholder="あなたのお名前…🐾" maxlength="20">
+            <button class="submit-btn" id="nameSubmit">OK</button>
+        </div>`;
+    chatArea.appendChild(wrap); scrollToBottom();
+    const input = document.getElementById('nameInput');
+    const submit = document.getElementById('nameSubmit');
+    const doSubmit = () => {
+        const name = input.value.trim();
+        if (!name) { input.focus(); return; }
+        userName = name; wrap.remove();
+        track('shindan_step', { step: 'skip_name' });
+        addUserMsg(name);
+        setTimeout(() => {
+            botSays([
+                `<strong>${userName}</strong>さん！🐾<br>ありがとうございます🌻<br>では特典をお届けしますね！`
+            ], () => showCTA());
         }, 300);
     };
     submit.onclick = doSubmit;
