@@ -6,6 +6,17 @@
     <title>犬のきもち、わかってる？クイズ — 私たちの心の栄養診断</title>
     <meta name="description" content="栄養×飼い主マインドの専門家が教える、愛犬の心と体の健康クイズ。3分であなたとワンちゃんの関係を見直すきっかけに。">
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B10FBQXV5C"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-B10FBQXV5C');
+      function track(eventName, params) {
+        gtag('event', eventName, params || {});
+      }
+    </script>
     <style>
         :root {
             --honey: #f5c542; --honey-deep: #d4a017; --honey-light: #fff9e6;
@@ -431,6 +442,7 @@ function askName() {
         const name = input.value.trim();
         if (!name) { input.focus(); return; }
         userName = name; wrap.remove();
+        track('shindan_step', { step: '01_name' });
         addUserMsg(name);
         setTimeout(() => {
             botSays([
@@ -459,6 +471,7 @@ function askDogName() {
         const name = input.value.trim();
         if (!name) { input.focus(); return; }
         userDogName = name; wrap.remove();
+        track('shindan_step', { step: '02_dogname' });
         addUserMsg('🐕 ' + name);
         setTimeout(() => {
             botSays([
@@ -524,6 +537,7 @@ function handleAnswer(selectedIdx) {
                 nextBtn.textContent = currentQ < quizData.length - 1 ? '次の問題へ →' : 'メッセージを読む 💌';
                 nextBtn.onclick = () => {
                     nextBtnWrap.remove();
+                    track('shindan_step', { step: '0' + (currentQ + 3) + '_q' + (currentQ + 1) });
                     currentQ++;
                     renderQuestion();
                 };
@@ -536,6 +550,7 @@ function handleAnswer(selectedIdx) {
 }
 
 function showFinalMessage() {
+    track('shindan_step', { step: '08_quiz_done', score: score });
     botSays([
         `${userName}さん、<br>全問クリアお疲れ様でした！🐾`,
         `さっそく、${userDogName}ちゃんへの<br>「心の栄養」充足度を見てみましょう🌻`
@@ -562,6 +577,7 @@ function showFinalMessage() {
 
 /* ━━━ 診断結果とストーリー展開 ━━━ */
 function showDiagResult() {
+    track('shindan_step', { step: '09_result', score: score });
     let title, desc, color;
     if (score === 100) {
         title = '🏆 愛犬の「心の栄養」しっかり届いています！';
@@ -609,6 +625,7 @@ function showDiagResult() {
 
 /* ━━━ きいちゃん先生の原体験ストーリー ━━━ */
 function showStory() {
+    track('shindan_step', { step: '10_story' });
     botSays([
         `私の愛犬がね、<br><strong>急性膵炎</strong>になったんです。<br><br>しかも<strong>劇症膵炎</strong>で、<br>かなり状態が厳しくて…`,
         `治療の観察中に、<br><strong>大量の下血</strong>があって。<br><br>もうダメかもしれない…<br>本当にそう思いました。`,
@@ -657,6 +674,7 @@ function showStory() {
 
 /* ━━━ CTA: LINE登録 ━━━ */
 function showCTA() {
+    track('shindan_step', { step: '11_cta' });
     const ctaCard = `
         <div style="margin:8px 0;">
             <div class="result-card" style="text-align:center;padding:24px;">
@@ -679,7 +697,7 @@ function showCTA() {
                     </div>
                 </div>
                 <div style="text-align:center;font-size:12px;color:var(--honey-deep);font-weight:700;margin-bottom:4px;animation:bounce-arrow 1.5s ease-in-out infinite;">▼ ここをタップ ▼</div>
-                <a href="https://lin.ee/N9JP2TX" target="_blank" rel="noopener noreferrer" class="cta-btn">
+                <a href="https://lin.ee/N9JP2TX" target="_blank" rel="noopener noreferrer" class="cta-btn" onclick="track('shindan_step', { step: '12_line_click' })">
                     🐾 LINE登録で特別動画を受け取る 💛
                 </a>
                 <style>@keyframes bounce-arrow{0%,100%{transform:translateY(0);opacity:0.7}50%{transform:translateY(5px);opacity:1}}</style>
