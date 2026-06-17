@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎬 TTP動画 提案リスト | きいちゃんプロジェクト</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --gold: #C4A24E; --gold-light: #F5C542; --gold-bg: #FFF9E6;
+    --coral: #F29880; --text: #3D3226; --text-sub: #8C7B6B;
+    --card-border: #F5E6D0; --radius: 16px;
+    --shadow-soft: 0 4px 16px rgba(0,0,0,0.05);
+    --shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
+  }
+  body { font-family: 'Zen Maru Gothic', sans-serif; background: linear-gradient(180deg,#FFF9E6 0%,#FFF5F0 50%,#F0F7FC 100%); color: var(--text); min-height: 100vh; }
+
+  /* Nav */
+  .top-nav { display:flex; justify-content:space-between; align-items:center; padding:14px 24px; background:rgba(255,255,255,0.92); backdrop-filter:blur(12px); border-bottom:1px solid rgba(245,197,66,0.2); position:sticky; top:0; z-index:100; gap:12px; }
+  .header-brand h1 { font-size:18px; font-weight:900; color:var(--gold); display:flex; align-items:center; gap:10px; }
+  .header-brand .badge { background:linear-gradient(135deg,var(--gold-light),var(--coral)); color:#fff; font-size:10px; font-weight:700; letter-spacing:2px; padding:4px 12px; border-radius:12px; }
+  .nav-links { display:flex; gap:8px; align-items:center; }
+  .btn { background:#fff; border:2px solid var(--gold-light); color:var(--gold); padding:7px 14px; font-family:inherit; font-weight:700; border-radius:20px; cursor:pointer; transition:all 0.2s; font-size:12px; text-decoration:none; display:inline-flex; align-items:center; gap:5px; white-space:nowrap; }
+  .btn:hover { background:var(--gold-bg); transform:translateY(-1px); }
+  .btn.primary { background:linear-gradient(135deg,var(--gold-light),var(--coral)); color:#fff; border:none; }
+  .btn.primary:hover { box-shadow:0 6px 16px rgba(245,197,66,0.3); }
+  .btn:disabled { opacity:0.4; pointer-events:none; }
+
+  /* API Banner */
+  .api-banner { padding:10px 24px; display:flex; align-items:center; gap:10px; font-size:12px; border-bottom:1px solid rgba(245,197,66,0.2); background:linear-gradient(135deg,#fff8e1,#fff3e0); flex-wrap:wrap; }
+  .api-banner.has-key { background:linear-gradient(135deg,#e8f5e9,#f1f8e9); border-bottom-color:rgba(76,175,80,0.2); }
+  .api-banner-text { color:var(--text-sub); font-weight:700; }
+  .api-banner.has-key .api-banner-text { color:#388e3c; }
+  .api-key-input { flex:1; min-width:200px; max-width:340px; padding:6px 12px; border:1.5px solid rgba(245,197,66,0.35); border-radius:8px; font-family:inherit; font-size:12px; outline:none; background:rgba(255,255,255,0.8); transition:border-color 0.2s; }
+  .api-key-input:focus { border-color:var(--gold-light); }
+  .api-key-input.has-key { border-color:rgba(76,175,80,0.4); }
+
+  /* Hero */
+  .hero { max-width:960px; margin:0 auto; padding:28px 24px 14px; text-align:center; }
+  .hero h2 { font-size:22px; font-weight:900; margin-bottom:6px; }
+  .hero h2 span { background:linear-gradient(135deg,var(--gold-light),var(--coral)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .hero p { font-size:13px; color:var(--text-sub); line-height:1.7; }
+
+  /* Stats */
+  .stats-bar { max-width:960px; margin:0 auto 18px; padding:0 24px; display:flex; gap:8px; flex-wrap:wrap; }
+  .stat-pill { background:rgba(255,255,255,0.85); padding:7px 14px; border-radius:10px; font-size:12px; font-weight:700; color:var(--text-sub); border:1px solid rgba(245,197,66,0.15); display:flex; align-items:center; gap:6px; }
+  .stat-pill .count { background:var(--gold-bg); color:var(--gold); padding:1px 7px; border-radius:7px; font-size:11px; min-width:20px; text-align:center; }
+
+  /* Filter */
+  .filter-bar { max-width:960px; margin:0 auto 16px; padding:0 24px; display:flex; gap:5px; flex-wrap:wrap; }
+  .filter-btn { padding:6px 13px; border-radius:9px; border:none; background:rgba(255,255,255,0.6); color:var(--text-sub); font-weight:700; font-family:inherit; font-size:11px; cursor:pointer; transition:all 0.2s; }
+  .filter-btn:hover { background:rgba(255,255,255,0.9); }
+  .filter-btn.active { background:#fff; color:var(--gold); box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+
+  /* Card */
+  .card-list { max-width:960px; margin:0 auto; padding:0 24px 80px; display:flex; flex-direction:column; gap:14px; }
+  .video-card { background:#fff; border-radius:var(--radius); box-shadow:var(--shadow-soft); border:1px solid var(--card-border); overflow:hidden; transition:transform 0.25s,box-shadow 0.25s; position:relative; }
+  .video-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-hover); }
+  .video-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; border-radius:var(--radius) 0 0 var(--radius); }
+  .video-card[data-priority="high"]::before { background:linear-gradient(180deg,#FF6B6B,#ee5a5a); }
+  .video-card[data-priority="medium"]::before { background:linear-gradient(180deg,var(--gold-light),#F2A83A); }
+  .video-card[data-priority="low"]::before { background:linear-gradient(180deg,#51cf66,#40c057); }
+  .video-card[data-priority=""]::before { background:#ddd; }
+
+  .card-inner { padding:16px 20px 16px 24px; display:grid; grid-template-columns:260px 1fr auto; gap:16px; align-items:start; }
+
+  /* Thumbnail */
+  .card-thumb { width:260px; height:146px; border-radius:10px; overflow:hidden; background:#f0f0f0; flex-shrink:0; position:relative; }
+  .card-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+  .thumb-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.2s; }
+  .card-thumb:hover .thumb-overlay { opacity:1; }
+  .thumb-overlay .play-icon { color:#fff; font-size:32px; }
+  .thumb-link { position:absolute; inset:0; z-index:1; }
+  .thumb-dl-btn { position:absolute; bottom:7px; right:7px; z-index:2; background:rgba(0,0,0,0.65); color:#fff; border:none; border-radius:6px; padding:5px 9px; font-size:11px; font-weight:700; cursor:pointer; opacity:0; transition:opacity 0.2s,background 0.2s; font-family:inherit; }
+  .card-thumb:hover .thumb-dl-btn { opacity:1; }
+  .thumb-dl-btn:hover { background:rgba(0,0,0,0.9) !important; }
+
+  .card-main { min-width:0; }
+  .card-num { font-size:10px; font-weight:900; color:var(--gold); letter-spacing:1px; margin-bottom:4px; }
+  .card-title { font-size:15px; font-weight:900; line-height:1.5; margin-bottom:8px; color:var(--text); }
+  .card-meta { display:flex; flex-wrap:wrap; gap:5px; align-items:center; margin-bottom:7px; }
+  .meta-tag { font-size:11px; font-weight:700; padding:3px 9px; border-radius:6px; display:inline-flex; align-items:center; gap:3px; }
+  .tag-channel { background:rgba(59,130,246,0.08); color:#3b82f6; border:1px solid rgba(59,130,246,0.15); }
+  .tag-views { background:rgba(139,195,74,0.08); color:#689f38; border:1px solid rgba(139,195,74,0.15); }
+  .tag-likes { background:rgba(239,68,68,0.08); color:#ef4444; border:1px solid rgba(239,68,68,0.15); }
+  .yt-tags { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:8px; }
+  .yt-tag { font-size:10px; font-weight:700; padding:2px 8px; border-radius:5px; background:rgba(178,120,233,0.08); color:#9b59b6; border:1px solid rgba(178,120,233,0.15); cursor:pointer; transition:all 0.15s; user-select:none; }
+  .yt-tag:hover { background:rgba(178,120,233,0.18); transform:scale(1.05); }
+  .yt-tag.copied { background:rgba(76,175,80,0.12); color:#388e3c; border-color:rgba(76,175,80,0.3); }
+  .card-actions-row { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+  .yt-link { display:inline-flex; align-items:center; gap:4px; padding:5px 10px; background:#FF0000; color:#fff; border-radius:7px; text-decoration:none; font-size:11px; font-weight:700; transition:all 0.2s; }
+  .yt-link:hover { background:#CC0000; }
+  .yt-link svg { width:12px; height:12px; fill:#fff; }
+  .refresh-btn { display:inline-flex; align-items:center; gap:4px; padding:5px 10px; background:rgba(99,102,241,0.08); color:#6366f1; border:1px solid rgba(99,102,241,0.2); border-radius:7px; font-size:11px; font-weight:700; font-family:inherit; cursor:pointer; transition:all 0.2s; }
+  .refresh-btn:hover { background:rgba(99,102,241,0.15); }
+  .refresh-btn.loading { opacity:0.5; pointer-events:none; }
+  .last-updated { font-size:9px; color:#bbb; margin-top:4px; }
+
+  /* Controls */
+  .card-controls { display:flex; flex-direction:column; gap:7px; align-items:flex-end; min-width:148px; }
+  .status-select, .priority-select { appearance:none; -webkit-appearance:none; padding:7px 28px 7px 11px; border:2px solid #eee; border-radius:9px; font-family:inherit; font-size:11px; font-weight:700; cursor:pointer; outline:none; width:100%; transition:all 0.2s; background-color:#fff; background-image:url('data:image/svg+xml;utf8,<svg fill="%23C4A24E" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat:no-repeat; background-position:right 7px center; }
+  .status-select:focus, .priority-select:focus { border-color:var(--gold-light); }
+  .status-select[data-status="proposed"] { background-color:#f8f9fa; color:#868e96; border-color:#dee2e6; }
+  .status-select[data-status="reviewing"] { background-color:#fff3e0; color:#e65100; border-color:#ffcc80; }
+  .status-select[data-status="approved"] { background-color:#e8f5e9; color:#2e7d32; border-color:#a5d6a7; }
+  .status-select[data-status="scripting"] { background-color:#e3f2fd; color:#1565c0; border-color:#90caf9; }
+  .status-select[data-status="filming"] { background-color:#f3e5f5; color:#7b1fa2; border-color:#ce93d8; }
+  .status-select[data-status="editing"] { background-color:#fce4ec; color:#c62828; border-color:#ef9a9a; }
+  .status-select[data-status="published"] { background-color:#e0f2f1; color:#00695c; border-color:#80cbc4; }
+  .status-select[data-status="rejected"] { background-color:#fafafa; color:#bbb; border-color:#eee; }
+  .priority-select { padding:5px 26px 5px 9px; border-width:1.5px; font-size:11px; background-color:#fafafa; background-image:url('data:image/svg+xml;utf8,<svg fill="%23999" height="14" viewBox="0 0 24 24" width="14" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); }
+
+  /* Memo */
+  .memo-area { border-top:1px solid #f5f0e8; padding:10px 20px 14px 24px; background:#FDFCF8; }
+  .memo-toggle { background:none; border:none; font-family:inherit; font-size:11px; font-weight:700; color:var(--text-sub); cursor:pointer; display:flex; align-items:center; gap:5px; padding:3px 0; transition:color 0.2s; }
+  .memo-toggle:hover { color:var(--gold); }
+  .memo-toggle .arrow { transition:transform 0.2s; display:inline-block; }
+  .memo-toggle .arrow.open { transform:rotate(90deg); }
+  .memo-content { display:none; margin-top:8px; }
+  .memo-content.open { display:block; }
+  .memo-textarea { width:100%; padding:10px 12px; border:1.5px solid #eee; border-radius:9px; font-family:inherit; font-size:13px; resize:vertical; min-height:64px; outline:none; line-height:1.6; color:var(--text); background:#fff; transition:border-color 0.2s; }
+  .memo-textarea:focus { border-color:var(--gold-light); }
+  .memo-textarea::placeholder { color:#ccc; }
+  .memo-saved { font-size:10px; color:#51cf66; font-weight:700; margin-top:4px; opacity:0; transition:opacity 0.3s; }
+  .memo-saved.show { opacity:1; }
+
+  /* Add button */
+  .add-card-area { max-width:960px; margin:0 auto; padding:0 24px 40px; }
+  .add-card-btn { width:100%; padding:18px; border:2px dashed rgba(245,197,66,0.3); border-radius:var(--radius); background:rgba(255,255,255,0.5); font-family:inherit; font-size:13px; font-weight:700; color:var(--text-sub); cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .add-card-btn:hover { border-color:var(--gold-light); background:rgba(255,255,255,0.8); color:var(--gold); }
+
+  /* Modal */
+  .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); display:none; justify-content:center; align-items:center; z-index:1000; backdrop-filter:blur(4px); }
+  .modal-overlay.active { display:flex; }
+  .modal { background:#fff; padding:26px; border-radius:20px; width:540px; max-width:92vw; box-shadow:0 20px 60px rgba(0,0,0,0.2); max-height:90vh; overflow-y:auto; animation:modalIn 0.3s ease; }
+  @keyframes modalIn { from{opacity:0;transform:translateY(20px) scale(0.97)} to{opacity:1;transform:none} }
+  .modal h2 { font-size:17px; margin-bottom:18px; color:var(--gold); display:flex; align-items:center; gap:8px; }
+  .form-group { margin-bottom:14px; }
+  .form-group label { display:block; margin-bottom:4px; font-size:11px; font-weight:700; color:#777; }
+  .form-group input, .form-group textarea { width:100%; padding:10px 12px; border:2px solid #eee; border-radius:8px; font-family:inherit; font-size:13px; outline:none; transition:border-color 0.2s; color:var(--text); }
+  .form-group input:focus, .form-group textarea:focus { border-color:var(--gold-light); }
+  .form-group textarea { resize:vertical; min-height:70px; }
+
+  /* Fetch preview */
+  .fetch-preview { display:none; background:#f9f7f2; border:1.5px solid var(--card-border); border-radius:10px; padding:12px; margin-bottom:14px; gap:12px; align-items:flex-start; }
+  .fetch-preview.active { display:flex; }
+  .fetch-preview img { width:120px; height:68px; border-radius:6px; object-fit:cover; flex-shrink:0; background:#eee; }
+  .fetch-preview-info { flex:1; min-width:0; }
+  .fetch-preview-title { font-size:13px; font-weight:900; line-height:1.4; margin-bottom:4px; color:var(--text); }
+  .fetch-preview-meta { font-size:11px; color:var(--text-sub); }
+  .fetch-loading { display:none; align-items:center; gap:8px; font-size:12px; color:var(--text-sub); padding:8px 0; }
+  .fetch-loading.active { display:flex; }
+  .spinner { width:15px; height:15px; border:2px solid rgba(196,162,78,0.2); border-top-color:var(--gold); border-radius:50%; animation:spin 0.7s linear infinite; flex-shrink:0; }
+  @keyframes spin { to{transform:rotate(360deg)} }
+
+  .modal-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:18px; }
+
+  /* State */
+  .video-card[data-status-val="published"] { opacity:0.72; }
+  .video-card[data-status-val="published"]:hover { opacity:1; }
+  .video-card[data-status-val="rejected"] { opacity:0.42; }
+  .video-card[data-status-val="rejected"]:hover { opacity:0.68; }
+  .video-card[data-status-val="rejected"] .card-title { text-decoration:line-through; color:#aaa; }
+  .delete-btn { background:none; border:none; color:#ddd; cursor:pointer; font-size:13px; padding:4px; transition:color 0.2s; position:absolute; top:10px; right:12px; }
+  .delete-btn:hover { color:#ff6b6b; }
+  .back-float { position:fixed; bottom:22px; right:22px; z-index:99; }
+
+  @media(max-width:700px) {
+    .card-inner { grid-template-columns:1fr; }
+    .card-thumb { width:100%; height:0; padding-bottom:56.25%; position:relative; }
+    .card-thumb img { position:absolute; inset:0; width:100%; height:100%; }
+    .card-controls { flex-direction:row; min-width:0; width:100%; }
+    .card-controls select { flex:1; }
+    .thumb-dl-btn { opacity:1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+  <div class="header-brand">
+    <h1><span class="badge">TTP</span> 🎬 動画リサーチ</h1>
+  </div>
+  <div class="nav-links">
+    <a href="kiichan-tasks.html" class="btn">📋 ポータル</a>
+    <button class="btn" onclick="focusApiKey()">⚙️ API設定</button>
+  </div>
+</div>
+
+<!-- API Key Banner -->
+<div class="api-banner" id="apiBanner">
+  <span class="api-banner-text" id="apiBannerText">🔑 YouTube APIキーを設定すると再生回数・タグ・いいねを自動取得できます</span>
+  <input type="password" class="api-key-input" id="apiKeyInput" placeholder="AIza... (YouTube Data API v3)">
+  <button class="btn" style="font-size:11px;padding:6px 12px;" onclick="saveApiKey()">保存</button>
+</div>
+
+<div class="hero">
+  <div style="font-size:38px;margin-bottom:10px;">🎬</div>
+  <h2>きいちゃんの <span>TTP動画</span> 提案リスト</h2>
+  <p>バズっている犬系動画をリサーチし、きいちゃんの「飼い主マインド」ポジションでリメイクする候補一覧です。<br>URLを貼るだけで情報を自動取得。ステータス・メモで撮影〜公開まで管理できます。</p>
+</div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">📋 すべて</button>
+  <button class="filter-btn" data-filter="proposed" onclick="setFilter('proposed')">💡 提案中</button>
+  <button class="filter-btn" data-filter="reviewing" onclick="setFilter('reviewing')">🔍 検討中</button>
+  <button class="filter-btn" data-filter="approved" onclick="setFilter('approved')">✅ 採用</button>
+  <button class="filter-btn" data-filter="scripting" onclick="setFilter('scripting')">✏️ 台本</button>
+  <button class="filter-btn" data-filter="filming" onclick="setFilter('filming')">📹 撮影</button>
+  <button class="filter-btn" data-filter="editing" onclick="setFilter('editing')">🎞️ 編集中</button>
+  <button class="filter-btn" data-filter="published" onclick="setFilter('published')">🎉 公開済</button>
+</div>
+
+<div class="card-list" id="cardList"></div>
+
+<div class="add-card-area">
+  <button class="add-card-btn" onclick="openAddModal()">＋ YouTube URLを貼り付けて追加</button>
+</div>
+
+<div class="back-float">
+  <a href="kiichan-tasks.html" class="btn primary" style="box-shadow:0 4px 20px rgba(245,197,66,0.3);">🌻 ポータル</a>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="addModal" onclick="if(event.target===this)closeAddModal()">
+  <div class="modal">
+    <h2>🎬 TTP候補を追加</h2>
+
+    <div class="form-group">
+      <label>YouTube URL <span style="color:#ef4444">*</span></label>
+      <input type="text" id="inputUrl" placeholder="https://youtube.com/watch?v=..." oninput="onUrlInput(this.value)">
+    </div>
+
+    <div class="fetch-loading" id="fetchLoading"><div class="spinner"></div><span>動画情報を取得中…</span></div>
+    <div class="fetch-preview" id="fetchPreview">
+      <img id="previewThumb" src="" alt="">
+      <div class="fetch-preview-info">
+        <div class="fetch-preview-title" id="previewTitle"></div>
+        <div class="fetch-preview-meta" id="previewMeta"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>メモ（アレンジ方法・提案ポイントなど）</label>
+      <textarea id="inputMemo" placeholder="例: 飼い主マインドの視点で、潜在意識とのつながりを入れてリメイク"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeAddModal()">キャンセル</button>
+      <button class="btn primary" id="saveBtn" onclick="saveEntry()" disabled>保存する 🌻</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'kiichan-ttp-v2';
+const API_KEY_STORAGE = 'yt-api-key';
+
+function extractVideoId(url) {
+  const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
+function thumbUrl(vid) {
+  return `https://img.youtube.com/vi/${vid}/hqdefault.jpg`;
+}
+
+function formatViews(n) {
+  n = parseInt(n);
+  if (isNaN(n)) return null;
+  if (n >= 10000) return (n / 10000).toFixed(1) + '万回';
+  return n.toLocaleString() + '回';
+}
+
+function formatLikes(n) {
+  n = parseInt(n);
+  if (isNaN(n)) return null;
+  if (n >= 10000) return (n / 10000).toFixed(1) + '万';
+  return n.toLocaleString();
+}
+
+function getApiKey() { return localStorage.getItem(API_KEY_STORAGE) || ''; }
+
+function saveApiKey() {
+  const key = document.getElementById('apiKeyInput').value.trim();
+  localStorage.setItem(API_KEY_STORAGE, key);
+  updateApiBanner();
+  if (key) alert('✅ APIキーを保存しました！カードの「🔄 更新」ボタンで最新データを取得できます。');
+}
+
+function updateApiBanner() {
+  const key = getApiKey();
+  const banner = document.getElementById('apiBanner');
+  const input = document.getElementById('apiKeyInput');
+  const text = document.getElementById('apiBannerText');
+  if (key) {
+    banner.classList.add('has-key');
+    input.classList.add('has-key');
+    input.value = key;
+    text.textContent = '✅ YouTube APIキー設定済み — 再生回数・いいね・タグを自動取得できます';
+  } else {
+    banner.classList.remove('has-key');
+    input.classList.remove('has-key');
+    text.textContent = '🔑 YouTube APIキーを設定すると再生回数・タグ・いいねを自動取得できます';
+  }
+}
+
+function focusApiKey() {
+  document.getElementById('apiBanner').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => document.getElementById('apiKeyInput').focus(), 300);
+}
+
+// Seed data
+const seedData = [
+  { id:'ttp-001', videoId:'rKN1nLGlNL4', title:'【動物とお話】一番の望みはなに？', channel:'【ペットーク】教えて、あつし先生!!', views:'2.5万回', viewCount:25000, likes:null, tags:['アニマルコミュニケーション','アニマルコミュニケーター','ハイジ','アニマルコミュニケーション講座','アニコミ'], status:'proposed', priority:'medium', memo:'', createdAt:'2026-06-17', updatedAt:null },
+  { id:'ttp-002', videoId:'6EbO81pD6fs', title:'【なぜか爆モテ】犬が自然と寄ってくる人の共通点8選', channel:'獣医さや先生の犬学ゼミ', views:'19.3万回', viewCount:193000, likes:null, tags:['ペット','獣医'], status:'proposed', priority:'medium', memo:'', createdAt:'2026-06-17', updatedAt:null },
+  { id:'ttp-003', videoId:'ST8rmljYlQg', title:'【逆効果】知らず知らずのうちに犬を悲しませてしまう行動16選', channel:'獣医さや先生の犬学ゼミ', views:'42.0万回', viewCount:420000, likes:null, tags:[], status:'proposed', priority:'high', memo:'', createdAt:'2026-06-17', updatedAt:null },
+  { id:'ttp-004', videoId:'vTiHT5Z9g9E', title:'優しい人に育てられた犬だけが見せる仕草6選【徹底解説】', channel:'犬の気持ち発信チャンネル', views:'38.2万回', viewCount:382000, likes:null, tags:[], status:'proposed', priority:'medium', memo:'', createdAt:'2026-06-17', updatedAt:null },
+  { id:'ttp-005', videoId:'wz8JQva6Fxc', title:'我が子のように大切に育てられた犬だけが見せる仕草7選', channel:'犬の気持ち発信チャンネル', views:'46.6万回', viewCount:466000, likes:null, tags:[], status:'proposed', priority:'medium', memo:'', createdAt:'2026-06-17', updatedAt:null },
+  { id:'ttp-006', videoId:'MFWhvexKDRg', title:'犬が家族の中で最愛の人にしか見せない仕草10選を獣医師が解説【2025年最新】', channel:'くぅのドッグフード研究室', views:'20.2万回', viewCount:202000, likes:null, tags:['犬の気持ち','分離不安','しつけ'], status:'proposed', priority:'medium', memo:'', createdAt:'2026-06-17', updatedAt:null },
+  { id:'ttp-007', videoId:'dPdyNKSn17I', title:'【これされたら特別】犬が心の底から好きな人にだけ見せる仕草10選', channel:'獣医さや先生の犬学ゼミ', views:'32.8万回', viewCount:328000, likes:null, tags:[], status:'proposed', priority:'medium', memo:'', createdAt:'2026-06-17', updatedAt:null },
+  { id:'ttp-008', videoId:'tfCgaD1tuw0', title:'【完全版】犬がこの仕草をしたら、あなたに話しかけています。', channel:'犬の気持ち発信チャンネル', views:'73.7万回', viewCount:737000, likes:null, tags:[], status:'proposed', priority:'high', memo:'', createdAt:'2026-06-17', updatedAt:null },
+];
+
+let entries = [];
+let currentFilter = 'all';
+
+function load() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    entries = JSON.parse(saved);
+    const newSeeds = seedData.filter(s => !entries.some(e => e.id === s.id));
+    if (newSeeds.length) { entries = [...entries, ...newSeeds]; save(); }
+  } else {
+    // Migrate from old key
+    const old = localStorage.getItem('kiichan-ttp-videos');
+    if (old) {
+      const oldEntries = JSON.parse(old);
+      entries = seedData.map(seed => {
+        const o = oldEntries.find(e => e.id === seed.id);
+        return o ? { ...seed, status: o.status, priority: o.priority, memo: o.memo } : seed;
+      });
+      oldEntries.filter(e => !seedData.some(s => s.id === e.id)).forEach(e => {
+        const vid = extractVideoId(e.url || '');
+        entries.push({ ...e, videoId: vid || '', tags: e.keywords || [], viewCount: 0, likes: null, updatedAt: null });
+      });
+    } else {
+      entries = JSON.parse(JSON.stringify(seedData));
+    }
+    save();
+  }
+}
+
+function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); }
+
+// YouTube Data API v3
+async function fetchYouTubeAPI(videoId) {
+  const key = getApiKey();
+  if (!key || !videoId) return null;
+  try {
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet,statistics&key=${key}`);
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    if (!data.items?.length) return null;
+    const item = data.items[0];
+    const vc = parseInt(item.statistics.viewCount || 0);
+    return {
+      title: item.snippet.title,
+      channel: item.snippet.channelTitle,
+      thumbnail: item.snippet.thumbnails.high?.url || item.snippet.thumbnails.medium?.url || item.snippet.thumbnails.default?.url,
+      viewCount: vc,
+      views: formatViews(vc),
+      likes: formatLikes(item.statistics.likeCount),
+      tags: (item.snippet.tags || []).slice(0, 8),
+    };
+  } catch(e) { console.error('YT API:', e); return null; }
+}
+
+// oEmbed — no API key, gets title + channel + thumbnail
+async function fetchOEmbed(videoId) {
+  try {
+    const ytUrl = encodeURIComponent(`https://www.youtube.com/watch?v=${videoId}`);
+    const res = await fetch(`https://www.youtube.com/oembed?url=${ytUrl}&format=json`);
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    return { title: data.title, channel: data.author_name, thumbnail: thumbUrl(videoId), viewCount: 0, views: null, likes: null, tags: [] };
+  } catch(e) { return null; }
+}
+
+// Status/Priority labels
+const statusLabels = { proposed:'💡 提案中', reviewing:'🔍 検討中', approved:'✅ 採用決定', scripting:'✏️ 台本作成中', filming:'📹 撮影中', editing:'🎞️ 編集中', published:'🎉 公開済み', rejected:'❌ 見送り' };
+const priorityLabels = { high:'🔥 高', medium:'⚡ 中', low:'🌱 低', '':'— 未設定' };
+
+function renderStats() {
+  const counts = {};
+  Object.keys(statusLabels).forEach(s => counts[s] = 0);
+  entries.forEach(e => { counts[e.status] = (counts[e.status] || 0) + 1; });
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-pill">📋 全体 <span class="count">${entries.length}</span></div>
+    <div class="stat-pill">💡 提案中 <span class="count">${counts.proposed||0}</span></div>
+    <div class="stat-pill">🔍 検討中 <span class="count">${counts.reviewing||0}</span></div>
+    <div class="stat-pill">✅ 採用 <span class="count">${counts.approved||0}</span></div>
+    <div class="stat-pill">📹 制作中 <span class="count">${(counts.scripting||0)+(counts.filming||0)+(counts.editing||0)}</span></div>
+    <div class="stat-pill">🎉 公開済 <span class="count">${counts.published||0}</span></div>`;
+}
+
+function renderCards() {
+  const filtered = currentFilter === 'all' ? entries : entries.filter(e => e.status === currentFilter);
+  const po = { high:0, medium:1, low:2, '':3 };
+  filtered.sort((a,b) => {
+    const d = (po[a.priority]??3) - (po[b.priority]??3);
+    return d !== 0 ? d : (b.viewCount||0) - (a.viewCount||0);
+  });
+
+  const container = document.getElementById('cardList');
+  const hasKey = !!getApiKey();
+
+  if (!filtered.length) {
+    container.innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--text-sub);"><div style="font-size:48px;margin-bottom:12px;">🔍</div><div style="font-size:15px;font-weight:700;">この条件の候補はまだありません</div></div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(e => {
+    const num = String(entries.indexOf(e)+1).padStart(2,'0');
+    const hasMemo = !!(e.memo?.trim());
+    const vid = e.videoId || '';
+    const thumb = e.thumbnail || (vid ? thumbUrl(vid) : '');
+    const ytUrl = vid ? `https://youtube.com/watch?v=${vid}` : '';
+    const tagsHtml = (e.tags||[]).slice(0,7).map(t=>`<span class="yt-tag" onclick="copyTag(this,'${h(t)}')" title="クリックでコピー">${h(t)}</span>`).join('');
+    const statusOpts = Object.entries(statusLabels).map(([v,l])=>`<option value="${v}" ${e.status===v?'selected':''}>${l}</option>`).join('');
+    const priOpts = Object.entries(priorityLabels).map(([v,l])=>`<option value="${v}" ${e.priority===v?'selected':''}>${l}</option>`).join('');
+    const updStr = e.updatedAt ? new Date(e.updatedAt).toLocaleDateString('ja-JP') : null;
+
+    return `
+      <div class="video-card" data-id="${e.id}" data-priority="${e.priority||''}" data-status-val="${e.status}">
+        <button class="delete-btn" onclick="deleteEntry('${e.id}')" title="削除">✕</button>
+        <div class="card-inner">
+          <div class="card-thumb">
+            ${thumb ? `<img src="${h(thumb)}" alt="" onerror="this.style.display='none'"><div class="thumb-overlay"><span class="play-icon">▶</span></div>${ytUrl?`<a href="${h(ytUrl)}" target="_blank" rel="noopener noreferrer" class="thumb-link"></a>`:''}<button class="thumb-dl-btn" onclick="downloadThumb('${vid}','${h(e.title)}',event)" title="サムネをダウンロード">⬇ DL</button>` : ''}
+          </div>
+          <div class="card-main">
+            <div class="card-num">#${num}</div>
+            <div class="card-title">${h(e.title||'—')}</div>
+            <div class="card-meta">
+              ${e.channel ? `<span class="meta-tag tag-channel">📺 ${h(e.channel)}</span>` : ''}
+              ${e.views ? `<span class="meta-tag tag-views">👁️ ${h(e.views)}</span>` : ''}
+              ${e.likes ? `<span class="meta-tag tag-likes">👍 ${h(e.likes)}</span>` : ''}
+            </div>
+            ${tagsHtml ? `<div class="yt-tags">${tagsHtml}</div>` : ''}
+            <div class="card-actions-row">
+              ${ytUrl ? `<a href="${h(ytUrl)}" target="_blank" rel="noopener noreferrer" class="yt-link"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> 動画を見る</a>` : ''}
+              ${hasKey && vid ? `<button class="refresh-btn" id="ref-${e.id}" onclick="refreshCard('${e.id}')">🔄 更新</button>` : ''}
+            </div>
+            ${updStr ? `<div class="last-updated">最終取得: ${updStr}</div>` : ''}
+          </div>
+          <div class="card-controls">
+            <select class="status-select" data-status="${e.status}" onchange="updateStatus('${e.id}',this.value)">${statusOpts}</select>
+            <select class="priority-select" onchange="updatePriority('${e.id}',this.value)">${priOpts}</select>
+          </div>
+        </div>
+        <div class="memo-area">
+          <button class="memo-toggle" onclick="toggleMemo('${e.id}')">
+            <span class="arrow ${hasMemo?'open':''}" id="arrow-${e.id}">▶</span>
+            📝 メモ ${hasMemo?'(入力済)':''}
+          </button>
+          <div class="memo-content ${hasMemo?'open':''}" id="memo-${e.id}">
+            <textarea class="memo-textarea" placeholder="アレンジ方法、撮影アイデア、きいちゃんへの提案ポイントなど…" oninput="saveMemo('${e.id}',this.value)">${h(e.memo||'')}</textarea>
+            <div class="memo-saved" id="saved-${e.id}">✓ 保存しました</div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function render() {
+  renderStats();
+  renderCards();
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === currentFilter));
+}
+
+function setFilter(f) { currentFilter = f; render(); }
+function updateStatus(id, v) { const e = entries.find(e=>e.id===id); if(e){e.status=v;save();render();} }
+function updatePriority(id, v) { const e = entries.find(e=>e.id===id); if(e){e.priority=v;save();render();} }
+
+const memoT = {};
+function saveMemo(id, val) {
+  const e = entries.find(e=>e.id===id);
+  if (!e) return;
+  e.memo = val;
+  clearTimeout(memoT[id]);
+  memoT[id] = setTimeout(() => {
+    save();
+    const el = document.getElementById('saved-'+id);
+    if (el) { el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),1500); }
+  }, 500);
+}
+
+function toggleMemo(id) {
+  document.getElementById('memo-'+id)?.classList.toggle('open');
+  document.getElementById('arrow-'+id)?.classList.toggle('open');
+}
+
+function deleteEntry(id) {
+  const e = entries.find(e=>e.id===id);
+  if (e && confirm(`「${e.title}」を削除しますか？`)) { entries=entries.filter(e=>e.id!==id); save(); render(); }
+}
+
+async function refreshCard(id) {
+  const e = entries.find(e=>e.id===id);
+  if (!e?.videoId) return;
+  const btn = document.getElementById('ref-'+id);
+  if (btn) { btn.classList.add('loading'); btn.textContent = '取得中…'; }
+  const data = await fetchYouTubeAPI(e.videoId);
+  if (data) {
+    Object.assign(e, { ...data, updatedAt: new Date().toISOString() });
+    save(); render();
+  } else {
+    if (btn) { btn.classList.remove('loading'); btn.textContent = '🔄 更新'; }
+    alert('取得に失敗しました。APIキーを確認してください。');
+  }
+}
+
+// --- Modal ---
+let fetchedData = null;
+let urlT = null;
+
+async function onUrlInput(val) {
+  const vid = extractVideoId(val.trim());
+  const saveBtn = document.getElementById('saveBtn');
+  const preview = document.getElementById('fetchPreview');
+  const loading = document.getElementById('fetchLoading');
+
+  if (!vid) {
+    fetchedData = null;
+    preview.classList.remove('active');
+    loading.classList.remove('active');
+    saveBtn.disabled = true;
+    return;
+  }
+
+  // Show thumbnail immediately
+  document.getElementById('previewThumb').src = thumbUrl(vid);
+  document.getElementById('previewTitle').textContent = '取得中…';
+  document.getElementById('previewMeta').textContent = '';
+  preview.classList.add('active');
+  loading.classList.remove('active');
+  saveBtn.disabled = true;
+
+  clearTimeout(urlT);
+  urlT = setTimeout(async () => {
+    loading.classList.add('active');
+    let data = await fetchYouTubeAPI(vid);
+    if (!data) data = await fetchOEmbed(vid);
+    loading.classList.remove('active');
+
+    if (data) {
+      fetchedData = { ...data, videoId: vid };
+      document.getElementById('previewThumb').src = data.thumbnail || thumbUrl(vid);
+      document.getElementById('previewTitle').textContent = data.title || '';
+      document.getElementById('previewMeta').textContent = [data.channel, data.views].filter(Boolean).join(' ・ ');
+      saveBtn.disabled = false;
+    } else {
+      document.getElementById('previewTitle').textContent = '動画情報を取得できませんでした';
+      document.getElementById('previewMeta').textContent = 'URLを確認してください';
+    }
+  }, 600);
+}
+
+function openAddModal() {
+  document.getElementById('inputUrl').value = '';
+  document.getElementById('inputMemo').value = '';
+  document.getElementById('fetchPreview').classList.remove('active');
+  document.getElementById('fetchLoading').classList.remove('active');
+  document.getElementById('saveBtn').disabled = true;
+  fetchedData = null;
+  document.getElementById('addModal').classList.add('active');
+  setTimeout(() => document.getElementById('inputUrl').focus(), 200);
+}
+
+function closeAddModal() { document.getElementById('addModal').classList.remove('active'); }
+
+function saveEntry() {
+  if (!fetchedData) return;
+  const memo = document.getElementById('inputMemo').value.trim();
+  entries.push({
+    id: 'ttp-' + Math.random().toString(36).substr(2,6),
+    ...fetchedData,
+    memo,
+    status: 'proposed',
+    priority: '',
+    createdAt: new Date().toISOString().slice(0,10),
+    updatedAt: new Date().toISOString()
+  });
+  save(); closeAddModal(); render();
+}
+
+function h(str) {
+  if (!str) return '';
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+function copyTag(el, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    el.classList.add('copied');
+    const orig = el.textContent;
+    el.textContent = '✓ コピー';
+    setTimeout(() => { el.classList.remove('copied'); el.textContent = orig; }, 1200);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+    el.classList.add('copied');
+    setTimeout(() => el.classList.remove('copied'), 1200);
+  });
+}
+
+async function downloadThumb(videoId, title, evt) {
+  evt.stopPropagation();
+  evt.preventDefault();
+  const btn = evt.currentTarget;
+  const url = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+  const fallback = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  const filename = title.replace(/[\\/:*?"<>|]/g,'').slice(0,40) + '.jpg';
+  btn.textContent = '…';
+  try {
+    let res = await fetch(url);
+    if (!res.ok) res = await fetch(fallback);
+    const blob = await res.blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    btn.textContent = '✓ DL';
+    setTimeout(() => { btn.textContent = '⬇ DL'; }, 1500);
+  } catch(e) {
+    window.open(fallback, '_blank');
+    btn.textContent = '⬇ DL';
+  }
+}
+
+// Pre-set API key if not already saved
+if (!localStorage.getItem(API_KEY_STORAGE)) {
+  localStorage.setItem(API_KEY_STORAGE, 'AIzaSyCzU2A99FWdzupjx6t4AdMaqxLtY-lxyBA');
+}
+// Clear old storage to reset with new 8-video seed list
+if (localStorage.getItem('kiichan-ttp-videos') && !localStorage.getItem('kiichan-ttp-v2')) {
+  localStorage.removeItem('kiichan-ttp-videos');
+}
+
+load();
+updateApiBanner();
+render();
+</script>
+</body>
+</html>
