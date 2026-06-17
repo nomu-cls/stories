@@ -355,27 +355,46 @@ function load() {
 
 function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); }
 
-// YouTube Data API v3
+// YouTube Data API v3 — Vercelプロキシ経由 / ローカルキーにフォールバック
 async function fetchYouTubeAPI(videoId) {
-  const key = getApiKey();
-  if (!key || !videoId) return null;
-  try {
-    const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet,statistics&key=${key}`);
-    if (!res.ok) throw new Error(res.status);
-    const data = await res.json();
-    if (!data.items?.length) return null;
-    const item = data.items[0];
-    const vc = parseInt(item.statistics.viewCount || 0);
-    return {
-      title: item.snippet.title,
-      channel: item.snippet.channelTitle,
-      thumbnail: item.snippet.thumbnails.high?.url || item.snippet.thumbnails.medium?.url || item.snippet.thumbnails.default?.url,
-      viewCount: vc,
-      views: formatViews(vc),
-      likes: formatLikes(item.statistics.likeCount),
-      tags: (item.snippet.tags || []).slice(0, 8),
-    };
-  } catch(e) { console.error('YT API:', e); return null; }
+  if (!videoId) return null;
+
+  // Vercel上ではサーバーサイドプロキシ経由（APIキー不要）
+  // GitHub Pages / ローカルでは localStorage のキーを直接使用
+  const onVercel = !window.location.hostname.includes('github.io') &&
+                   !window.location.hostname.includes('localhost') &&
+                   !window.location.protocol.startsWith('file');
+
+  let ytData = null;
+  if (onVercel) {
+    try {
+      const res = await fetch(`/api/youtube?videoId=${videoId}`);
+      if (res.ok) ytData = await res.json();
+    } catch(e) { /* fall through to direct */ }
+  }
+
+  if (!ytData) {
+    const key = getApiKey();
+    if (!key) return null;
+    try {
+      const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet,statistics&key=${key}`);
+      if (!res.ok) throw new Error(res.status);
+      ytData = await res.json();
+    } catch(e) { console.error('YT API:', e); return null; }
+  }
+
+  if (!ytData?.items?.length) return null;
+  const item = ytData.items[0];
+  const vc = parseInt(item.statistics.viewCount || 0);
+  return {
+    title: item.snippet.title,
+    channel: item.snippet.channelTitle,
+    thumbnail: item.snippet.thumbnails.high?.url || item.snippet.thumbnails.medium?.url || item.snippet.thumbnails.default?.url,
+    viewCount: vc,
+    views: formatViews(vc),
+    likes: formatLikes(item.statistics.likeCount),
+    tags: (item.snippet.tags || []).slice(0, 8),
+  };
 }
 
 // oEmbed — no API key, gets title + channel + thumbnail
@@ -646,13 +665,17 @@ async function downloadThumb(videoId, title, evt) {
   }
 }
 
-// Pre-set API key if not already saved
-if (!localStorage.getItem(API_KEY_STORAGE)) {
-  localStorage.setItem(API_KEY_STORAGE, 'AIzaSyCzU2A99FWdzupjx6t4AdMaqxLtY-lxyBA');
-}
+// APIキーはブラウザのlocalStorageに保存されます（ページ上部の入力欄から設定）
 // Clear old storage to reset with new 8-video seed list
 if (localStorage.getItem('kiichan-ttp-videos') && !localStorage.getItem('kiichan-ttp-v2')) {
   localStorage.removeItem('kiichan-ttp-videos');
+}
+
+const onVercel = !window.location.hostname.includes('github.io') &&
+                 !window.location.hostname.includes('localhost') &&
+                 !window.location.protocol.startsWith('file');
+if (onVercel) {
+  document.getElementById('apiBanner').style.display = 'none';
 }
 
 load();
