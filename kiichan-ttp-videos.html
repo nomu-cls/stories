@@ -167,8 +167,9 @@
   .video-card[data-status-val="rejected"] { opacity:0.42; }
   .video-card[data-status-val="rejected"]:hover { opacity:0.68; }
   .video-card[data-status-val="rejected"] .card-title { text-decoration:line-through; color:#aaa; }
-  .delete-btn { background:none; border:none; color:#ddd; cursor:pointer; font-size:13px; padding:4px; transition:color 0.2s; position:absolute; top:10px; right:12px; }
-  .delete-btn:hover { color:#ff6b6b; }
+  .delete-btn { display:none; }
+  .delete-card-btn { background:none; border:1.5px solid #fcc; color:#e88; border-radius:8px; padding:5px 10px; font-size:11px; font-weight:700; font-family:inherit; cursor:pointer; transition:all 0.2s; width:100%; }
+  .delete-card-btn:hover { background:#fff0f0; border-color:#f99; color:#e44; }
   .back-float { position:fixed; bottom:22px; right:22px; z-index:99; }
 
   @media(max-width:700px) {
@@ -482,6 +483,7 @@ function renderCards() {
           <div class="card-controls">
             <select class="status-select" data-status="${e.status}" onchange="updateStatus('${e.id}',this.value)">${statusOpts}</select>
             <select class="priority-select" onchange="updatePriority('${e.id}',this.value)">${priOpts}</select>
+            <button class="delete-card-btn" onclick="deleteEntry('${e.id}')">🗑 削除</button>
           </div>
         </div>
         <div class="memo-area">
