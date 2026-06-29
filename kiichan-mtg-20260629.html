@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>きいちゃんプロジェクト MTG議事録 — 2026/06/29</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --honey: #f5c542; --honey-deep: #d4a017; --honey-light: #fff9e6;
+            --peach: #f7b89c; --coral: #f2988e; --coral-deep: #e06b6b;
+            --sage: #8cb88a; --sage-light: #eef6ee;
+            --sky: #85bdd9; --sky-light: #edf5fa;
+            --lavender: #b8a9d8; --lavender-light: #f3f0fa;
+            --bg: #fffcf5; --text: #4a3a2a; --muted: #a09080;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family:'Zen Maru Gothic',sans-serif;
+            background: linear-gradient(180deg,#fffcf5 0%,#fff5e8 50%,#fef0e0 100%);
+            color:var(--text); min-height:100vh; padding:24px;
+        }
+        .container { max-width:860px; margin:0 auto; }
+
+        /* Header */
+        .header { text-align:center; margin-bottom:32px; }
+        .badge {
+            display:inline-block;
+            background:linear-gradient(135deg,var(--honey),var(--peach));
+            color:#fff; font-size:10px; font-weight:700;
+            padding:4px 16px; border-radius:20px; letter-spacing:3px; margin-bottom:12px;
+        }
+        .header h1 { font-size:24px; font-weight:900; line-height:1.5; }
+        .header h1 em { font-style:normal; background:linear-gradient(transparent 60%,rgba(245,197,66,.3) 60%); }
+        .meta { font-size:12px; color:var(--muted); margin-top:8px; line-height:1.7; }
+
+        /* Section card */
+        .section {
+            background:#fff; border-radius:20px; padding:28px 32px;
+            box-shadow:0 4px 20px rgba(0,0,0,.04); margin-bottom:20px;
+            position:relative; overflow:hidden;
+        }
+        .section::before {
+            content:''; position:absolute; top:0; left:0; right:0;
+            height:5px; border-radius:20px 20px 0 0;
+        }
+        .section.honey::before { background:linear-gradient(90deg,var(--honey),var(--peach)); }
+        .section.sage::before { background:linear-gradient(90deg,var(--sage),#6baf69); }
+        .section.lavender::before { background:linear-gradient(90deg,var(--lavender),#9a8bc0); }
+        .section.coral::before { background:linear-gradient(90deg,var(--coral),var(--coral-deep)); }
+        .section.sky::before { background:linear-gradient(90deg,var(--sky),#6bb3d9); }
+        .section.mint::before { background:linear-gradient(90deg,#7ecec4,#5bb8ae); }
+
+        .section h2 {
+            font-size:17px; font-weight:900; margin-bottom:14px;
+            display:flex; align-items:center; gap:8px;
+        }
+        .section h3 {
+            font-size:14px; font-weight:900; margin:16px 0 8px;
+            padding-left:12px; border-left:3px solid var(--honey);
+        }
+
+        /* Lists */
+        ul, ol { padding-left:20px; }
+        li { font-size:13px; line-height:1.8; margin-bottom:4px; }
+        li strong { color:var(--honey-deep); }
+
+        /* Highlight box */
+        .highlight {
+            background:var(--honey-light); border:1px solid rgba(245,197,66,.25);
+            border-radius:12px; padding:16px 20px; margin:12px 0;
+            font-size:13px; line-height:1.8;
+        }
+        .highlight.lavender { background:var(--lavender-light); border-color:rgba(184,169,216,.3); }
+        .highlight.sage { background:var(--sage-light); border-color:rgba(140,184,138,.3); }
+        .highlight.coral { background:#fef0f0; border-color:rgba(242,152,142,.3); }
+        .highlight.sky { background:var(--sky-light); border-color:rgba(133,189,217,.3); }
+        .highlight.mint { background:#f0faf9; border-color:rgba(126,206,196,.3); }
+
+        /* Task table */
+        .task-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:12px; }
+        .task-table th {
+            background:linear-gradient(135deg,var(--honey-light),#fff0e0);
+            padding:10px 14px; text-align:left; font-weight:700;
+            color:var(--honey-deep); border-bottom:2px solid rgba(245,197,66,.2);
+        }
+        .task-table td {
+            padding:10px 14px; border-bottom:1px solid #f5f0e8;
+            vertical-align:top; line-height:1.7;
+        }
+        .task-table tr:last-child td { border-bottom:none; }
+        .who {
+            display:inline-block; font-size:10px; font-weight:700;
+            padding:2px 8px; border-radius:10px; margin-right:4px;
+        }
+        .who.kii { background:var(--honey-light); color:var(--honey-deep); }
+        .who.nomu { background:var(--lavender-light); color:#8a7bb0; }
+
+        /* Flow diagram */
+        .flow {
+            display:flex; align-items:center; gap:8px;
+            flex-wrap:wrap; margin:12px 0;
+        }
+        .flow-step {
+            background:#fff; border:2px solid var(--honey);
+            border-radius:12px; padding:8px 14px;
+            font-size:12px; font-weight:700; text-align:center;
+        }
+        .flow-arrow { color:var(--honey); font-size:18px; font-weight:900; }
+
+        /* Decision badge */
+        .decision {
+            display:inline-block; background:linear-gradient(135deg,var(--sage),#6baf69);
+            color:#fff; font-size:10px; font-weight:700;
+            padding:2px 10px; border-radius:10px; margin-right:6px; vertical-align:middle;
+        }
+
+        /* Footer */
+        .footer {
+            text-align:center; padding:32px; font-size:11px; color:var(--muted);
+        }
+
+        @media(max-width:600px) {
+            body { padding:12px; }
+            .section { padding:20px 18px; }
+            .flow { flex-direction:column; }
+            .flow-arrow { transform:rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+        <div class="badge">🐾 MEETING MINUTES</div>
+        <h1>きいちゃんプロジェクト<br>MTG 議事録</h1>
+        <div class="meta">
+            📅 2026年6月29日（月）｜ 👥 きいちゃん × ノムさん<br>
+            🎯 テーマ：<em>ディプロマ発行・YouTube戦略・講座コンテンツ深化</em><br>
+            ⏱ 所要時間：約2時間
+        </div>
+    </div>
+
+    <!-- 1. ディプロマ発行 -->
+    <div class="section honey">
+        <h2>🎓 1. ディプロマ（修了証）発行の決定</h2>
+
+        <p style="font-size:13px;line-height:1.8;margin-bottom:12px;">
+            飼い主マインド講座の受講完了者に対して、<strong>修了証（ディプロマ）を発行すること</strong>が決定した。
+            単なる記念品ではなく、将来のインストラクター認定制度との連携を見据えた仕組みとして設計する。
+        </p>
+
+        <h3>決定事項</h3>
+        <ul>
+            <li><span class="decision">決定</span><strong>Canvaで修了証をデザイン</strong>し、手渡しまたはデータで配布</li>
+            <li><span class="decision">決定</span><strong>発行番号を管理</strong>する（スプレッドシート等で記録）</li>
+            <li>将来的に<strong>インストラクター認定制度</strong>に連携予定（ディプロマ保有者が受験資格を得る流れ）</li>
+            <li>修了条件は全回参加を基本とするが、柔軟に対応</li>
+        </ul>
+
+        <div class="highlight sage">
+            💡 <strong>ポイント</strong>：修了証の発行は「学んだ証」としての価値だけでなく、
+            受講生が「次のステップ（インストラクター）へ進む意欲」を高める機能も持つ。
+            まずはシンプルなデザインで始め、制度が整ったらグレードアップしていく。
+        </div>
+    </div>
+
+    <!-- 2. 第1回講座振り返り -->
+    <div class="section coral">
+        <h2>📋 2. 第1回講座の振り返り</h2>
+
+        <h3>参加者フィードバックのポイント</h3>
+        <ul>
+            <li>全員から<strong>ワーク部分への高評価</strong>あり ─ 「体験した」「気づいた」という声が多数</li>
+            <li>理論（講義）部分は必要だが、<strong>量を絞って軽量化</strong>する方向で検討</li>
+            <li>アンケート3名分のうち、<strong>3名目がまだ到着待ち</strong></li>
+            <li>半信半疑で参加したが最終的に受け入れてくれた参加者もおり、<strong>犬という入り口の有効性</strong>を確認</li>
+        </ul>
+
+        <h3>第1回で見えた構成の方針</h3>
+        <div class="highlight coral">
+            <strong>理論 → ワーク</strong> の比率を見直す。<br>
+            「理論を先に説明してからワーク」よりも、<strong>「ワークを体験してから、なぜそうなのかを理論で説明」</strong>する順番のほうが、
+            参加者の納得感と変化の実感が高まる。
+        </div>
+    </div>
+
+    <!-- 3. 本音ワークのオリジナル化 -->
+    <div class="section lavender">
+        <h2>🔮 3. 本音ワークのオリジナル化とNLP手法の活用</h2>
+
+        <p style="font-size:13px;line-height:1.8;margin-bottom:12px;">
+            現在の「本音ワーク」が他のプログラム（思考の学校）と類似しているという懸念が共有された。
+            きいちゃん独自のアプローチとして、<strong>犬との関係を入り口にしたオリジナルワーク</strong>を開発する方向性を議論。
+        </p>
+
+        <h3>NLP手法との組み合わせ案</h3>
+
+        <div class="highlight lavender">
+            <strong>① ポジションチェンジ（3ポジション）</strong><br>
+            1ポジション（自分）→ 2ポジション（相手の立場）→ 3ポジション（俯瞰）で状況を体験する技法。
+            犬の問題行動を「自分」「犬」「第三者」の3視点で見ることで、飼い主が自分自身の投影に気づける。
+        </div>
+
+        <div class="highlight lavender">
+            <strong>② エンプティーチェア（空の椅子）</strong><br>
+            空の椅子にいない相手（犬や自分の別の側面）を想定して対話する技法。
+            犬に言いたいことを直接言葉にすることで、本当に抱えていた感情が浮かび上がる。
+        </div>
+
+        <div class="highlight lavender">
+            <strong>③ フォーカシング</strong><br>
+            体の感覚（フェルトセンス）に意識を向け、言語化する技法。
+            感情が言葉になる前の「なんとなくモヤモヤ」を丁寧に探っていく。
+        </div>
+
+        <h3>犬との関係を入り口にしたオリジナルワークのアイデア</h3>
+        <ul>
+            <li>「愛犬の気になる行動・症状」を描いた絵や写真を使い、<strong>気になる部分が飼い主自身の投影</strong>であることに気づくワーク</li>
+            <li>犬のお悩み（問題行動）を起点として、<strong>ポジションチェンジで飼い主の本音</strong>を引き出す流れ</li>
+            <li>「犬がこうなってほしい」という願望の裏に<strong>飼い主自身のどんな欲求・恐れが隠れているか</strong>を探る構造</li>
+        </ul>
+
+        <div class="highlight sage">
+            💡 <strong>差別化のポイント</strong>：「犬の問題行動を直す」という入り口から始めながら、
+            自然と飼い主自身のマインドに気づかせる構造がきいちゃんの強み。
+            NLPの技法はあくまで「手段」として組み込み、表に出すのは「犬との関係ワーク」として独自ブランドを確立する。
+        </div>
+    </div>
+
+    <!-- 4. 第2回講座準備 -->
+    <div class="section mint">
+        <h2>📚 4. 第2回講座の設計方針</h2>
+
+        <h3>メインコンテンツ: Power vs Force（意識レベルの地図）</h3>
+        <p style="font-size:13px;line-height:1.8;margin-bottom:12px;">
+            デヴィッド・ホーキンスの「Power vs Force」を軸に、<strong>意識レベルが人（と犬）の現実に与える影響</strong>を扱う。
+        </p>
+
+        <ul>
+            <li>最低レベル（恥・罪悪感）から始まり、怒り→勇気→愛→至福へと上がっていく意識レベルの地図</li>
+            <li>恥・罪悪感の状態では<strong>怒りが隠れている</strong> → 回復のステップには必ず怒りが通過する</li>
+            <li>一時的に意識レベルが下がることは誰にでもある ─ 問題は<strong>「デフォルト」がどこにあるか</strong></li>
+            <li>デフォルトを引き上げる作業 = 本音ワーク・NLP手法・飼い主マインド講座全体の目的</li>
+        </ul>
+
+        <h3>感情と体の症状のマッピング</h3>
+        <div class="highlight mint">
+            東洋医学・心身相関の観点から、<strong>感情と臓器の関係</strong>を扱うコンテンツ。<br>
+            例：怒り ↔ 肝臓 ／ 恐れ ↔ 腎臓 ／ 悲しみ ↔ 肺<br><br>
+            参加者の犬の肝臓の数値が良くないという実例があり、<strong>犬の体の症状と飼い主の感情状態の連動</strong>として扱えるかを検討。
+            第2回または第3回に組み込む予定。
+        </div>
+
+        <h3>SPARKワーク（予定）</h3>
+        <ul>
+            <li>第1回で実施した本音ワークの発展形として位置づけ</li>
+            <li>具体的な構成は今後詰める</li>
+        </ul>
+
+        <h3>第2回の全体の流れ（案）</h3>
+        <table class="task-table">
+            <thead><tr><th>#</th><th>パート</th><th>内容</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td><strong>第1回の振り返り</strong></td><td>前回のワークで気づいたことの共有・深掘り</td></tr>
+                <tr><td>2</td><td><strong>Power vs Force 理論</strong></td><td>意識レベルの地図、デフォルト意識と現実の関係</td></tr>
+                <tr><td>3</td><td><strong>感情マッピング</strong></td><td>自分の感情の「デフォルト位置」を特定するワーク</td></tr>
+                <tr><td>4</td><td><strong>犬との鏡ワーク</strong></td><td>犬の症状・行動を飼い主の感情と照らし合わせる</td></tr>
+                <tr><td>5</td><td><strong>SPARKワーク</strong></td><td>意識レベルを引き上げるための実践</td></tr>
+                <tr><td>6</td><td><strong>シェアリング ＆ CTA</strong></td><td>気づきの共有・次回予告・宿題</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 5. YouTube発信戦略 -->
+    <div class="section sky">
+        <h2>🎬 5. YouTube発信戦略</h2>
+
+        <h3>基本方針: TTP（徹底的にパクる）× 犬種別コンテンツ</h3>
+        <p style="font-size:13px;line-height:1.8;margin-bottom:12px;">
+            バズっているチャンネルのサムネイル・タイトル・構成をTTPしながら、<strong>犬種別の心理・特性</strong>を切り口にしたコンテンツを展開。
+            ChatGPTを活用して各犬種の分析コンテンツを効率的に制作する。
+        </p>
+
+        <h3>参考チャンネル（犬の気持ち系）</h3>
+        <ul>
+            <li>わんこ最高TV、モカの部屋犬の気持ち、わんこの心、愛しいわんこの気持ち図鑑 など</li>
+            <li>共通点：<strong>AIイラストベースのサムネイル</strong>が主流。テキストとイラスト犬で構成</li>
+            <li>タイトル例：「犬が一人で寂しいとこうなる」「飼い主が好きな犬だけ見せる仕草10選」など<strong>危機感・共感を誘うワード</strong></li>
+        </ul>
+
+        <div class="highlight sky">
+            💡 <strong>コンテンツ戦略</strong>：犬の気持ち系の入り口（「犬が寂しいとどうなる？」）から入り、
+            動画内で「実は飼い主さん自身の気持ちが投影されているんです」という方向へ。
+            他チャンネルと同じテーマで始めつつ、<strong>きいちゃんならではの深い視点</strong>で差別化する。
+        </div>
+
+        <h3>制作・投稿の方針</h3>
+        <ul>
+            <li><strong>7月中に長尺8本</strong>を目標（週2本ペース）</li>
+            <li>ストックがない場合は既存動画の<strong>切り出しショートでつなぐ</strong></li>
+            <li><strong>投稿曜日</strong>：火曜日または木曜日 ＋ 土曜日の週2本が理想</li>
+            <li><strong>投稿時間</strong>：18時（仕事帰りの視聴）か21時。競合チャンネルは18時台が多い</li>
+            <li>まずは犬種別シリーズ（トイプードル、ゴールデン等の人口が多い犬種）でTTPをテスト</li>
+        </ul>
+
+        <h3>サムネイル制作</h3>
+        <ul>
+            <li>競合と<strong>同じトーン・レイアウトのAIイラスト</strong>を使い、まず「見られる形」を作る</li>
+            <li>犬種名をタイトルとタグに入れ、犬種別ファンに届く設計</li>
+            <li>キーワードは「寂しい」「危険なサイン」など感情・危機感を引き出す言葉を押さえる</li>
+        </ul>
+
+        <h3>YouTube → LINE流入の設計</h3>
+        <div class="flow">
+            <div class="flow-step">YouTube動画<br>（犬の気持ち系）</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">「犬のことが<br>もっと知りたい人へ」<br>CTA</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">LINE登録<br>（診断 or 特典）</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">セッション<br>or 講座</div>
+        </div>
+
+        <h3>開催レポートの発信</h3>
+        <ul>
+            <li>講座開催中であることをInstagramで発信する<strong>「開催レポート」</strong>を残していく</li>
+            <li>「こんなことやったよ！」という内容で、次期参加者の興味を引く</li>
+            <li>かしこまらずLINEやインスタで気軽に投稿すればOK</li>
+        </ul>
+    </div>
+
+    <!-- 6. 次回までのアクション -->
+    <div class="section sage">
+        <h2>✅ 6. 次回MTGまでのアクション一覧</h2>
+
+        <table class="task-table">
+            <thead>
+                <tr>
+                    <th style="width:80px">担当</th>
+                    <th>タスク</th>
+                    <th style="width:120px">期限</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="who kii">きいちゃん</span></td>
+                    <td>YouTube犬種別コンテンツ制作スタート（7月中に8本が目標）</td>
+                    <td>7月末</td>
+                </tr>
+                <tr>
+                    <td><span class="who kii">きいちゃん</span></td>
+                    <td>TTP先チャンネルを参考にAIサムネイルを制作・テスト投稿</td>
+                    <td>7月中旬まで</td>
+                </tr>
+                <tr>
+                    <td><span class="who kii">きいちゃん</span></td>
+                    <td>参加者が普段見ているYouTubeチャンネルを調査してノムさんに共有</td>
+                    <td>次回MTGまで</td>
+                </tr>
+                <tr>
+                    <td><span class="who kii">きいちゃん</span></td>
+                    <td>Instagram・LINEで講座開催レポートを投稿</td>
+                    <td>随時</td>
+                </tr>
+                <tr>
+                    <td><span class="who kii">きいちゃん</span></td>
+                    <td>修了証（ディプロマ）のCanvaデザインを作成</td>
+                    <td>第1期修了まで</td>
+                </tr>
+                <tr>
+                    <td><span class="who kii">きいちゃん</span></td>
+                    <td>アンケート3名目の回答をノムさんに共有</td>
+                    <td>届き次第</td>
+                </tr>
+                <tr>
+                    <td><span class="who kii">きいちゃん</span></td>
+                    <td>第2回講座の準備（Power vs Force / 感情マッピング / SPARKワーク）</td>
+                    <td>第2回開催前</td>
+                </tr>
+                <tr>
+                    <td><span class="who nomu">ノムさん</span></td>
+                    <td>犬の気持ち系TTPおすすめチャンネルリストをきいちゃんに共有</td>
+                    <td>次回MTGまで</td>
+                </tr>
+                <tr>
+                    <td><span class="who nomu">ノムさん</span></td>
+                    <td>本音ワーク × NLP組み合わせの骨格設計サポート</td>
+                    <td>随時</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- まとめ -->
+    <div class="section honey">
+        <h2>🌻 今回のまとめ</h2>
+        <div class="highlight">
+            <strong>このMTGで確認した3つの軸</strong><br><br>
+            1️⃣ <strong>コンテンツ（YouTube）</strong>：まず「見られる形」でスタート。犬の気持ち系 × 犬種別TTPで新規流入を増やす。<br><br>
+            2️⃣ <strong>講座（飼い主マインド）</strong>：「ワーク体験 → 理論で納得」の順番を徹底。本音ワークをNLPと組み合わせてオリジナル化。<br><br>
+            3️⃣ <strong>仕組み（修了証・インストラクター）</strong>：受講した事実に価値を与え、次のステージへのモチベーションをデザインする。
+        </div>
+    </div>
+
+    <div class="footer">
+        🐾 きいちゃんプロジェクト 議事録 — 2026年6月29日<br>
+        次回アンケート3名分が揃い次第、内容を共有・フィードバック予定
+    </div>
+
+</div>
+</body>
+</html>
