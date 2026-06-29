@@ -427,11 +427,7 @@ function renderStats() {
 
 function renderCards() {
   const filtered = currentFilter === 'all' ? entries : entries.filter(e => e.status === currentFilter);
-  filtered.sort((a,b) => {
-    const pa = new Date(b.publishedAt || 0);
-    const pb = new Date(a.publishedAt || 0);
-    return pa - pb;
-  });
+  filtered.sort((a,b) => (b.buzzRate || 0) - (a.buzzRate || 0));
 
   const container = document.getElementById('cardList');
   const hasKey = !!getApiKey();
