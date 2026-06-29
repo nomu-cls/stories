@@ -649,6 +649,7 @@
 <script>
   // Project Config & Supabase Setup
   const PROJECT_ID = 'kiichan';
+  const DATA_VERSION = '20260629'; // 新タスク追加のたびに更新
   const SUPABASE_URL = 'https://yqluegvlauzvgqywnejj.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxbHVlZ3ZsYXV6dmdxeXduZWpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY0MTAzMDYsImV4cCI6MjA4MTk4NjMwNn0.VRSfZybmSi4bUYfITm3K1X6dwBnA68_QZ50a-P_R8-8';
   let supabaseClient = null;
@@ -996,15 +997,19 @@
       if (dbTasks !== null) {
         if (dbTasks.length > 0) {
           tasks = dbTasks;
-          // initialTasksに新しく追加されたものをDBにも挿入
-          const newTasks = initialTasks.filter(it => !tasks.some(t => t.title === it.title));
-          if (newTasks.length > 0) {
-            console.log('[Portal] Inserting new tasks to DB...', newTasks.length);
-            for (const t of newTasks) {
-              await dbInsertTask(t);
+          // バージョンが変わった時だけ1回だけ新タスクを追加（削除済みタスクの復活を防ぐ）
+          const storedVersion = localStorage.getItem(`${PROJECT_ID}-data-version`);
+          if (storedVersion !== DATA_VERSION) {
+            const newTasks = initialTasks.filter(it => !tasks.some(t => t.title === it.title));
+            if (newTasks.length > 0) {
+              console.log('[Portal] Inserting new tasks to DB...', newTasks.length);
+              for (const t of newTasks) {
+                await dbInsertTask(t);
+              }
+              const refreshed = await dbLoadTasks();
+              if (refreshed) tasks = refreshed;
             }
-            const refreshed = await dbLoadTasks();
-            if (refreshed) tasks = refreshed;
+            localStorage.setItem(`${PROJECT_ID}-data-version`, DATA_VERSION);
           }
         } else {
           // DBが空 → 初期データをシード
@@ -1014,6 +1019,7 @@
           }
           const refreshed = await dbLoadTasks();
           if (refreshed) tasks = refreshed;
+          localStorage.setItem(`${PROJECT_ID}-data-version`, DATA_VERSION);
         }
       }
 
@@ -1022,15 +1028,18 @@
       if (dbLogs !== null) {
         if (dbLogs.length > 0) {
           logs = dbLogs;
-          // initialLogsに新しく追加されたものをDBにも挿入
-          const newLogs = initialLogs.filter(il => !logs.some(l => l.topic === il.topic));
-          if (newLogs.length > 0) {
-            console.log('[Portal] Inserting new logs to DB...', newLogs.length);
-            for (const l of newLogs) {
-              await dbInsertLog(l);
+          // バージョンチェックで新ログも1回だけ追加
+          const storedVersion = localStorage.getItem(`${PROJECT_ID}-data-version`);
+          if (storedVersion !== DATA_VERSION) {
+            const newLogs = initialLogs.filter(il => !logs.some(l => l.topic === il.topic));
+            if (newLogs.length > 0) {
+              console.log('[Portal] Inserting new logs to DB...', newLogs.length);
+              for (const l of newLogs) {
+                await dbInsertLog(l);
+              }
+              const refreshed = await dbLoadLogs();
+              if (refreshed) logs = refreshed;
             }
-            const refreshed = await dbLoadLogs();
-            if (refreshed) logs = refreshed;
           }
         } else {
           console.log('[Portal] Seeding initial logs to DB...');
