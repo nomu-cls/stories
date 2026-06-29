@@ -996,6 +996,16 @@
       if (dbTasks !== null) {
         if (dbTasks.length > 0) {
           tasks = dbTasks;
+          // initialTasksに新しく追加されたものをDBにも挿入
+          const newTasks = initialTasks.filter(it => !tasks.some(t => t.title === it.title));
+          if (newTasks.length > 0) {
+            console.log('[Portal] Inserting new tasks to DB...', newTasks.length);
+            for (const t of newTasks) {
+              await dbInsertTask(t);
+            }
+            const refreshed = await dbLoadTasks();
+            if (refreshed) tasks = refreshed;
+          }
         } else {
           // DBが空 → 初期データをシード
           console.log('[Portal] Seeding initial tasks to DB...');
@@ -1012,6 +1022,16 @@
       if (dbLogs !== null) {
         if (dbLogs.length > 0) {
           logs = dbLogs;
+          // initialLogsに新しく追加されたものをDBにも挿入
+          const newLogs = initialLogs.filter(il => !logs.some(l => l.topic === il.topic));
+          if (newLogs.length > 0) {
+            console.log('[Portal] Inserting new logs to DB...', newLogs.length);
+            for (const l of newLogs) {
+              await dbInsertLog(l);
+            }
+            const refreshed = await dbLoadLogs();
+            if (refreshed) logs = refreshed;
+          }
         } else {
           console.log('[Portal] Seeding initial logs to DB...');
           for (const l of initialLogs) {
