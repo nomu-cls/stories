@@ -649,7 +649,7 @@
 <script>
   // Project Config & Supabase Setup
   const PROJECT_ID = 'kiichan';
-  const DATA_VERSION = '20260629'; // 新タスク追加のたびに更新
+  const DATA_VERSION = '20260717'; // 新タスク追加のたびに更新
   const SUPABASE_URL = 'https://yqluegvlauzvgqywnejj.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxbHVlZ3ZsYXV6dmdxeXduZWpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY0MTAzMDYsImV4cCI6MjA4MTk4NjMwNn0.VRSfZybmSi4bUYfITm3K1X6dwBnA68_QZ50a-P_R8-8';
   let supabaseClient = null;
@@ -703,6 +703,20 @@
     { id: gid(), title: 'Instagram・LINEで第1回講座開催レポートを投稿', assignee: 'きいちゃん', date: '2026-07-05', status: 'todo', category: 'snspub', phase: 'phase-3', description: '「こんなことやったよ！」形式でOK。次期参加者の興味を引く' },
     { id: gid(), title: '第2回講座準備（Power vs Force / 感情マッピング / SPARKワーク）', assignee: 'きいちゃん', date: '2026-07-10', status: 'todo', category: 'zeroki', phase: 'phase-3', description: '意識レベルの地図・感情と臓器の関係・犬との鏡ワークを組み込む' },
     { id: gid(), title: 'TTPおすすめチャンネルリストをきいちゃんに共有', assignee: '野村', date: '2026-07-07', status: 'todo', category: 'snspub', phase: 'phase-3', description: '犬の気持ち系で伸びているチャンネルをリスト化' },
+    // ===== 7/17 MTG 追加タスク =====
+    { id: gid(), title: 'LINE導線を「LINE登録→診断プレゼント」の順に変更', assignee: 'きいちゃん', date: '2026-07-24', status: 'todo', category: 'line', phase: 'phase-3', description: '診断の出口を変更しLINE登録のハードルを下げる。診断後にきいちゃん先生の解説動画特典も' },
+    { id: gid(), title: 'YouTube動画内にLINE登録CMを入れる', assignee: 'きいちゃん', date: '2026-07-24', status: 'todo', category: 'snspub', phase: 'phase-3', description: '「突然ですが…」スタイル。LINE登録で犬の気持ち診断ができることを動画途中で告知' },
+    { id: gid(), title: 'チャンネル名に本名追加＆タイトル・概要欄にキーワード設定', assignee: 'きいちゃん', date: '2026-07-24', status: 'todo', category: 'snspub', phase: 'phase-3', description: 'タイトル末尾に「伊藤君子 飼い主マインド 潜在意識」等。概要欄・固定コメントにLINE登録リンク必須' },
+    { id: gid(), title: 'サムネABテスト＆ショート→長尺の紐付け', assignee: 'きいちゃん', date: '2026-07-31', status: 'todo', category: 'snspub', phase: 'phase-3', description: 'YouTube Studioでサムネ最大3枚をテスト。ショートに関連長尺動画を設定して誘導' },
+    { id: gid(), title: '2回目講座後に受講生3名と個別フォローセッション（60分）', assignee: 'きいちゃん', date: '2026-07-31', status: 'todo', category: 'zeroki', phase: 'phase-3', description: 'ワーク進捗確認・躓きのヒアリング・気づきのサポート。セルフワークの限界を突破する' },
+    { id: gid(), title: '受講生全員にYouTubeインタビュー協力を依頼', assignee: 'きいちゃん', date: '2026-07-31', status: 'todo', category: 'zeroki', phase: 'phase-3', description: '講座終了前にお願いし「恩返しのために結果を出す」モチベーションを活用' },
+    { id: gid(), title: 'Facebookワーク未活用の理由を講座でヒアリング', assignee: 'きいちゃん', date: '2026-07-31', status: 'todo', category: 'zeroki', phase: 'phase-3', description: 'やり方不明／評価不安／安心感不足／メリット認識不足のどれで止まっているか確認。バディ制導入も検討' },
+    { id: gid(), title: '聞き手候補の知人に動画協力を打診', assignee: 'きいちゃん', date: '2026-07-31', status: 'todo', category: 'snspub', phase: 'phase-3', description: '元同僚・大阪在住・猫4匹の方。聞き手＋編集をセットで頼めれば負担大幅減' },
+    { id: gid(), title: '動画編集外注の価格・条件確認と月契約交渉', assignee: 'きいちゃん', date: '2026-07-31', status: 'todo', category: 'snspub', phase: 'phase-3', description: '相場：仕上がり10分1万円＋1分超過ごと1,000円、サムネ3,000円、ショート3,000円。長尺月6〜8本ペースを想定し撮影日も先に予定化' },
+    { id: gid(), title: '第一期の料金プラン整理（98,000円／198,000円の2本立て）', assignee: 'きいちゃん', date: '2026-08-10', status: 'todo', category: 'design', phase: 'phase-3', description: '19.8万は個別セッション付き等で差別化必須。再受講は半額目安、紹介割は1万円引き。第一期は9/6スタート想定' },
+    { id: gid(), title: '無料セッションLPに「期間限定・人数限定」を明記', assignee: 'きいちゃん', date: '2026-07-31', status: 'todo', category: 'content', phase: 'phase-3', description: '受付終了時はLP閉鎖or「受付終了」表示。次回募集はLINEで案内する希少性の設計' },
+    { id: gid(), title: 'チェックシート感想の方へ返信（講座案内＋個別セッション誘導）', assignee: 'きいちゃん', date: '2026-07-22', status: 'todo', category: 'session', phase: 'phase-3', description: '金額は出さずに第一期を案内し「迷われている方はまず個別セッションから」と誘導' },
+    { id: gid(), title: '公式LINEで定期的な情報提供を開始', assignee: 'きいちゃん', date: '2026-08-01', status: 'todo', category: 'line', phase: 'phase-3', description: '第一期案内に向けてリストを温める。YouTube更新のお知らせ配信でもOK' },
   ];
 
   const initialLogs = [
@@ -723,6 +737,12 @@
       date: '2026-06-29',
       topic: 'ディプロマ発行決定・YouTube犬種別戦略・講座コンテンツ深化',
       content: '・ディプロマ（修了証）の発行を決定。Canvaで作成し発行番号を管理。将来のインストラクター認定制度と連携予定。\n・第1回講座振り返り：ワーク部分が特に好評。理論の軽量化を検討。「ワーク体験→理論で納得」の順番に統一する方針に。\n・本音ワークのオリジナル化：NLP（ポジションチェンジ・エンプティーチェア・フォーカシング）との組み合わせを検討。犬との関係を入り口にして飼い主自身の本音に気づかせる独自ワーク開発へ。\n・第2回講座準備：Power vs Force（意識レベルの地図）を軸に、感情マッピング（怒りと肝臓など臓器との関係）・犬との鏡ワーク・SPARKワークを組み込む。\n・YouTube発信：犬の気持ち系チャンネルをTTP。AIイラストサムネイル・犬種別シリーズ・週2本で7月中に8本が目標。投稿時間は火or木＋土の18時。YouTube→LINE流入からセッション・講座へ誘導する設計。'
+    },
+    {
+      id: gid(),
+      date: '2026-07-17',
+      topic: '0期フォロー強化・第一期2プラン制・YouTube TTP実践とLINE導線見直し',
+      content: '・初ショート動画が1日で1,000再生突破と好調（2日で700再生超の動画も）。\n・Facebook本音シェアワークが停滞→次回講座で理由をヒアリング。2回目講座後に受講生3名と個別フォローセッション（60分）を実施決定。受講生全員にYouTubeインタビュー協力も依頼。\n・第一期は9/6スタート想定。料金は98,000円（講座のみ）／198,000円（講座＋個別セッション）の2プラン制へ。再受講は半額目安、紹介割は1万円引き。\n・LINE導線を「LINE登録→診断プレゼント」に変更。YouTube動画内にLINE登録CM（突然ですが…スタイル）を入れる。無料セッションは「期間限定・人数限定」を明記し、終了時はLINEで次回募集を案内。\n・TTPは犬・猫の飼い主の悩み系（ご飯を食べない等）がターゲット。サムネ・タイトル・タグを似せて関連動画に乗る。動画は8〜12分（上限15分）。サムネABテスト（最大3枚）、ショート→長尺の紐付け、タイトルに「伊藤君子 飼い主マインド 潜在意識」等のキーワード追加。\n・動画編集外注を検討（仕上がり10分1万円目安・月契約で交渉）。聞き手候補の知人（大阪・猫4匹）に聞き手＋編集を打診。長尺は月6〜8本ペース目標で撮影日を先に予定化。\n・次回MTG：7/30または7/31の12:00〜（2回目講座の感想が揃った後）。'
     }
   ];
 
@@ -995,13 +1015,16 @@
     if (!db()) { updateSyncStatus('offline'); return; }
     updateSyncStatus('syncing');
     try {
+      // タスク・ログ両方のマージ判定に使うため、バージョンは先に1回だけ読む
+      // （タスク処理内で先にsetItemすると、直後のログのバージョンチェックが常にスキップされるため）
+      const storedVersion = localStorage.getItem(`${PROJECT_ID}-data-version`);
+
       // Tasks
       const dbTasks = await dbLoadTasks();
       if (dbTasks !== null) {
         if (dbTasks.length > 0) {
           tasks = dbTasks;
           // バージョンが変わった時だけ1回だけ新タスクを追加（削除済みタスクの復活を防ぐ）
-          const storedVersion = localStorage.getItem(`${PROJECT_ID}-data-version`);
           if (storedVersion !== DATA_VERSION) {
             const newTasks = initialTasks.filter(it => !tasks.some(t => t.title === it.title));
             if (newTasks.length > 0) {
@@ -1012,7 +1035,6 @@
               const refreshed = await dbLoadTasks();
               if (refreshed) tasks = refreshed;
             }
-            localStorage.setItem(`${PROJECT_ID}-data-version`, DATA_VERSION);
           }
         } else {
           // DBが空 → 初期データをシード
@@ -1022,7 +1044,6 @@
           }
           const refreshed = await dbLoadTasks();
           if (refreshed) tasks = refreshed;
-          localStorage.setItem(`${PROJECT_ID}-data-version`, DATA_VERSION);
         }
       }
 
@@ -1032,7 +1053,6 @@
         if (dbLogs.length > 0) {
           logs = dbLogs;
           // バージョンチェックで新ログも1回だけ追加
-          const storedVersion = localStorage.getItem(`${PROJECT_ID}-data-version`);
           if (storedVersion !== DATA_VERSION) {
             const newLogs = initialLogs.filter(il => !logs.some(l => l.topic === il.topic));
             if (newLogs.length > 0) {
@@ -1052,6 +1072,11 @@
           const refreshed = await dbLoadLogs();
           if (refreshed) logs = refreshed;
         }
+      }
+
+      // タスク・ログ両方のマージが済んでからバージョンを確定
+      if (dbTasks !== null && dbLogs !== null) {
+        localStorage.setItem(`${PROJECT_ID}-data-version`, DATA_VERSION);
       }
 
       // Agendas
