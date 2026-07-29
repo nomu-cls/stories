@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LPフィードバックシート — 飼い主マインド講座 | 2026/07/29</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --honey: #f5c542; --honey-deep: #d4a017; --honey-light: #fff9e6;
+            --peach: #f7b89c; --coral: #f2988e; --coral-deep: #e06b6b;
+            --sage: #8cb88a; --sage-light: #eef6ee;
+            --sky: #85bdd9; --sky-light: #edf5fa;
+            --lavender: #b8a9d8; --lavender-light: #f3f0fa;
+            --red: #e05252; --red-light: #fdeeee;
+            --bg: #fffcf5; --text: #4a3a2a; --muted: #a09080;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family:'Zen Maru Gothic',sans-serif;
+            background: linear-gradient(180deg,#fffcf5 0%,#fff5e8 50%,#fef0e0 100%);
+            color:var(--text); min-height:100vh; padding:24px;
+        }
+        .container { max-width:860px; margin:0 auto; }
+
+        .header { text-align:center; margin-bottom:32px; }
+        .badge {
+            display:inline-block;
+            background:linear-gradient(135deg,var(--honey),var(--peach));
+            color:#fff; font-size:10px; font-weight:700;
+            padding:4px 16px; border-radius:20px; letter-spacing:3px; margin-bottom:12px;
+        }
+        .header h1 { font-size:24px; font-weight:900; line-height:1.5; }
+        .header h1 em { font-style:normal; background:linear-gradient(transparent 60%,rgba(245,197,66,.3) 60%); }
+        .meta { font-size:12px; color:var(--muted); margin-top:8px; line-height:1.7; }
+        .meta a { color:var(--sky); }
+
+        .section {
+            background:#fff; border-radius:20px; padding:28px 32px;
+            box-shadow:0 4px 20px rgba(0,0,0,.04); margin-bottom:20px;
+            position:relative; overflow:hidden;
+        }
+        .section::before {
+            content:''; position:absolute; top:0; left:0; right:0;
+            height:5px; border-radius:20px 20px 0 0;
+        }
+        .section.honey::before { background:linear-gradient(90deg,var(--honey),var(--peach)); }
+        .section.sage::before { background:linear-gradient(90deg,var(--sage),#6baf69); }
+        .section.red::before { background:linear-gradient(90deg,var(--red),#c73e3e); }
+        .section.coral::before { background:linear-gradient(90deg,var(--coral),var(--coral-deep)); }
+        .section.sky::before { background:linear-gradient(90deg,var(--sky),#6bb3d9); }
+
+        .section h2 {
+            font-size:17px; font-weight:900; margin-bottom:14px;
+            display:flex; align-items:center; gap:8px;
+        }
+        .section h3 {
+            font-size:14px; font-weight:900; margin:20px 0 8px;
+            padding-left:12px; border-left:3px solid var(--honey);
+        }
+        .section p { font-size:13px; line-height:1.9; margin-bottom:10px; }
+
+        ul, ol { padding-left:20px; }
+        li { font-size:13px; line-height:1.9; margin-bottom:5px; }
+        li strong, p strong { color:var(--honey-deep); }
+        .section.red li strong, .section.red p strong { color:var(--red); }
+
+        .highlight {
+            background:var(--honey-light); border:1px solid rgba(245,197,66,.25);
+            border-radius:12px; padding:16px 20px; margin:12px 0;
+            font-size:13px; line-height:1.9;
+        }
+        .highlight.sage { background:var(--sage-light); border-color:rgba(140,184,138,.3); }
+        .highlight.red { background:var(--red-light); border-color:rgba(224,82,82,.25); }
+        .highlight.sky { background:var(--sky-light); border-color:rgba(133,189,217,.3); }
+
+        .prio {
+            display:inline-block; font-size:10px; font-weight:700;
+            padding:2px 10px; border-radius:10px; margin-right:6px; vertical-align:middle; color:#fff;
+        }
+        .prio.p1 { background:linear-gradient(135deg,var(--red),#c73e3e); }
+        .prio.p2 { background:linear-gradient(135deg,var(--honey),var(--honey-deep)); }
+        .prio.p3 { background:linear-gradient(135deg,var(--sage),#6baf69); }
+
+        .fb-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:12px; }
+        .fb-table th {
+            background:linear-gradient(135deg,var(--honey-light),#fff0e0);
+            padding:10px 14px; text-align:left; font-weight:700;
+            color:var(--honey-deep); border-bottom:2px solid rgba(245,197,66,.2);
+        }
+        .fb-table td {
+            padding:10px 14px; border-bottom:1px solid #f5f0e8;
+            vertical-align:top; line-height:1.8;
+        }
+        .fb-table tr:last-child td { border-bottom:none; }
+
+        /* Button demo */
+        .btn-demo-row { display:flex; gap:16px; flex-wrap:wrap; margin:14px 0; }
+        .btn-demo {
+            flex:1; min-width:250px; border-radius:14px; padding:20px;
+            text-align:center; border:2px dashed #e8ddd0;
+        }
+        .btn-demo .label { font-size:11px; font-weight:700; color:var(--muted); margin-bottom:12px; }
+        .btn-demo .note { font-size:11px; line-height:1.7; margin-top:12px; color:var(--muted); text-align:left; }
+        .demo-header-band {
+            background:#e05c5c; color:#fff; font-size:12px; font-weight:700;
+            padding:8px 14px; text-align:left; margin-bottom:14px; border-radius:4px;
+        }
+        .btn-current {
+            display:inline-block; background:rgb(255,92,92); color:#fff;
+            font-size:14px; font-weight:500; padding:12px 24px; border-radius:999px;
+        }
+        .btn-better {
+            display:inline-block;
+            background:linear-gradient(135deg,#43b96a,#2e9e55); color:#fff;
+            font-size:17px; font-weight:900; padding:18px 40px; border-radius:999px;
+            box-shadow:0 6px 16px rgba(46,158,85,.35);
+            position:relative;
+        }
+        .btn-better small { display:block; font-size:11px; font-weight:500; margin-top:2px; }
+        .btn-sub {
+            display:inline-block; margin-top:10px;
+            background:#fff; color:#2e9e55; border:2px solid #2e9e55;
+            font-size:12px; font-weight:700; padding:10px 22px; border-radius:999px;
+        }
+        .micro { font-size:11px; color:var(--red); font-weight:700; margin-top:8px; }
+
+        /* CTA map */
+        .cta-map { display:flex; flex-direction:column; gap:4px; margin:14px 0; }
+        .cta-map .block {
+            border-radius:8px; padding:8px 14px; font-size:11.5px; font-weight:700;
+            background:#faf5ec; color:var(--muted); border:1px solid #f0e8da;
+            display:flex; justify-content:space-between; align-items:center;
+        }
+        .cta-map .block.cta-here {
+            background:var(--sage-light); color:#3e7a3c; border-color:rgba(140,184,138,.5);
+        }
+        .cta-map .block .tag {
+            font-size:10px; padding:1px 8px; border-radius:8px; background:#2e9e55; color:#fff;
+        }
+        .cta-map .block .tag.sub { background:var(--sky); }
+        .cta-map .block .tag.none { background:#ccc; }
+
+        .footer { text-align:center; padding:32px; font-size:11px; color:var(--muted); }
+
+        @media(max-width:600px) {
+            body { padding:12px; }
+            .section { padding:20px 18px; }
+            .btn-demo-row { flex-direction:column; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <div class="badge">🔍 LP FEEDBACK</div>
+        <h1>飼い主マインド講座 LP<br><em>フィードバックシート</em></h1>
+        <div class="meta">
+            📅 2026年7月29日 ｜ ✍️ レビュー：ノムさん<br>
+            対象：<a href="https://animal-nutrition-program.co.jp/lp/dog-owner-mindset-course/" target="_blank">https://animal-nutrition-program.co.jp/lp/dog-owner-mindset-course/</a>
+        </div>
+    </div>
+
+    <!-- 総評 -->
+    <div class="section honey">
+        <h2>🌻 総評：世界観は◎、あとは「申込の器」を整えるだけ</h2>
+        <p>
+            コピーの世界観（「犬＝自分」「愛犬からのサインとして受け取る」）はターゲットの心にちゃんと刺さる内容になっていて、
+            ヒーロー画像の「なんで、ご飯食べてくれないの？」もYouTube戦略（TTP）と一貫していてとても良いです。
+            スケジュール・サポート・FAQも丁寧で、講座の中身への信頼感は伝わります。
+        </p>
+        <div class="highlight">
+            ただ、今のLPは<strong>「もう申し込むと決めている人」しか受け止められない構造</strong>になっています。
+            「いいかも…でも9.8万かぁ、どうしよう」と迷う人（＝実は一番多い層）の受け皿を作ることが、成約率アップの最大のポイントです。
+            以下、優先度順にまとめました🐾
+        </div>
+    </div>
+
+    <!-- 0. LPの役割 -->
+    <div class="section sky">
+        <h2>⚖️ 0. まず「誰に見せるLPか」を決める（ここで直す優先度が変わります）</h2>
+        <table class="fb-table">
+            <thead><tr><th style="width:190px">シナリオ</th><th>評価と必要な修正</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><strong>A. 個別セッションを受けた方に見せる<br>（クロージング用ページ）</strong></td>
+                    <td>この使い方なら<strong>今の構成でほぼ成立します</strong>。すでにきいちゃんへの信頼と講座への納得があるので、迷い層向けの導線は必須ではありません。<br>
+                    ただしその場合でも <strong>①ボタンの色・大きさ ②締切と残枠 ③0期の声 ④クレカ決済</strong> の4つは必要です（背中を押す最後のひと押しがこの4つ）。</td>
+                </tr>
+                <tr>
+                    <td><strong>B. SNS・LINEから直接見せる<br>（公開LP）</strong></td>
+                    <td>このまま公開すると「もう決めている人」しか拾えません。<strong>CTA増設＋迷い層の受け皿（個別セッション相談・LINE登録）が必須</strong>になります（本シートの🔴1〜3）。</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="highlight sky">
+            💡 <strong>おすすめは「当面はA運用、直しながらBに育てる」。</strong>
+            まずは個別セッション後の案内ページとして使い始めつつ、ボタン・声・締切・決済を整えたら、
+            LINE配信やYouTube概要欄にも載せられる公開LPに格上げしていく、という二段階が現実的です。
+        </div>
+    </div>
+
+    <!-- 1. ボタン -->
+    <div class="section red">
+        <h2>🔴 1. 申込ボタンが「ボタン」に見えない（※前回も指摘した箇所です！）</h2>
+        <p>
+            現在のボタンは <strong>コーラル色（rgb 255,92,92）・文字16px・小さめの余白</strong>。
+            この色はセクション見出しの赤帯とほぼ同じ色なので、<strong>デザインの装飾に溶けてしまって「押すもの」として認識されにくい</strong>です。
+            さらにページ全体（約12,700px）でボタンは<strong>価格の直後の1箇所だけ</strong>。ページの84%地点まで読まないと申込手段がありません。
+        </p>
+
+        <div class="btn-demo-row">
+            <div class="btn-demo">
+                <div class="label">😢 現状（見出しと同じ色に溶けている）</div>
+                <div class="demo-header-band">価格・お申し込み方法・定員</div>
+                <span class="btn-current">飼い主マインド講座を申し込む</span>
+                <div class="note">・見出しの赤帯と同色 → 目が素通りする<br>・文字が小さく、押せる感が弱い<br>・1ページに1個だけ</div>
+            </div>
+            <div class="btn-demo">
+                <div class="label">😊 改善例（LP内で「ここだけの色」にする）</div>
+                <div class="demo-header-band">価格・お申し込み方法・定員</div>
+                <span class="btn-better">🐾 第1期に申し込む<small>残り枠わずか・○月○日締切</small></span><br>
+                <span class="btn-sub">迷っている方は個別セッションで相談する</span>
+                <div class="note">・LPで他に使っていない色（緑系など）をボタン専用色に<br>・大きく、影をつけて「浮かせる」<br>・ボタン下に締切・残枠のマイクロコピー<br>・迷い層向けのサブボタンをセットに</div>
+            </div>
+        </div>
+
+        <div class="highlight red">
+            💡 <strong>ルール：ボタンの色は「そのページでボタンにしか使わない色」にする。</strong><br>
+            サイトの世界観に合わせるのは背景や見出しの役目。ボタンだけは目立つのが仕事です。
+            緑系はコーラル基調のこのLPと補色関係になるのでおすすめ（ボタン=GO の連想もあります）。
+        </div>
+    </div>
+
+    <!-- 2. CTA配置 -->
+    <div class="section red">
+        <h2>🔴 2. ボタンの数と位置：1個 → 5個へ</h2>
+        <p>
+            スマホで読む40〜50代の読者は、最後まで読み切らない方が大半です。
+            読み終わった「気持ちが動いた瞬間」ごとにボタンがある状態にしましょう。
+        </p>
+        <div class="cta-map">
+            <div class="block">ヒーロー画像（ファーストビュー）</div>
+            <div class="block">こんなお悩みはありませんか？<span class="tag none">現状：なし</span></div>
+            <div class="block cta-here">→ ここにCTA①（お悩みに共感した直後）<span class="tag">追加</span></div>
+            <div class="block">講座で大切にしていること／受講前後の変化</div>
+            <div class="block cta-here">→ ここにCTA②（変化のイメージが湧いた直後）<span class="tag">追加</span></div>
+            <div class="block">スケジュール・サポート・開催形式</div>
+            <div class="block">講師プロフィール</div>
+            <div class="block">価格・定員</div>
+            <div class="block cta-here">CTA③（現状ここに1個だけある）<span class="tag">強化</span></div>
+            <div class="block">FAQ・確認事項</div>
+            <div class="block cta-here">→ ここにCTA④＋迷い層向け導線<span class="tag">追加</span></div>
+            <div class="block cta-here">→ 最下部にLINE登録CTA（今すぐ申し込まない人用）<span class="tag sub">追加</span></div>
+        </div>
+        <p>スマホでは<strong>画面下に固定の追従ボタン</strong>（「申し込む／LINEで相談」）も効果大です。</p>
+    </div>
+
+    <!-- 3. 迷い層の受け皿 -->
+    <div class="section red">
+        <h2>🔴 3. 「迷っている人」の受け皿を作る（二段構えに）</h2>
+        <p>
+            MTGで決めた導線は「<strong>個別セッション → 納得 → 講座</strong>」でした。
+            実際に、チェックシートの感想をくださった方も「セッションを受けたらどうなるのか見えなくて迷っている」とおっしゃっていましたよね。
+            今のLPは「銀行振込で今決める」の一択なので、この迷い層をすべて取りこぼしてしまいます。
+        </p>
+        <ul>
+            <li>メインボタンの近くに：<strong>「決めきれない方は、まず個別セッションでご相談ください」</strong></li>
+            <li>ページ最下部に：<strong>「LINE登録で犬の気持ち診断をプレゼント🎁」</strong> → 今回申し込まない人もLINEでつながっておけば、第2期の見込み客になります</li>
+        </ul>
+        <div class="highlight sage">
+            🌱 <strong>「申し込む or 去る」ではなく「申し込む or 相談する or LINEでつながる」</strong>の3択にする。
+            これだけでLPが取りこぼしていた人が全員資産に変わります。
+        </div>
+    </div>
+
+    <!-- 4. 声 -->
+    <div class="section coral">
+        <h2>🟡 4. 受講生の声（社会的証明）を入れる</h2>
+        <p>
+            9.8万〜19.8万の講座で、第三者の声がゼロなのはもったいない！
+            「本人がそうなれました、と言ってくれれば最強」——0期の声こそがLPの心臓部です。
+        </p>
+        <ul>
+            <li>0期モニターさんの感想を<strong>2〜3件</strong>掲載（顔出し不要。「40代・ミニチュアシュナウザー飼い」など属性だけでOK）</li>
+            <li>2回目講座後の個別フォローセッションでもらう感想・インタビューがそのまま使えます</li>
+            <li>声が揃うまでの暫定として、個別セッション受講者の感想でもOK</li>
+        </ul>
+    </div>
+
+    <!-- 5. ストーリー -->
+    <div class="section coral">
+        <h2>🟡 5. きいちゃんの原体験ストーリーをプロフィールに</h2>
+        <p>
+            今のプロフィールは資格の羅列が中心で、一番強い武器が使われていません。
+            それは——<strong>「栄養の専門家なのに、自分の犬を栄養では救えなかった。執着に気づいて手放した瞬間、犬が自力で回復した」</strong>という実体験の物語です。
+        </p>
+        <div class="highlight">
+            📖 <strong>3段階で書くと伝わります：</strong><br>
+            ① 栄養で愛犬の腎臓数値を劇的に改善させた（専門性の証明）<br>
+            ② それでも次の病気は栄養では救えなかった（読者と同じ挫折）<br>
+            ③ 自分のマインド（執着）に気づき手放したら、犬が自力で回復した（この講座の原点）<br><br>
+            「何をやっても良くならない」と悩む読者にとって、<strong>「先生も同じところで行き詰まった」が一番の安心材料</strong>になります。
+        </div>
+    </div>
+
+    <!-- 6. 締切・価格 -->
+    <div class="section coral">
+        <h2>🟡 6. 締切の明示と価格の見せ方</h2>
+        <h3>締切がない → 「あとで考えよう」ができてしまう</h3>
+        <ul>
+            <li><strong>「第1期募集・○月○日（○）締切」</strong>を価格セクションとボタン周りに明記</li>
+            <li>「第1期特別価格。次期以降は改定予定」も事実なので書いてOK</li>
+            <li>残り枠の表示（プレミアム残○名）を価格とセットで</li>
+        </ul>
+        <h3>価格が箇条書きのテキストだけ → 2枚のカード（比較表）に</h3>
+        <ul>
+            <li>プレミアムとベーシックの<strong>差分（個別セッション60分×2・修了後3ヶ月LINEフォロー）が一目でわかる表</strong>に</li>
+            <li>「じっくり自分のペースで→ベーシック／個別サポートで確実に変わりたい→プレミアム」の<strong>選び方ガイド</strong>を一言添える</li>
+        </ul>
+        <h3>申込方法の記述とボタンの行き先がズレている</h3>
+        <ul>
+            <li>本文は「公式LINEで『受講希望』とメッセージ」なのに、ボタンは<strong>Googleフォーム直リンク</strong>になっています</li>
+            <li>おすすめは<strong>LINE経由に統一</strong>：迷い層との接点が残る／未申込の方への追客ができる／診断・情報配信の導線に乗る</li>
+        </ul>
+    </div>
+
+    <!-- 6.5 クレカ決済 -->
+    <div class="section coral">
+        <h2>💳 6.5 クレカ決済の導入（この価格帯では必須です）</h2>
+        <p>
+            9.8万〜19.8万の講座で「銀行振込のみ」は、<strong>金額そのものではなく支払い方法で落ちる方</strong>が出てしまいます。
+            「受けたい。でも一括振込はきつい」——ここで止まるのは本当にもったいない！
+        </p>
+        <h3>おすすめ：Stripe（ストライプ）</h3>
+        <ul>
+            <li><strong>初期費用・月額0円</strong>、かかるのは決済手数料（3.6%）のみ。19.8万なら手数料約7,100円 → 1件の取りこぼしを防げれば十分お釣りが来ます</li>
+            <li><strong>ペイメントリンク機能</strong>：決済ページのURLを発行してLINEで送るだけ。LPやシステムの改修は不要で、今の「LINEで受講希望→ご案内」の流れにそのまま組み込めます</li>
+            <li><strong>分割ニーズにも対応可</strong>：「3回分割プラン（月々66,000円×3回）」のような形で、月ごとの自動決済リンクが作れます</li>
+            <li>個人事業主でも契約OK。審査には<strong>特定商取引法に基づく表記のページが必要</strong>なので、本シート🟢7の法務まわりと同時に準備すると一石二鳥です</li>
+        </ul>
+        <div class="highlight">
+            📝 <strong>表記の例：</strong>「お支払い方法：銀行振込／クレジットカード（一括・3回分割）」<br>
+            分割を用意するなら価格表示にも「<strong>月々33,000円×3回</strong>」の併記を。月額換算は心理的ハードルをぐっと下げます。
+        </div>
+    </div>
+
+    <!-- 7. こまかい改善 -->
+    <div class="section sky">
+        <h2>🟢 7. 細かい改善ポイント</h2>
+        <table class="fb-table">
+            <thead><tr><th style="width:130px">箇所</th><th>指摘・提案</th></tr></thead>
+            <tbody>
+                <tr><td>ページ最上部</td><td>テキストの見出しがヒーロー画像の内容と重複。画像から始めてOK</td></tr>
+                <tr><td>「3ヶ月間」の表記</td><td>講座日程は9/12〜10/17の約5週間。冒頭の「3ヶ月間向き合う」とズレて見えるので「講座＋フォロー期間で3ヶ月」など整理を（信頼性に関わる部分）</td></tr>
+                <tr><td>支払い方法</td><td>「銀行振込のみ」の強調が2箇所。可能ならカード・分割対応を検討（特に19.8万は分割の有無が効きます）</td></tr>
+                <tr><td>「こじらせ」ワード</td><td>ページタイトルには「こじらせを解決！」とあるのに本文で未使用。「こじらせ飼い主マインド」は独自ワードなので、お悩みセクションで使うと「私のことに名前がついた」という安心を作れます</td></tr>
+                <tr><td>猫の飼い主さん</td><td>FAQで初めて「猫もOK」が出てくる。お悩みセクションに一言足すと対象が広がります</td></tr>
+                <tr><td>表記の統一</td><td>「、、、」→「……」へ。細部の丁寧さは価格帯への信頼に直結します</td></tr>
+                <tr><td>法務まわり</td><td>特定商取引法に基づく表記・プライバシーポリシーへのリンクが見当たりません。高額講座では信頼面でも必須級</td></tr>
+                <tr><td>視覚要素</td><td>ヒーロー以外ほぼ文字。「受講前→受講後」を図解、スケジュールをタイムライン化するだけでも読了率が上がります</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 着手順 -->
+    <div class="section sage">
+        <h2>✅ 着手する順番（おすすめ）</h2>
+        <table class="fb-table">
+            <thead><tr><th style="width:60px">優先度</th><th>やること</th><th style="width:120px">効果</th></tr></thead>
+            <tbody>
+                <tr><td><span class="prio p1">1</span></td><td>ボタンの色・サイズ変更 ＋ 5箇所に増設（追従ボタン含む）</td><td>★★★</td></tr>
+                <tr><td><span class="prio p1">2</span></td><td>締切明記 ＋ 申込導線をLINEに統一 ＋ Stripe契約開始（審査に数日かかるので早めに）</td><td>★★★（すぐできる）</td></tr>
+                <tr><td><span class="prio p1">3</span></td><td>迷い層向けサブCTA（個別セッション相談／LINE登録＋診断）</td><td>★★★</td></tr>
+                <tr><td><span class="prio p2">4</span></td><td>原体験ストーリーをプロフィールに挿入</td><td>★★</td></tr>
+                <tr><td><span class="prio p2">5</span></td><td>0期の声を掲載（フォローセッションで取得→即反映）</td><td>★★★（揃い次第）</td></tr>
+                <tr><td><span class="prio p3">6</span></td><td>価格カード化・比較表、細かい表記の修正</td><td>★★</td></tr>
+            </tbody>
+        </table>
+        <div class="highlight sage">
+            🐾 まとめ：<strong>「すでに欲しい人だけのLP」から「迷っている人も受け止めるLP」へ。</strong><br>
+            ボタンを目立たせて増やし、迷ったら相談できる道を用意する。この2つだけでも成約率は大きく変わるはずです！
+        </div>
+    </div>
+
+    <div class="footer">
+        🐾 きいちゃんプロジェクト — LPフィードバックシート 2026年7月29日<br>
+        ご質問・修正のご相談はいつでもメッセンジャーでどうぞ🌻
+    </div>
+
+</div>
+</body>
+</html>
