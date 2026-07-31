@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>みのりラボ 🌱 — 先生業のための発信実践ラボ</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --leaf: #4a9e6b; --leaf-deep: #2e7d4f; --leaf-light: #e9f5ee;
+  --lime: #a3cf5f; --cream: #fdfbf4; --soil: #4a3f33; --muted: #9a8f80;
+  --sun: #f5c542; --sun-light: #fff8e3;
+  --berry: #d97878; --berry-light: #fbeeee;
+  --sky2: #6faec9;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Zen Maru Gothic',sans-serif;
+  background: linear-gradient(180deg,#fdfbf4 0%,#f3f7ec 60%,#eaf3ea 100%);
+  color:var(--soil); min-height:100vh; padding:24px;
+}
+.container { max-width:900px; margin:0 auto; }
+
+/* Header */
+.header { text-align:center; margin-bottom:24px; }
+.badge {
+  display:inline-block; background:linear-gradient(135deg,var(--leaf),var(--lime));
+  color:#fff; font-size:10px; font-weight:700; padding:4px 16px;
+  border-radius:20px; letter-spacing:3px; margin-bottom:12px;
+}
+.header h1 { font-size:26px; font-weight:900; }
+.header .sub { font-size:13px; color:var(--muted); margin-top:6px; line-height:1.8; }
+
+/* Cohort progress */
+.cohort {
+  background:#fff; border-radius:18px; padding:18px 24px; margin-bottom:20px;
+  box-shadow:0 4px 18px rgba(46,125,79,.07);
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+}
+.cohort .label { font-size:13px; font-weight:900; color:var(--leaf-deep); white-space:nowrap; }
+.cohort .bar { flex:1; min-width:200px; height:14px; background:var(--leaf-light); border-radius:10px; overflow:hidden; }
+.cohort .fill { height:100%; background:linear-gradient(90deg,var(--lime),var(--leaf)); border-radius:10px; transition:width .5s; }
+.cohort .pct { font-size:12px; font-weight:700; color:var(--muted); white-space:nowrap; }
+
+/* Section */
+.section {
+  background:#fff; border-radius:20px; padding:26px 30px; margin-bottom:20px;
+  box-shadow:0 4px 18px rgba(46,125,79,.07); position:relative; overflow:hidden;
+}
+.section::before { content:''; position:absolute; top:0; left:0; right:0; height:5px; }
+.section.green::before { background:linear-gradient(90deg,var(--leaf),var(--lime)); }
+.section.sun::before { background:linear-gradient(90deg,var(--sun),#f0a94e); }
+.section.berry::before { background:linear-gradient(90deg,var(--berry),#c05f5f); }
+.section.blue::before { background:linear-gradient(90deg,var(--sky2),#4e8fb0); }
+.section h2 { font-size:17px; font-weight:900; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.section p { font-size:13px; line-height:1.9; }
+
+/* Concept cards */
+.concept-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+.concept-card {
+  flex:1; min-width:200px; background:var(--leaf-light);
+  border-radius:14px; padding:16px 18px;
+}
+.concept-card .t { font-size:13px; font-weight:900; color:var(--leaf-deep); margin-bottom:6px; }
+.concept-card .d { font-size:12px; line-height:1.8; }
+
+.rules { margin-top:14px; background:var(--sun-light); border:1px solid rgba(245,197,66,.3); border-radius:12px; padding:14px 18px; font-size:12.5px; line-height:1.9; }
+
+/* Members */
+.member-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; }
+.member-card {
+  flex:1; min-width:180px; background:#fff; border:2px solid var(--leaf-light);
+  border-radius:16px; padding:16px 18px; text-align:center; position:relative;
+}
+.member-card .avatar { font-size:34px; }
+.member-card .name { font-size:14px; font-weight:900; margin-top:6px; }
+.member-card .genre { font-size:11px; color:var(--muted); }
+.member-card .goal { font-size:11.5px; margin-top:8px; background:var(--leaf-light); border-radius:8px; padding:6px 8px; line-height:1.6; }
+.member-card .streak { margin-top:8px; font-size:11px; font-weight:700; color:var(--leaf-deep); }
+.member-del { position:absolute; top:8px; right:10px; background:none; border:none; cursor:pointer; font-size:12px; opacity:.35; }
+.member-del:hover { opacity:1; }
+
+/* KPI dashboard */
+.kpi-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:12px; }
+.kpi-table th {
+  background:var(--leaf-light); padding:9px 12px; text-align:left;
+  font-weight:700; color:var(--leaf-deep);
+}
+.kpi-table td { padding:9px 12px; border-bottom:1px solid #f0ede4; line-height:1.7; }
+.kpi-table tr:last-child td { border-bottom:none; }
+.mini-bars { display:flex; align-items:flex-end; gap:2px; height:26px; }
+.mini-bars span { width:9px; background:linear-gradient(180deg,var(--lime),var(--leaf)); border-radius:2px 2px 0 0; min-height:2px; }
+
+/* Report form */
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+.form-grid .full { grid-column:1/3; }
+label { font-size:11.5px; font-weight:700; color:var(--leaf-deep); display:block; margin-bottom:4px; }
+input, select, textarea {
+  width:100%; padding:9px 12px; border:1.5px solid #e2ddd0; border-radius:10px;
+  font-family:inherit; font-size:13px; background:#fffdf8; color:var(--soil);
+}
+input:focus, select:focus, textarea:focus { outline:none; border-color:var(--leaf); }
+textarea { resize:vertical; min-height:56px; }
+.btn {
+  display:inline-block; border:none; cursor:pointer; font-family:inherit;
+  background:linear-gradient(135deg,var(--leaf),var(--leaf-deep)); color:#fff;
+  font-size:14px; font-weight:900; padding:12px 30px; border-radius:999px;
+  box-shadow:0 5px 14px rgba(46,125,79,.3); margin-top:14px;
+}
+.btn:hover { transform:translateY(-1px); }
+.btn.ghost { background:#fff; color:var(--leaf-deep); border:2px solid var(--leaf); box-shadow:none; font-size:12px; padding:8px 20px; }
+
+/* Feed */
+.week-group { margin-top:18px; }
+.week-title { font-size:13px; font-weight:900; color:var(--leaf-deep); padding-bottom:6px; border-bottom:2px dashed var(--leaf-light); margin-bottom:10px; }
+.report {
+  background:var(--cream); border:1px solid #eee9db; border-radius:14px;
+  padding:14px 18px; margin-bottom:10px;
+}
+.report .head { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.report .who { font-size:13px; font-weight:900; }
+.report .nums { font-size:11px; color:var(--muted); }
+.report .pill {
+  display:inline-block; font-size:10.5px; font-weight:700; color:#fff;
+  background:var(--leaf); border-radius:9px; padding:1px 9px; margin-left:2px;
+}
+.report .pill.v { background:var(--sky2); }
+.report .pill.l { background:var(--sun); color:var(--soil); }
+.report .body { font-size:12.5px; line-height:1.8; margin-top:8px; }
+.report .body b { color:var(--leaf-deep); }
+.react-btn {
+  background:none; border:1.5px solid var(--leaf-light); border-radius:999px;
+  font-family:inherit; font-size:12px; padding:3px 12px; cursor:pointer; margin-top:8px;
+}
+.react-btn:hover { background:var(--leaf-light); }
+.react-btn.on { background:var(--sun-light); border-color:var(--sun); }
+
+/* Live section */
+.live-box { display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; }
+.live-card { flex:1; min-width:220px; background:var(--berry-light); border-radius:14px; padding:16px 18px; }
+.live-card .t { font-size:13px; font-weight:900; color:var(--berry); margin-bottom:6px; }
+.live-card ul { padding-left:18px; }
+.live-card li { font-size:12px; line-height:1.8; }
+
+.empty { font-size:12.5px; color:var(--muted); padding:14px; text-align:center; }
+.footer { text-align:center; padding:28px; font-size:11px; color:var(--muted); line-height:1.8; }
+
+@media(max-width:600px){
+  body{padding:12px;} .section{padding:20px 16px;}
+  .form-grid{grid-template-columns:1fr;} .form-grid .full{grid-column:1;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="badge">🌱 MINORI LAB — 0期</div>
+    <h1>みのりラボ</h1>
+    <div class="sub">
+      先生業のための、発信実践ラボ。<br>
+      教材を学ぶ場ではなく、<strong>発信が止まらなくなる環境</strong>です。
+    </div>
+  </div>
+
+  <!-- Cohort progress -->
+  <div class="cohort">
+    <span class="label">🌻 0期：2026.8.3 スタート（13週間）</span>
+    <div class="bar"><div class="fill" id="cohortFill"></div></div>
+    <span class="pct" id="cohortPct"></span>
+  </div>
+
+  <!-- Concept -->
+  <div class="section green">
+    <h2>🌱 このラボの約束ごと</h2>
+    <div class="concept-row">
+      <div class="concept-card">
+        <div class="t">① 週に1回、報告する</div>
+        <div class="d">投稿本数と数字と、ひとことの学び。仲間の報告が来たら、自分もやりたくなる。それがこのラボの仕組みです。</div>
+      </div>
+      <div class="concept-card">
+        <div class="t">② 月に1回、集まる</div>
+        <div class="d">Zoomライブで数字を見ながら公開フィードバック。1人への助言が、全員の学びになります。</div>
+      </div>
+      <div class="concept-card">
+        <div class="t">③ 3ヶ月で、実らせる</div>
+        <div class="d">ダラダラ続けません。13週間の期で区切って、始まりと終わりを作る。だから続くし、変化が見えます。</div>
+      </div>
+    </div>
+    <div class="rules">
+      📜 <strong>ラボのルール</strong>：投稿本数・再生数・登録数は<strong>オープンに見せ合う</strong>（お互いの栄養になるから）。
+      売上や価格の相談は<strong>個別で</strong>（それぞれの事情があるから）。
+      できなかった週も<strong>報告する</strong>（「できなかった」も大事なデータだから）🌻
+    </div>
+  </div>
+
+  <!-- Members -->
+  <div class="section sun">
+    <h2>👩‍🌾 ラボメンバー</h2>
+    <div class="member-row" id="memberRow"></div>
+    <details style="margin-top:14px;">
+      <summary style="font-size:12px; color:var(--muted); cursor:pointer;">＋ メンバーを追加する</summary>
+      <div class="form-grid" style="margin-top:10px;">
+        <div><label>お名前</label><input id="mName" placeholder="例: きいちゃん"></div>
+        <div><label>絵文字</label><input id="mEmoji" placeholder="例: 🐕"></div>
+        <div><label>ジャンル</label><input id="mGenre" placeholder="例: 犬の栄養×飼い主マインド"></div>
+        <div><label>今期の目標</label><input id="mGoal" placeholder="例: 長尺18本・LINE登録50人"></div>
+      </div>
+      <button class="btn ghost" onclick="addMember()">追加する</button>
+    </details>
+  </div>
+
+  <!-- Report form -->
+  <div class="section green">
+    <h2>✍️ 今週の報告</h2>
+    <div class="form-grid">
+      <div><label>だれ？</label><select id="rMember"></select></div>
+      <div><label>どの週？</label><input type="week" id="rWeek"></div>
+      <div><label>長尺 投稿本数</label><input type="number" id="rLong" min="0" placeholder="0"></div>
+      <div><label>ショート 投稿本数</label><input type="number" id="rShort" min="0" placeholder="0"></div>
+      <div><label>今週の再生数（合計）</label><input type="number" id="rViews" min="0" placeholder="0"></div>
+      <div><label>リスト登録数（LINE等）</label><input type="number" id="rSubs" min="0" placeholder="0"></div>
+      <div class="full"><label>今週の学び・気づき</label><textarea id="rLearned" placeholder="うまくいったこと、いかなかったこと、発見したこと"></textarea></div>
+      <div class="full"><label>来週の一手</label><textarea id="rNext" placeholder="来週、これだけはやる！を1つ"></textarea></div>
+    </div>
+    <button class="btn" onclick="addReport()">🌱 報告をまく</button>
+  </div>
+
+  <!-- KPI dashboard -->
+  <div class="section blue">
+    <h2>📊 みんなの畑（今期の累計）</h2>
+    <table class="kpi-table">
+      <thead><tr><th>メンバー</th><th>長尺</th><th>ショート</th><th>再生数</th><th>リスト</th><th>報告リズム（週ごとの本数）</th></tr></thead>
+      <tbody id="kpiBody"></tbody>
+    </table>
+    <p style="font-size:11px; color:var(--muted); margin-top:10px;">
+      🌱 一番大事な数字は「投稿本数」——再生は天気に左右されるけど、たねまきは自分で決められるから。
+    </p>
+  </div>
+
+  <!-- Feed -->
+  <div class="section green">
+    <h2>🌻 報告のタイムライン</h2>
+    <div id="feed"></div>
+  </div>
+
+  <!-- Monthly live -->
+  <div class="section berry">
+    <h2>🎪 月1ラボライブ</h2>
+    <div class="live-box">
+      <div class="live-card">
+        <div class="t">次回：8月末（日程調整中）</div>
+        <ul>
+          <li>各メンバーの数字をみんなで見る（10分）</li>
+          <li>公開フィードバック：1人20分×人数分</li>
+          <li>来月の「一手」を宣言して終わる</li>
+        </ul>
+      </div>
+      <div class="live-card">
+        <div class="t">ライブの心得</div>
+        <ul>
+          <li>他の人へのフィードバックは、自分の畑にも効く</li>
+          <li>数字が小さい月ほど、学びは大きい</li>
+          <li>宣言したことは、ラボのみんなが覚えてる🌻</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    🌱 みのりラボ 0期 — 主宰：ノムさん<br>
+    たねをまく → 花がひらく → 実る。一緒に育てましょう。
+  </div>
+
+</div>
+
+<script>
+const LS_KEY = 'minori-lab-v1';
+const COHORT_START = new Date('2026-08-03T00:00:00+09:00');
+const COHORT_WEEKS = 13;
+
+let state = { members: [], reports: [] };
+
+const seed = () => ({
+  members: [
+    { id: 'm1', name: 'きいちゃん', emoji: '🐕', genre: '犬の栄養×飼い主マインド', goal: '長尺18本・第一期満席' },
+    { id: 'm2', name: 'メンバーB', emoji: '🌿', genre: '（募集中）', goal: '—' },
+  ],
+  reports: [
+    { id: 'r1', memberId: 'm1', week: '2026-W32', long: 2, short: 3, views: 1800, subs: 4,
+      learned: 'ショートの1本が1日で1,000再生！TTPサムネの反応が良い。', next: '長尺に動画内CM（LINE案内）を入れて2本投稿する', reacts: [] },
+  ],
+});
+
+function load() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    state = raw ? JSON.parse(raw) : seed();
+  } catch(e) { state = seed(); }
+  if (!state.members || !state.members.length) state = seed();
+}
+function save() { localStorage.setItem(LS_KEY, JSON.stringify(state)); }
+function gid() { return 'x' + Math.random().toString(36).substr(2, 8); }
+
+/* Cohort progress */
+function renderCohort() {
+  const now = new Date();
+  const elapsed = (now - COHORT_START) / (7 * 24 * 3600 * 1000);
+  const week = Math.max(0, Math.min(COHORT_WEEKS, Math.floor(elapsed) + 1));
+  const pct = Math.max(0, Math.min(100, Math.round(elapsed / COHORT_WEEKS * 100)));
+  document.getElementById('cohortFill').style.width = pct + '%';
+  document.getElementById('cohortPct').textContent =
+    now < COHORT_START ? 'まもなく開始🌱' : `第${week}週目 / ${COHORT_WEEKS}週（${pct}%）`;
+}
+
+/* Members */
+function renderMembers() {
+  const row = document.getElementById('memberRow');
+  row.innerHTML = state.members.map(m => {
+    const weeks = new Set(state.reports.filter(r => r.memberId === m.id).map(r => r.week)).size;
+    return `<div class="member-card">
+      <button class="member-del" onclick="delMember('${m.id}')" title="削除">✕</button>
+      <div class="avatar">${m.emoji || '🌱'}</div>
+      <div class="name">${esc(m.name)}</div>
+      <div class="genre">${esc(m.genre || '')}</div>
+      <div class="goal">🎯 ${esc(m.goal || '目標をきめよう')}</div>
+      <div class="streak">🌻 報告 ${weeks} 週分</div>
+    </div>`;
+  }).join('');
+  const sel = document.getElementById('rMember');
+  sel.innerHTML = state.members.map(m => `<option value="${m.id}">${esc(m.name)}</option>`).join('');
+}
+function addMember() {
+  const name = document.getElementById('mName').value.trim();
+  if (!name) return alert('お名前を入れてください');
+  state.members.push({ id: gid(), name,
+    emoji: document.getElementById('mEmoji').value.trim() || '🌱',
+    genre: document.getElementById('mGenre').value.trim(),
+    goal: document.getElementById('mGoal').value.trim() });
+  ['mName','mEmoji','mGenre','mGoal'].forEach(i => document.getElementById(i).value = '');
+  save(); renderAll();
+}
+function delMember(id) {
+  if (!confirm('このメンバーを削除しますか？（報告も消えます）')) return;
+  state.members = state.members.filter(m => m.id !== id);
+  state.reports = state.reports.filter(r => r.memberId !== id);
+  save(); renderAll();
+}
+
+/* Reports */
+function addReport() {
+  const memberId = document.getElementById('rMember').value;
+  const week = document.getElementById('rWeek').value;
+  if (!memberId) return alert('メンバーを選んでください');
+  if (!week) return alert('週を選んでください');
+  state.reports.push({
+    id: gid(), memberId, week,
+    long: +document.getElementById('rLong').value || 0,
+    short: +document.getElementById('rShort').value || 0,
+    views: +document.getElementById('rViews').value || 0,
+    subs: +document.getElementById('rSubs').value || 0,
+    learned: document.getElementById('rLearned').value.trim(),
+    next: document.getElementById('rNext').value.trim(),
+    reacts: [],
+  });
+  ['rLong','rShort','rViews','rSubs','rLearned','rNext'].forEach(i => document.getElementById(i).value = '');
+  save(); renderAll();
+}
+function react(id) {
+  const r = state.reports.find(r => r.id === id);
+  if (!r) return;
+  r.reacts = r.reacts || [];
+  r.reacts.push('🌻');
+  save(); renderAll();
+}
+
+function memberOf(id) { return state.members.find(m => m.id === id) || { name: '?', emoji: '🌱' }; }
+
+function renderFeed() {
+  const feed = document.getElementById('feed');
+  if (!state.reports.length) { feed.innerHTML = '<div class="empty">まだ報告がありません。最初のたねをまこう🌱</div>'; return; }
+  const byWeek = {};
+  state.reports.forEach(r => { (byWeek[r.week] = byWeek[r.week] || []).push(r); });
+  const weeks = Object.keys(byWeek).sort().reverse();
+  feed.innerHTML = weeks.map(w => `
+    <div class="week-group">
+      <div class="week-title">📅 ${esc(w)} の週</div>
+      ${byWeek[w].map(r => {
+        const m = memberOf(r.memberId);
+        return `<div class="report">
+          <div class="head">
+            <span class="who">${m.emoji} ${esc(m.name)}</span>
+            <span class="nums">
+              <span class="pill">長尺 ${r.long}</span>
+              <span class="pill">ショート ${r.short}</span>
+              <span class="pill v">再生 ${r.views.toLocaleString()}</span>
+              <span class="pill l">リスト +${r.subs}</span>
+            </span>
+          </div>
+          <div class="body">
+            ${r.learned ? `<b>学び：</b>${esc(r.learned)}<br>` : ''}
+            ${r.next ? `<b>来週の一手：</b>${esc(r.next)}` : ''}
+          </div>
+          <button class="react-btn ${r.reacts && r.reacts.length ? 'on' : ''}" onclick="react('${r.id}')">
+            🌻 ナイスたねまき ${r.reacts && r.reacts.length ? '×' + r.reacts.length : ''}
+          </button>
+        </div>`;
+      }).join('')}
+    </div>`).join('');
+}
+
+function renderKpi() {
+  const body = document.getElementById('kpiBody');
+  body.innerHTML = state.members.map(m => {
+    const rs = state.reports.filter(r => r.memberId === m.id).sort((a,b) => a.week < b.week ? -1 : 1);
+    const sum = k => rs.reduce((s,r) => s + (r[k]||0), 0);
+    const weekly = rs.map(r => (r.long||0) + (r.short||0));
+    const max = Math.max(1, ...weekly);
+    const bars = weekly.length
+      ? weekly.map(v => `<span style="height:${Math.round(v/max*100)}%" title="${v}本"></span>`).join('')
+      : '<span style="height:2px"></span>';
+    return `<tr>
+      <td><strong>${m.emoji} ${esc(m.name)}</strong></td>
+      <td>${sum('long')}本</td><td>${sum('short')}本</td>
+      <td>${sum('views').toLocaleString()}</td><td>+${sum('subs')}</td>
+      <td><div class="mini-bars">${bars}</div></td>
+    </tr>`;
+  }).join('');
+}
+
+function esc(s) { return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function renderAll() { renderCohort(); renderMembers(); renderFeed(); renderKpi(); }
+
+load(); renderAll();
+
+/* default week = current ISO week */
+(function(){
+  const d = new Date();
+  const t = new Date(d.valueOf());
+  t.setDate(t.getDate() + 3 - ((t.getDay() + 6) % 7));
+  const w1 = new Date(t.getFullYear(), 0, 4);
+  const wk = 1 + Math.round(((t - w1) / 86400000 - 3 + ((w1.getDay() + 6) % 7)) / 7);
+  document.getElementById('rWeek').value = `${t.getFullYear()}-W${String(wk).padStart(2,'0')}`;
+})();
+</script>
+</body>
+</html>
