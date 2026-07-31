@@ -649,7 +649,7 @@
 <script>
   // Project Config & Supabase Setup
   const PROJECT_ID = 'kiichan';
-  const DATA_VERSION = '20260717'; // 新タスク追加のたびに更新
+  const DATA_VERSION = '20260731'; // 新タスク追加のたびに更新
   const SUPABASE_URL = 'https://yqluegvlauzvgqywnejj.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxbHVlZ3ZsYXV6dmdxeXduZWpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY0MTAzMDYsImV4cCI6MjA4MTk4NjMwNn0.VRSfZybmSi4bUYfITm3K1X6dwBnA68_QZ50a-P_R8-8';
   let supabaseClient = null;
@@ -717,6 +717,20 @@
     { id: gid(), title: '無料セッションLPに「期間限定・人数限定」を明記', assignee: 'きいちゃん', date: '2026-07-31', status: 'todo', category: 'content', phase: 'phase-3', description: '受付終了時はLP閉鎖or「受付終了」表示。次回募集はLINEで案内する希少性の設計' },
     { id: gid(), title: 'チェックシート感想の方へ返信（講座案内＋個別セッション誘導）', assignee: 'きいちゃん', date: '2026-07-22', status: 'todo', category: 'session', phase: 'phase-3', description: '金額は出さずに第一期を案内し「迷われている方はまず個別セッションから」と誘導' },
     { id: gid(), title: '公式LINEで定期的な情報提供を開始', assignee: 'きいちゃん', date: '2026-08-01', status: 'todo', category: 'line', phase: 'phase-3', description: '第一期案内に向けてリストを温める。YouTube更新のお知らせ配信でもOK' },
+    // ===== 7/31 MTG 追加タスク =====
+    { id: gid(), title: '屋外・自然の中での動画撮影テスト', assignee: 'きいちゃん', date: '2026-08-15', status: 'todo', category: 'snspub', phase: 'phase-3', description: '散歩中など景色が動く場所で撮影。大王の自然動画25万回再生の型。自然体・嘘くささが消える効果も' },
+    { id: gid(), title: '0期生に聞き役を依頼してYouTube撮影テスト', assignee: 'きいちゃん', date: '2026-08-20', status: 'todo', category: 'snspub', phase: 'phase-3', description: '画面外・後ろ姿・L字配置など配慮の形は柔軟に。聞き手がいると話しやすくなるかを検証' },
+    { id: gid(), title: '動画内CMを「LINE登録」誘導に統一', assignee: 'きいちゃん', date: '2026-08-08', status: 'todo', category: 'snspub', phase: 'phase-3', description: '無料セッション直接誘導はやめる。公開済み3〜4本は編集者にCM差し替えを依頼' },
+    { id: gid(), title: '診断後の専用ページをWordPressで作成', assignee: 'きいちゃん', date: '2026-08-15', status: 'todo', category: 'line', phase: 'phase-3', description: 'プレゼント動画＋PDF＋無料セッション案内を1ページに集約。診断→セッションまで一本の線に' },
+    { id: gid(), title: '既存LINE向けキーワード「気持ち」の自動返信設定', assignee: 'きいちゃん', date: '2026-08-08', status: 'todo', category: 'line', phase: 'phase-3', description: '動画CMで「登録済みの方は気持ちと送ってください」→ 診断を自動返信' },
+    { id: gid(), title: 'リッチメニューに無料セッション申込を最優先表示', assignee: 'きいちゃん', date: '2026-08-08', status: 'todo', category: 'line', phase: 'phase-3', description: '登録直後が一番申し込みやすい。定期のLINE配信でも案内する' },
+    { id: gid(), title: 'プライバシーポリシー・特商法ページの作成', assignee: 'きいちゃん', date: '2026-08-15', status: 'todo', category: 'content', phase: 'phase-3', description: 'AIでテンプレートをきいちゃん仕様に置き換え。運営会社情報はどちらかに含めればOK' },
+    { id: gid(), title: '第3講に逆算ワークを組み込み8/15に質の高い声を取得', assignee: 'きいちゃん', date: '2026-08-15', status: 'todo', category: 'zeroki', phase: 'phase-3', description: '「犬が変わった」「悲しみが前向きなエネルギーに変わった」を経験→言語化→インタビューの段階設計。「オーラ変わった」はコピーに活用' },
+    { id: gid(), title: '8/15に栄養×マインド統合構想をアナウンス', assignee: 'きいちゃん', date: '2026-08-15', status: 'todo', category: 'zeroki', phase: 'phase-3', description: '0期生に新構想（協会セミナー→養成講座）を伝えて意見を聞く。反応が良ければ前進の合図' },
+    { id: gid(), title: 'ルビー先生との対談動画を撮影しLPに推薦掲載', assignee: 'きいちゃん', date: '2026-08-31', status: 'todo', category: 'content', phase: 'phase-3', description: '獣医師の推薦としてLP上部に。シニア犬の共通の悩みも共有できる' },
+    { id: gid(), title: 'LPの開講日程を10月に更新・リアル写真を追加', assignee: 'きいちゃん', date: '2026-08-08', status: 'todo', category: 'content', phase: 'phase-3', description: '第一期は10月開講に変更（8〜9月は集客期間）。AI画像ばかりにならないよう講座風景・ランチ会写真を' },
+    { id: gid(), title: '単発サポートの料金プランをまとめて送付', assignee: '野村', date: '2026-08-04', status: 'todo', category: 'design', phase: 'phase-3', description: 'きいちゃんからのリクエスト。継続プランと合わせて提案書の形で' },
+    { id: gid(), title: '手作り食の表計算ツールの詳細ヒアリング', assignee: '野村', date: '2026-08-07', status: 'todo', category: 'design', phase: 'phase-3', description: '栄養講座で使う表計算ツールの制作相談。次回打ち合わせで内容を見せてもらう' },
   ];
 
   const initialLogs = [
@@ -743,6 +757,12 @@
       date: '2026-07-17',
       topic: '0期フォロー強化・第一期2プラン制・YouTube TTP実践とLINE導線見直し',
       content: '・初ショート動画が1日で1,000再生突破と好調（2日で700再生超の動画も）。\n・Facebook本音シェアワークが停滞→次回講座で理由をヒアリング。2回目講座後に受講生3名と個別フォローセッション（60分）を実施決定。受講生全員にYouTubeインタビュー協力も依頼。\n・第一期は9/6スタート想定。料金は98,000円（講座のみ）／198,000円（講座＋個別セッション）の2プラン制へ。再受講は半額目安、紹介割は1万円引き。\n・LINE導線を「LINE登録→診断プレゼント」に変更。YouTube動画内にLINE登録CM（突然ですが…スタイル）を入れる。無料セッションは「期間限定・人数限定」を明記し、終了時はLINEで次回募集を案内。\n・TTPは犬・猫の飼い主の悩み系（ご飯を食べない等）がターゲット。サムネ・タイトル・タグを似せて関連動画に乗る。動画は8〜12分（上限15分）。サムネABテスト（最大3枚）、ショート→長尺の紐付け、タイトルに「伊藤君子 飼い主マインド 潜在意識」等のキーワード追加。\n・動画編集外注を検討（仕上がり10分1万円目安・月契約で交渉）。聞き手候補の知人（大阪・猫4匹）に聞き手＋編集を打診。長尺は月6〜8本ペース目標で撮影日を先に予定化。\n・次回MTG：7/30または7/31の12:00〜（2回目講座の感想が揃った後）。'
+    },
+    {
+      id: gid(),
+      date: '2026-07-31',
+      topic: '第一期10月開講へ変更・LINE導線再設計・栄養×マインド統合構想（3ヶ月契約最終回）',
+      content: '・第一期の開講を10月に後ろ倒し決定。8〜9月の2ヶ月を集客期間に。最優先KPIは無料セッション数（0期3名は全員セッション経由で成約済み）。\n・LINE導線を再設計：YouTube動画内CM→LINE登録→挨拶メッセージで診断配布→診断後の専用ページ（動画＋PDF＋無料セッション案内をWordPressで1ページに）→無料セッション、の一本線に。既存登録者はキーワード「気持ち」で診断自動返信。リッチメニューは無料セッション最優先。\n・YouTube：ショート4,000回超え、長尺が伸びないのは正常（視聴者層が別）。TTPは徹底的に（サムネにも小さいおじさん等をガッツリ、潜在意識系・思考の学校タグそのままOK）。ただし順番は「撮りたいもの・思い・自己紹介」が先。屋外・自然の中での撮影をテスト（景色が動くと視聴維持が上がる仮説）。聞き役は0期生に依頼するのが最善。\n・0期の声：8/15最終日に質の高い感想・インタビュー取得が最重要。「犬が変わった」「悲しみ→前向きなエネルギー」の変化を第3講のワークで逆算設計。志を何度も伝え「ありがとう」を先に言う巻き込み方に。0期13,200円は安すぎたとの学び。第一期98,000円はLP掲載OK。\n・LP：プライバシーポリシー・特商法ページ作成、ルビー先生（獣医師）対談→推薦掲載、リアル写真追加。\n・新構想：メディカルトリマー協会と秋から栄養セミナー。来年春の栄養講師養成講座にマインドを組み込む統合設計。8/15に0期生へアナウンスして反応を見る。\n・ノムさんへ：単発サポート料金プランの送付（きいちゃんからリクエスト）、手作り食の表計算ツール制作の詳細ヒアリング（次回）。'
     }
   ];
 

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>きいちゃんプロジェクト MTG議事録 — 2026/07/31</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --honey: #f5c542; --honey-deep: #d4a017; --honey-light: #fff9e6;
+            --peach: #f7b89c; --coral: #f2988e; --coral-deep: #e06b6b;
+            --sage: #8cb88a; --sage-light: #eef6ee;
+            --sky: #85bdd9; --sky-light: #edf5fa;
+            --lavender: #b8a9d8; --lavender-light: #f3f0fa;
+            --bg: #fffcf5; --text: #4a3a2a; --muted: #a09080;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family:'Zen Maru Gothic',sans-serif;
+            background: linear-gradient(180deg,#fffcf5 0%,#fff5e8 50%,#fef0e0 100%);
+            color:var(--text); min-height:100vh; padding:24px;
+        }
+        .container { max-width:860px; margin:0 auto; }
+
+        .header { text-align:center; margin-bottom:32px; }
+        .badge {
+            display:inline-block;
+            background:linear-gradient(135deg,var(--honey),var(--peach));
+            color:#fff; font-size:10px; font-weight:700;
+            padding:4px 16px; border-radius:20px; letter-spacing:3px; margin-bottom:12px;
+        }
+        .header h1 { font-size:24px; font-weight:900; line-height:1.5; }
+        .header h1 em { font-style:normal; background:linear-gradient(transparent 60%,rgba(245,197,66,.3) 60%); }
+        .meta { font-size:12px; color:var(--muted); margin-top:8px; line-height:1.7; }
+
+        .section {
+            background:#fff; border-radius:20px; padding:28px 32px;
+            box-shadow:0 4px 20px rgba(0,0,0,.04); margin-bottom:20px;
+            position:relative; overflow:hidden;
+        }
+        .section::before {
+            content:''; position:absolute; top:0; left:0; right:0;
+            height:5px; border-radius:20px 20px 0 0;
+        }
+        .section.honey::before { background:linear-gradient(90deg,var(--honey),var(--peach)); }
+        .section.sage::before { background:linear-gradient(90deg,var(--sage),#6baf69); }
+        .section.lavender::before { background:linear-gradient(90deg,var(--lavender),#9a8bc0); }
+        .section.coral::before { background:linear-gradient(90deg,var(--coral),var(--coral-deep)); }
+        .section.sky::before { background:linear-gradient(90deg,var(--sky),#6bb3d9); }
+        .section.mint::before { background:linear-gradient(90deg,#7ecec4,#5bb8ae); }
+
+        .section h2 { font-size:17px; font-weight:900; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+        .section h3 { font-size:14px; font-weight:900; margin:16px 0 8px; padding-left:12px; border-left:3px solid var(--honey); }
+        .section p { font-size:13px; line-height:1.8; margin-bottom:10px; }
+
+        ul, ol { padding-left:20px; }
+        li { font-size:13px; line-height:1.8; margin-bottom:4px; }
+        li strong { color:var(--honey-deep); }
+
+        .highlight {
+            background:var(--honey-light); border:1px solid rgba(245,197,66,.25);
+            border-radius:12px; padding:16px 20px; margin:12px 0;
+            font-size:13px; line-height:1.8;
+        }
+        .highlight.lavender { background:var(--lavender-light); border-color:rgba(184,169,216,.3); }
+        .highlight.sage { background:var(--sage-light); border-color:rgba(140,184,138,.3); }
+        .highlight.coral { background:#fef0f0; border-color:rgba(242,152,142,.3); }
+        .highlight.sky { background:var(--sky-light); border-color:rgba(133,189,217,.3); }
+        .highlight.mint { background:#f0faf9; border-color:rgba(126,206,196,.3); }
+
+        .task-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:12px; }
+        .task-table th {
+            background:linear-gradient(135deg,var(--honey-light),#fff0e0);
+            padding:10px 14px; text-align:left; font-weight:700;
+            color:var(--honey-deep); border-bottom:2px solid rgba(245,197,66,.2);
+        }
+        .task-table td { padding:10px 14px; border-bottom:1px solid #f5f0e8; vertical-align:top; line-height:1.7; }
+        .task-table tr:last-child td { border-bottom:none; }
+        .who {
+            display:inline-block; font-size:10px; font-weight:700;
+            padding:2px 8px; border-radius:10px; margin-right:4px;
+        }
+        .who.kii { background:var(--honey-light); color:var(--honey-deep); }
+        .who.nomu { background:var(--lavender-light); color:#8a7bb0; }
+
+        .flow { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:12px 0; }
+        .flow-step {
+            background:#fff; border:2px solid var(--honey);
+            border-radius:12px; padding:8px 14px;
+            font-size:12px; font-weight:700; text-align:center;
+        }
+        .flow-arrow { color:var(--honey); font-size:18px; font-weight:900; }
+
+        .decision {
+            display:inline-block; background:linear-gradient(135deg,var(--sage),#6baf69);
+            color:#fff; font-size:10px; font-weight:700;
+            padding:2px 10px; border-radius:10px; margin-right:6px; vertical-align:middle;
+        }
+
+        .footer { text-align:center; padding:32px; font-size:11px; color:var(--muted); }
+
+        @media(max-width:600px) {
+            body { padding:12px; }
+            .section { padding:20px 18px; }
+            .flow { flex-direction:column; }
+            .flow-arrow { transform:rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <div class="badge">🐾 MEETING MINUTES</div>
+        <h1>きいちゃんプロジェクト<br>MTG 議事録</h1>
+        <div class="meta">
+            📅 2026年7月31日（金）｜ 👥 きいちゃん × ノムさん<br>
+            🎯 テーマ：<em>YouTube TTP徹底・LINE導線再設計・10月開講への変更・栄養×マインド統合構想</em><br>
+            ⏱ 所要時間：約2時間15分 ｜ ※3ヶ月コンサル契約の最終セッション
+        </div>
+    </div>
+
+    <!-- 1. スケジュール変更 -->
+    <div class="section coral">
+        <h2>📅 1. 第一期の開講を10月に変更（決定）</h2>
+        <ul>
+            <li><span class="decision">決定</span>第一期の開講日を<strong>9月12日 → 10月スタート</strong>に後ろ倒し</li>
+            <li><span class="decision">決定</span><strong>8〜9月の2ヶ月間を集客期間</strong>として確保する</li>
+            <li>理由：1ヶ月の集客は現実的でなく、「やりきれなかった」と思いながら開講するより丁寧に準備する方が大事。しんどさは滲み出てしまう</li>
+            <li>10・11・12月の3ヶ月で第一期を年内に修了できる</li>
+            <li>目標は変わらず<strong>第一期6名</strong>。現状の0期3名は全員セッション経由で成約している</li>
+        </ul>
+        <div class="highlight coral">
+            🎯 <strong>最優先課題は「無料セッションの数を増やすこと」</strong>。
+            セッションまで来てもらえれば講座につながることは0期で実証済み。だから8〜9月はYouTube→LINE→セッションの流量づくりに全集中する。
+        </div>
+    </div>
+
+    <!-- 2. YouTube戦略 -->
+    <div class="section sky">
+        <h2>🎬 2. YouTube戦略：TTPの徹底とスタイル探し</h2>
+
+        <h3>現状の数字の読み方</h3>
+        <ul>
+            <li>ショートは<strong>4,000回超え</strong>と好調。長尺が伸びないのは<strong>正常</strong>（ショートと長尺は視聴者層が別）</li>
+            <li>ショートは人を運ぶ入口として活用し、長尺への紐付けと、そのまま診断・LINE登録が起きれば最高という位置づけ</li>
+        </ul>
+
+        <h3>TTPは「徹底的に」やる</h3>
+        <ul>
+            <li><strong>サムネ・タイトル・タグの3点でYouTube流入の約8割が決まる</strong></li>
+            <li>「小さいおじさん」で引っ張るなら、タイトルだけでなく<strong>サムネにもガッツリ載せる</strong>。開いた人には早い段階でその話に触れる</li>
+            <li><span class="decision">決定</span><strong>潜在意識系のコンテンツをそのままTTPしてOK</strong>。思考の学校のタグもそのまま使ってよい（業界みんなで回し合う考え方）</li>
+            <li>タイトルと中身の一致が大事。冒頭にタイトル関連の話がなければ、<strong>編集者に冒頭ダイジェストを入れてもらう</strong></li>
+        </ul>
+
+        <h3>ただし順番は「撮りたいものが先」</h3>
+        <div class="highlight sky">
+            💡 TTPは線を引く作業。その前に、<strong>自己紹介や思いを込めた動画など「話したいこと」を数本撮るのが先</strong>。
+            エネルギーが乗るし、そこから数字で反応が見えてくる。テーマを少しずつずらして（スタバ→タリーズ→TOTO方式）
+            視聴者が何に興味を持つかをテストする。「好きな犬種で自分のタイプがわかる」などキャッチーな企画も◎。
+        </div>
+
+        <h3>スタイルの改善案（苦手の克服ではなく、合う形を探す）</h3>
+        <ul>
+            <li>カメラに一人で話すのが苦手 → <strong>自分や犬の映像に音声を乗せるスタイル</strong>をテストする（ショートで実績のある型の長尺版）</li>
+            <li><strong>屋外・自然の中での撮影</strong>：大王チャンネルで自然の中で淡々と話す動画が25万回再生。「景色が動く」ことが視聴維持に効いている可能性。マチさんの海外検証動画も6.5万回</li>
+            <li>ワンちゃんとの<strong>散歩中撮影は原理的にも合致</strong>。自然の中では「嘘くささが消える」「自然体が出る」——きいちゃん自身の実感とも一致</li>
+            <li><strong>聞き手（インタビュアー）を0期生に依頼するのが最善策</strong>。一番知りたくて時間とお金を使ってくれている人たち。画面に映らない・後ろ姿・L字配置など配慮の形はいろいろ可能</li>
+        </ul>
+    </div>
+
+    <!-- 3. LINE導線 -->
+    <div class="section lavender">
+        <h2>💬 3. LINE導線の再設計（今日の最重要決定）</h2>
+
+        <p>YouTubeから無料セッションへ直接誘導していたのを、<strong>すべてLINE登録に集約</strong>する形に整理し直した。</p>
+
+        <h3>新規ユーザーの流れ</h3>
+        <div class="flow">
+            <div class="flow-step">YouTube動画内CM<br>「LINE登録で◯◯もらえます」</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">LINE登録<br>挨拶メッセージで<br>診断リンク自動配布</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">犬の気持ち診断</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">診断後の専用ページ<br>動画＋PDF＋<br>無料セッション案内</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">無料セッション</div>
+        </div>
+
+        <ul>
+            <li><span class="decision">決定</span>診断終了後に開く<strong>専用ページを1つWordPressで作成</strong>：プレゼント動画＋PDF＋無料セッション案内を1ページに集約（「診断やったら無料セッションまで一本の線」）</li>
+            <li><span class="decision">決定</span>既存登録者向け：動画CM内で<strong>「登録済みの方は『気持ち』と送ってください」</strong>→ キーワード自動返信で診断を配布</li>
+            <li><span class="decision">決定</span><strong>リッチメニューに無料セッション申込を最優先で表示</strong>。登録直後が一番申し込みやすいタイミング。加えて定期的にLINE配信でも案内</li>
+            <li>公開済み動画も編集者に依頼してCM差し替え（まだ3〜4本のうちに修正）</li>
+        </ul>
+
+        <h3>インスタの使い方</h3>
+        <ul>
+            <li>リールはYouTubeにも転用（ワンソース・マルチユース）</li>
+            <li>プロフィール欄のLINEリンクだけでなく、<strong>投稿ごとに「登録すると何がもらえるか」を明記</strong>、ストーリーズにも定期的にリンクを挟む</li>
+            <li>営業カラーを気にしすぎない：「それで嫌う人はお客さんにならない」。正解はやってみないとわからない——NGと言われることをやって成功している例も多い</li>
+            <li>「今すぐチェックしたくなる」ネタ（診断内容の3択クイズ→「もっと詳しい診断はこちら」）で診断への線を引く</li>
+        </ul>
+    </div>
+
+    <!-- 4. 0期の声 -->
+    <div class="section honey">
+        <h2>🌻 4. 0期の声の収穫（8月15日が勝負）</h2>
+
+        <ul>
+            <li>0期最終日は<strong>8月15日</strong>。ここで<strong>質の高い感想・インタビューを取得することが、次の期の全てを左右する</strong></li>
+            <li>LPには既に2名分の感想を掲載済み。YouTubeインタビューへの出演依頼も済み</li>
+        </ul>
+
+        <h3>欲しい声と、その逆算設計</h3>
+        <ul>
+            <li>一番欲しいのは<strong>「犬が変わった」という具体的変化</strong>（数値・元気さ）</li>
+            <li>犬がいない2名からは<strong>「悲しみのエネルギーが、これから進んでいく前向きなエネルギーに変わった」</strong>という変化の言語化</li>
+            <li>「犬は何を教えてくれたと思いますか？」という問いで、飼い主マインドの文脈に乗った感想を引き出す</li>
+            <li><span class="decision">決定</span>その変化を経験してもらうワークを<strong>第3講に逆算で組み込む</strong> → 経験→言語化→そのままインタビューで話してもらう段階設計</li>
+            <li>💎 既に出ている宝物ワード：<strong>「整体師さんにオーラ変わったねと言われた」</strong>→ LINE配信タイトルやコピーに活用する</li>
+        </ul>
+
+        <h3>受講生の巻き込み方</h3>
+        <div class="highlight">
+            🔑 感想が返ってこない・使える声が来ない問題への処方箋：<br>
+            ① <strong>きいちゃんの志（飼い主マインドを広める使命）を何度も何度も言語化して伝える</strong>——「あなたたちのためだけじゃない。ここにいる人たちを通してもっと多くの人に届けるための0期」<br>
+            ② <strong>「ありがとうございます」を先に言う</strong>——「こんなに具体的に言葉にしてくれるおかげで助かってます」と先に感謝を見せると、他の受講生も言語化の仕方を学ぶ（トイレの「きれいに使ってくれてありがとう」方式）<br>
+            ③ 再受講・養成講座への参加を視野に、<strong>「一緒に届けていく仲間」として接する</strong>
+        </div>
+
+        <h3>価格の学び</h3>
+        <ul>
+            <li>0期13,200円は<strong>安すぎた</strong>——受講生の本気度・向き合うエネルギーには、ある程度の対価が必要だと身をもって実感</li>
+            <li><span class="decision">決定</span>第一期の<strong>98,000円はLPに掲載してOK</strong>（隠す金額ではない。迷う人は個別セッションに来てもらえばいい）</li>
+            <li>将来の養成講座（50〜70万円想定）の段階では「価格を先に見せない」動画セールス型に移行（UTAGE等のステップ配信＋少額課金は、その規模になってから）</li>
+        </ul>
+    </div>
+
+    <!-- 5. LP整備 -->
+    <div class="section mint">
+        <h2>📄 5. LPの整備</h2>
+        <ul>
+            <li><span class="decision">決定</span><strong>プライバシーポリシー＋特定商取引法に基づく表記</strong>のページを別途作成（AIでテンプレートをきいちゃん仕様に置き換えれば簡単）。運営会社情報はどちらかに含めればOK</li>
+            <li><span class="decision">決定</span>獣医師の<strong>ルビー先生と対談動画を撮影</strong>し、推薦としてLP上部に掲載（顕在性の高い要素は上へ）</li>
+            <li>リアル感の追加：講座風景・受講生とのランチ会写真など、<strong>AI画像ばかりにならないよう実写を足していく</strong></li>
+            <li>最下部の「犬の気持ち診断プレゼント」ボタンは、インスタ等からLPに直接来る人のために残す</li>
+        </ul>
+    </div>
+
+    <!-- 6. 栄養×マインド統合 -->
+    <div class="section sage">
+        <h2>🥗 6. 新構想：栄養×飼い主マインドの統合</h2>
+
+        <ul>
+            <li><strong>メディカルトリマー協会</strong>（代表理事と面談済み）から依頼を受け、<strong>秋から犬の栄養セミナーを実施</strong>することが決定している</li>
+            <li>協会側も「飼い主のマインドが犬猫の健康に関わる」に共感。「その先はきいちゃんの講座に引っ張ってくれていい」とも</li>
+        </ul>
+
+        <h3>統合の設計思想（子育て講座の成功パターンを応用）</h3>
+        <div class="highlight sage">
+            💡 <strong>「みんなが欲しいもの（栄養）を入口にして、本当に大事なもの（マインド)へ」</strong><br>
+            栄養は「それ何？」のハードルがなく集客しやすい。栄養だけでは頭打ちになる——それこそがきいちゃんの原体験。<br>
+            将来の<strong>栄養講師の養成講座のカリキュラム内に「飼い主マインド」を組み込む</strong>：
+            講師になるにはマインドが整っている必要があるから、と自然に全員がマインドを学ぶ。
+            変わった人の中から「マインドも教えたい」人が出てきたら、その時初めてトレーナー養成を開始する。
+        </div>
+
+        <ul>
+            <li>ロードマップ：秋・協会セミナー → 来年春・栄養インストラクター養成講座（マインド組込）→ その先に飼い主マインドのトレーナー養成</li>
+            <li>0期生にも両方学びたい人が既に2名いる（栄養に熱心な方・栄養を知りたい男性受講生）——ニーズは実証されつつある</li>
+            <li><span class="decision">決定</span>8月15日の0期最終日に、この新構想を「予定してます」と<strong>アナウンスして意見を聞いてみる</strong>（反応が良ければそれが答え）</li>
+            <li>0期生には割引価格での新講座再受講という道も用意できる</li>
+        </ul>
+    </div>
+
+    <!-- 7. 勝ちパターン -->
+    <div class="section coral">
+        <h2>👑 7. きいちゃんの勝ちパターン（ストレングスから再確認）</h2>
+        <ul>
+            <li><strong>活発性×達成欲</strong>：決めたら一気に動ける。だから<strong>明確な数値目標（6名→逆算でセッション数→動画本数）</strong>の設定が絶対大事</li>
+            <li><strong>研究者気質（学習欲×収集心）</strong>：調べたことを「聞いて聞いて！」と伝えるエネルギーが本体。聞き手がいると最大化する</li>
+            <li><strong>ポジティブ×個別化</strong>：個別セッションが一番の成功パターン。相手に合わせて解決できる「先生」の状態が最強</li>
+            <li><strong>自我×運命思考</strong>：志を語り、応援団と仲間（インストラクター）を増やしていく方向へ</li>
+            <li>⚠️ 一人で地道に繰り返す作業はエネルギーが落ちる——これは能力でなく資質。<strong>利き手（合うスタイル）で量をこなす工夫</strong>を。「目の前に相手がいないと話せない」なら、相手を作ればいい</li>
+        </ul>
+    </div>
+
+    <!-- 8. アクション -->
+    <div class="section sage">
+        <h2>✅ 8. アクション一覧</h2>
+        <table class="task-table">
+            <thead><tr><th style="width:80px">担当</th><th>タスク</th><th style="width:110px">期限</th></tr></thead>
+            <tbody>
+                <tr><td><span class="who kii">きいちゃん</span></td><td>屋外・自然の中での動画撮影をテストする（散歩中など）</td><td>8月中</td></tr>
+                <tr><td><span class="who kii">きいちゃん</span></td><td>0期生に聞き役を依頼してYouTube撮影をテストする</td><td>8月中</td></tr>
+                <tr><td><span class="who kii">きいちゃん</span></td><td>動画内CMを「LINE登録」誘導に統一（公開済み分は編集者に差し替え依頼）</td><td>早めに</td></tr>
+                <tr><td><span class="who kii">きいちゃん</span></td><td>診断後の専用ページ（動画＋PDF＋無料セッション案内）をWordPressで作成</td><td>8月中旬</td></tr>
+                <tr><td><span class="who kii">きいちゃん</span></td><td>既存LINE向けキーワード（「気持ち」）の自動返信を設定</td><td>8月上旬</td></tr>
+                <tr><td><span class="who kii">きいちゃん</span></td><td>リッチメニューに無料セッション申込を最優先で表示</td><td>8月上旬</td></tr>
+                <tr><td><span class="who kii">きいちゃん</span></td><td>プライバシーポリシー・特商法ページをAI活用で作成</td><td>8月中旬</td></tr>
+                <tr><td><span class="who kii">きいちゃん</span></td><td>第3講に「欲しい声」への逆算ワークを組み込み、8/15に感想・インタビューを取得</td><td>8月15日</td></tr>
+                <tr><td><span class="who kii">きいちゃん</span></td><td>8/15に栄養×マインド統合構想をアナウンスし、0期生の意見を聞く</td><td>8月15日</td></tr>
+                <tr><td><span class="who kii">きいちゃん</span></td><td>ルビー先生との対談動画をセッティング・撮影し、LPに推薦掲載</td><td>8月中</td></tr>
+                <tr><td><span class="who kii">きいちゃん</span></td><td>LPの開講日程を10月スタートに更新、リアル写真を追加</td><td>8月上旬</td></tr>
+                <tr><td><span class="who nomu">ノムさん</span></td><td>単発サポートの料金プランをまとめてきいちゃんに送付</td><td>近日</td></tr>
+                <tr><td><span class="who nomu">ノムさん</span></td><td>手作り食の表計算ツールについて詳細をヒアリング（次回）</td><td>次回</td></tr>
+                <tr><td><span class="who nomu">ノムさん</span></td><td>ルビー先生の推薦文の掲載位置をLPを見て提案</td><td>近日</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- まとめ -->
+    <div class="section honey">
+        <h2>🌸 今回のまとめ（3ヶ月契約の締めくくり）</h2>
+        <div class="highlight">
+            <strong>このセッションで決まった3つの大きな舵取り</strong><br><br>
+            1️⃣ <strong>開講は10月へ</strong>：8〜9月の2ヶ月を集客に。焦らず「やりきった」状態で第一期を迎える。<br><br>
+            2️⃣ <strong>導線はLINEに全集約</strong>：YouTube CM→LINE→診断→専用ページ→無料セッションの一本線。最優先KPIは無料セッション数。<br><br>
+            3️⃣ <strong>栄養×マインドの統合構想が始動</strong>：協会セミナー（秋）→養成講座（来年春）にマインドを組み込む。きいちゃんの2つの専門性がひとつの階段になる。<br><br>
+            そして8月15日——0期の声の収穫が、すべての土台になる🌻
+        </div>
+    </div>
+
+    <div class="footer">
+        🐾 きいちゃんプロジェクト 議事録 — 2026年7月31日<br>
+        単発サポートの料金プランは別途送付予定／手作り食ツールの詳細は次回ヒアリング
+    </div>
+
+</div>
+</body>
+</html>
