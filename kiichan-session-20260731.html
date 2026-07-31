@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>きいちゃん × ノムさん — 3ヶ月の振り返りとこれから | 2026/07/31</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --honey: #f5c542; --honey-deep: #d4a017; --honey-light: #fff9e6;
+            --peach: #f7b89c; --coral: #f2988e; --coral-deep: #e06b6b;
+            --sage: #8cb88a; --sage-light: #eef6ee;
+            --sky: #85bdd9; --sky-light: #edf5fa;
+            --lavender: #b8a9d8; --lavender-light: #f3f0fa;
+            --bg: #fffcf5; --text: #4a3a2a; --muted: #a09080;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family:'Zen Maru Gothic',sans-serif;
+            background: linear-gradient(180deg,#fffcf5 0%,#fff5e8 50%,#fef0e0 100%);
+            color:var(--text); min-height:100vh; padding:24px;
+        }
+        .container { max-width:860px; margin:0 auto; }
+
+        .header { text-align:center; margin-bottom:32px; }
+        .badge {
+            display:inline-block;
+            background:linear-gradient(135deg,var(--honey),var(--peach));
+            color:#fff; font-size:10px; font-weight:700;
+            padding:4px 16px; border-radius:20px; letter-spacing:3px; margin-bottom:12px;
+        }
+        .header h1 { font-size:24px; font-weight:900; line-height:1.5; }
+        .header h1 em { font-style:normal; background:linear-gradient(transparent 60%,rgba(245,197,66,.3) 60%); }
+        .meta { font-size:12px; color:var(--muted); margin-top:8px; line-height:1.7; }
+
+        .section {
+            background:#fff; border-radius:20px; padding:28px 32px;
+            box-shadow:0 4px 20px rgba(0,0,0,.04); margin-bottom:20px;
+            position:relative; overflow:hidden;
+        }
+        .section::before {
+            content:''; position:absolute; top:0; left:0; right:0;
+            height:5px; border-radius:20px 20px 0 0;
+        }
+        .section.honey::before { background:linear-gradient(90deg,var(--honey),var(--peach)); }
+        .section.sage::before { background:linear-gradient(90deg,var(--sage),#6baf69); }
+        .section.lavender::before { background:linear-gradient(90deg,var(--lavender),#9a8bc0); }
+        .section.coral::before { background:linear-gradient(90deg,var(--coral),var(--coral-deep)); }
+        .section.sky::before { background:linear-gradient(90deg,var(--sky),#6bb3d9); }
+        .section.mint::before { background:linear-gradient(90deg,#7ecec4,#5bb8ae); }
+
+        .section h2 { font-size:17px; font-weight:900; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+        .section h3 { font-size:14px; font-weight:900; margin:18px 0 8px; padding-left:12px; border-left:3px solid var(--honey); }
+        .section p { font-size:13px; line-height:1.9; margin-bottom:10px; }
+        ul, ol { padding-left:20px; }
+        li { font-size:13px; line-height:1.9; margin-bottom:5px; }
+        li strong, p strong { color:var(--honey-deep); }
+
+        .highlight {
+            background:var(--honey-light); border:1px solid rgba(245,197,66,.25);
+            border-radius:12px; padding:16px 20px; margin:12px 0;
+            font-size:13px; line-height:1.9;
+        }
+        .highlight.sage { background:var(--sage-light); border-color:rgba(140,184,138,.3); }
+        .highlight.sky { background:var(--sky-light); border-color:rgba(133,189,217,.3); }
+        .highlight.lavender { background:var(--lavender-light); border-color:rgba(184,169,216,.3); }
+
+        .tbl { width:100%; border-collapse:collapse; font-size:12px; margin-top:12px; }
+        .tbl th {
+            background:linear-gradient(135deg,var(--honey-light),#fff0e0);
+            padding:10px 14px; text-align:left; font-weight:700;
+            color:var(--honey-deep); border-bottom:2px solid rgba(245,197,66,.2);
+        }
+        .tbl td { padding:10px 14px; border-bottom:1px solid #f5f0e8; vertical-align:top; line-height:1.8; }
+        .tbl tr:last-child td { border-bottom:none; }
+
+        /* Before/After */
+        .ba-row { display:flex; gap:14px; flex-wrap:wrap; margin:12px 0; }
+        .ba-card { flex:1; min-width:240px; border-radius:14px; padding:18px 20px; }
+        .ba-card.before { background:#faf5ec; border:1px solid #eee2d0; }
+        .ba-card.after { background:var(--sage-light); border:1px solid rgba(140,184,138,.4); }
+        .ba-card .ttl { font-size:12px; font-weight:900; margin-bottom:10px; color:var(--muted); }
+        .ba-card.after .ttl { color:#3e7a3c; }
+        .ba-card ul { padding-left:18px; }
+        .ba-card li { font-size:12.5px; }
+
+        /* Funnel status */
+        .funnel { display:flex; flex-direction:column; gap:6px; margin:14px 0; }
+        .fstep {
+            display:flex; align-items:center; gap:12px;
+            border-radius:10px; padding:10px 16px; font-size:12.5px;
+            background:#faf7f0; border:1px solid #f0e8da;
+        }
+        .fstep .light { font-size:16px; }
+        .fstep .name { font-weight:900; min-width:150px; }
+        .fstep .st { color:var(--muted); line-height:1.6; }
+
+        /* Roadmap */
+        .road { display:flex; gap:12px; flex-wrap:wrap; margin:14px 0; }
+        .road-card {
+            flex:1; min-width:200px; background:#fff; border:2px solid var(--honey);
+            border-radius:14px; padding:16px 18px;
+        }
+        .road-card .m { font-size:13px; font-weight:900; color:var(--honey-deep); margin-bottom:8px; }
+        .road-card ul { padding-left:16px; }
+        .road-card li { font-size:12px; }
+
+        /* Plans */
+        .plan-row { display:flex; gap:14px; flex-wrap:wrap; margin:14px 0; }
+        .plan {
+            flex:1; min-width:240px; background:#fff; border-radius:16px;
+            padding:20px; border:2px solid #eee2d0; text-align:left;
+        }
+        .plan.main { border-color:var(--sage); background:var(--sage-light); }
+        .plan .pname { font-size:13px; font-weight:900; }
+        .plan .pprice { font-size:20px; font-weight:900; color:var(--honey-deep); margin:6px 0; }
+        .plan.main .pprice { color:#3e7a3c; }
+        .plan ul { padding-left:16px; margin-top:8px; }
+        .plan li { font-size:12px; }
+        .plan .tag {
+            display:inline-block; font-size:10px; font-weight:700; color:#fff;
+            background:linear-gradient(135deg,var(--sage),#6baf69);
+            padding:2px 10px; border-radius:10px; margin-bottom:8px;
+        }
+
+        .footer { text-align:center; padding:32px; font-size:11px; color:var(--muted); }
+
+        @media(max-width:600px) {
+            body { padding:12px; }
+            .section { padding:20px 18px; }
+            .ba-row, .road, .plan-row { flex-direction:column; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <div class="badge">🌻 SESSION 2026.07.31</div>
+        <h1>3ヶ月おつかれさま！<br><em>振り返りと、ここからの道筋</em></h1>
+        <div class="meta">📅 2026年7月31日（金）12:00〜 ｜ 👥 きいちゃん × ノムさん</div>
+    </div>
+
+    <!-- 1. 振り返り -->
+    <div class="section honey">
+        <h2>🎉 1. この3ヶ月で、ここまで来ました</h2>
+        <div class="ba-row">
+            <div class="ba-card before">
+                <div class="ttl">📍 5月のきいちゃん</div>
+                <ul>
+                    <li>ペットショップを閉店したばかり</li>
+                    <li>「飼い主マインド」はまだ構想段階</li>
+                    <li>講座も価格も導線も、これから</li>
+                    <li>YouTubeは休止状態</li>
+                </ul>
+            </div>
+            <div class="ba-card after">
+                <div class="ttl">🌟 7月のきいちゃん</div>
+                <ul>
+                    <li><strong>0期が進行中</strong>（モニター3名・講座2回実施）</li>
+                    <li>受講生のご主人が「受けたい」と言う変化</li>
+                    <li><strong>第一期の日程・価格・LPが完成</strong>（9/12開講）</li>
+                    <li>診断チャット・LINE導線・チェックシートが稼働</li>
+                    <li><strong>初ショートが1日で1,000再生</strong></li>
+                </ul>
+            </div>
+        </div>
+        <div class="highlight">
+            ✨ ゼロから3ヶ月で「<strong>事業の設計図と、動く仕組み</strong>」が全部そろいました。
+            そして何より——きいちゃんは<strong>決めたら動ける人</strong>だと証明されました。ここまでのスピードは本当にすごい！
+        </div>
+    </div>
+
+    <!-- 2. 現在地 -->
+    <div class="section sky">
+        <h2>🗺️ 2. 現在地マップ — どこまで来て、何が残っているか</h2>
+        <div class="funnel">
+            <div class="fstep"><span class="light">🟢</span><span class="name">設計（コンセプト・講座・価格）</span><span class="st">完成。第一期の器はできている</span></div>
+            <div class="fstep"><span class="light">🟢</span><span class="name">0期（事例づくり）</span><span class="st">進行中。「変わった！」の声をこれから収穫</span></div>
+            <div class="fstep"><span class="light">🟡</span><span class="name">認知（YouTube）</span><span class="st">芽は出た（ショート1,000再生）。まだ本数が足りない</span></div>
+            <div class="fstep"><span class="light">🟡</span><span class="name">お試し→LINEリスト</span><span class="st">導線は切替済み。ただ流れ込む人がまだ少ない</span></div>
+            <div class="fstep"><span class="light">🟡</span><span class="name">セッション→講座の成約</span><span class="st">手応えあり（申込1件）。正規価格ではこれから検証</span></div>
+        </div>
+        <div class="highlight sky">
+            💡 <strong>フェーズが変わりました。</strong><br>
+            前の3ヶ月は「<strong>設計と構築</strong>」——これは完了。<br>
+            次の3ヶ月は「<strong>量産と検証</strong>」——作った装置に人を流し、数字を見て、直していく期間です。
+        </div>
+    </div>
+
+    <!-- 3. 課題の正体 -->
+    <div class="section lavender">
+        <h2>🔍 3. 「まだ確信が持てない」の正体</h2>
+        <p>
+            今わかっていないのは、たった3つの数字です。
+        </p>
+        <table class="tbl">
+            <thead><tr><th>まだ見えていない数字</th><th>どうやって見えるようになるか</th></tr></thead>
+            <tbody>
+                <tr><td>① YouTubeを見た人が、どれだけLINEに来るか</td><td>長尺の本数を増やし、動画内CMを入れて計測する</td></tr>
+                <tr><td>② LINEに来た人が、どれだけセッションを申し込むか</td><td>登録後の案内を整え、申込数を計測する</td></tr>
+                <tr><td>③ セッションを受けた人が、どれだけ講座に進むか</td><td>9月のクロージングで検証する</td></tr>
+            </tbody>
+        </table>
+        <div class="highlight lavender">
+            📊 <strong>計器はもう付いています。次は飛ばして、計測する番。</strong><br>
+            数字が見えれば「どこを直せばいいか」がわかる。確信は、頑張って持つものではなく<strong>数字がくれるもの</strong>です。
+        </div>
+    </div>
+
+    <!-- 4. ロードマップ -->
+    <div class="section sage">
+        <h2>🚀 4. 第一期満席までの3ヶ月ロードマップ</h2>
+        <div class="road">
+            <div class="road-card">
+                <div class="m">8月：装置を回す</div>
+                <ul>
+                    <li>YouTube長尺 月6〜8本（外注・撮影日確保）</li>
+                    <li>動画内CMでLINEへ</li>
+                    <li>0期の個別フォロー＆声の収穫</li>
+                    <li>📊 見る数字：本数・LINE登録数</li>
+                </ul>
+            </div>
+            <div class="road-card">
+                <div class="m">9月：刈り取る</div>
+                <ul>
+                    <li>個別セッションを最大化</li>
+                    <li>0期の声をLPに掲載</li>
+                    <li>9/12 第一期開講🎉</li>
+                    <li>📊 見る数字：セッション数・成約率</li>
+                </ul>
+            </div>
+            <div class="road-card">
+                <div class="m">10月：仕組みにする</div>
+                <ul>
+                    <li>第一期の運営＋声の収穫</li>
+                    <li>当たった動画の型を量産</li>
+                    <li>第二期が「自然に埋まる」導線へ</li>
+                    <li>📊 見る数字：全変換率の通し</li>
+                </ul>
+            </div>
+        </div>
+        <div class="highlight sage">
+            🎯 <strong>ゴール：第一期満席（6名）＝ 88.8万円</strong>（9.8万×3名＋19.8万×3名）<br>
+            その先には——講座の先の<strong>インストラクター認定制度</strong>、全国の飼い主さんへ「飼い主マインド」が広がっていく未来。
+            この3ヶ月は、その未来への最初の階段です。
+        </div>
+    </div>
+
+    <!-- 5. 勝ちパターン -->
+    <div class="section coral">
+        <h2>👑 5. きいちゃんの勝ちパターンで進める</h2>
+        <p>ストレングスTOP10から見た、きいちゃんが一番力を発揮できるやり方：</p>
+        <ul>
+            <li><strong>活発性・達成欲</strong> → 決めたら動ける。だから「撮影日を先に予定化」して量で勝負する</li>
+            <li><strong>学習欲・収集心</strong> → 「聞いて聞いて！」のエネルギーをそのまま動画に。台本を作り込むより、話したいことを話す</li>
+            <li><strong>ポジティブ・個別化</strong> → セッションとコミュニティで最も輝く。人と会う機会を増やすほど成約は伸びる</li>
+            <li><strong>自我・運命思考</strong> → 「大きなことを成し遂げる」人。目先の1本1本は、インストラクター制度への布石</li>
+        </ul>
+        <div class="highlight">
+            ⚠️ 逆に、きいちゃんが止まりやすいのは「<strong>一人で地道に繰り返す作業</strong>」（メルマガ、定期配信、数字のチェック…）。
+            これは能力の問題ではなく<strong>資質の特徴</strong>。だから、ここだけは仕組みと伴走で支えるのが最短ルートです。
+        </div>
+    </div>
+
+    <!-- 6. 提案 -->
+    <div class="section mint">
+        <h2>🤝 6. ここからのサポートのご提案</h2>
+        <p>
+            正直に言うと——<strong>設計フェーズは終わったので、これまでと同じ形（月2回・12万円）のコンサルはもう必要ありません。</strong><br>
+            次のフェーズに必要なのは「止まらない環境」と「数字を一緒に見る目」。それに合わせて形を変えます。
+        </p>
+        <div class="plan-row">
+            <div class="plan main">
+                <div class="tag">おすすめ</div>
+                <div class="pname">🌻 伴走プラン（8〜10月）</div>
+                <div class="pprice">月60,000円 × 3ヶ月</div>
+                <ul>
+                    <li>月1回のセッション（60〜90分）</li>
+                    <li>チャット相談いつでも（メッセンジャー）</li>
+                    <li><strong>週次の数字レビュー</strong>（本数・登録数・申込数を一緒に確認）</li>
+                    <li>YouTube実践コミュニティ（8月始動・下記）へ<strong>0期メンバーとして無料ご招待</strong></li>
+                </ul>
+            </div>
+            <div class="plan">
+                <div class="pname">➕ クロージング集中サポート（9月）</div>
+                <div class="pprice">スポット 20,000円/回</div>
+                <ul>
+                    <li>第一期成約の山場だけ個別を厚く</li>
+                    <li>セッション→講座への流れの個別作戦会議</li>
+                    <li>料金の伝え方・背中の押し方の実践練習</li>
+                </ul>
+            </div>
+        </div>
+        <h3>🆕 8月から：YouTube実践コミュニティ（0期）</h3>
+        <p style="font-size:12.5px;">
+            同じように「専門性で人を助ける先生業」の仲間3〜5名で、<strong>毎週の投稿報告と数字をみんなで回す場</strong>を作ります。
+            バディがいると続く——きいちゃんが講座で体感している、あの仕組みです。きいちゃんには0期の1人目として入ってほしい。
+        </p>
+        <div class="highlight sage">
+            💰 <strong>投資対効果の確認</strong>：伴走3ヶ月＝18万円＋スポット数回。
+            第一期満席なら<strong>88.8万円</strong>——ベーシック2名の成約だけでも回収できます。
+            そして一番のリスクは、金額ではなく「<strong>ここでPDCAが止まること</strong>」です。
+        </div>
+    </div>
+
+    <!-- 7. 今日決めること -->
+    <div class="section honey">
+        <h2>✅ 7. 今日決めること</h2>
+        <ul>
+            <li>☐ ここからの3ヶ月の<strong>ゴール共有</strong>：「第一期満席（6名）」でいい？</li>
+            <li>☐ <strong>継続の形</strong>：伴走プラン＋必要に応じてスポット、でいい？</li>
+            <li>☐ <strong>8月の撮影日</strong>をこの場でカレンダーに入れる（最初の一歩）</li>
+            <li>☐ 次回セッションの日程</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        🐾 きいちゃんプロジェクト — 2026年7月31日セッション資料<br>
+        3ヶ月間、本当におつかれさまでした。ここからが本番、一緒に満席にしましょう🌻
+    </div>
+
+</div>
+</body>
+</html>
