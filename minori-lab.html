@@ -76,6 +76,30 @@ body {
 .member-card .name { font-size:14px; font-weight:900; margin-top:6px; }
 .member-card .genre { font-size:11px; color:var(--muted); }
 .member-card .goal { font-size:11.5px; margin-top:8px; background:var(--leaf-light); border-radius:8px; padding:6px 8px; line-height:1.6; }
+.chips { margin-top:8px; display:flex; flex-wrap:wrap; gap:4px; justify-content:center; }
+.chip { font-size:9.5px; font-weight:700; background:var(--sun-light); color:#a07a10; border:1px solid rgba(245,197,66,.35); border-radius:8px; padding:2px 8px; }
+.pledge-box { background:var(--sun-light); border:1.5px dashed var(--sun); border-radius:10px; padding:10px 14px; font-size:12.5px; line-height:1.7; }
+
+/* 強みカード */
+.scard-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:4px; }
+.scard {
+  cursor:pointer; user-select:none; text-align:center;
+  border:2px solid #e2ddd0; border-radius:12px; background:#fffdf8;
+  padding:10px 14px; min-width:88px; transition:all .15s;
+}
+.scard .ic { font-size:20px; }
+.scard .nm { font-size:11.5px; font-weight:900; margin-top:2px; }
+.scard:hover { border-color:var(--sun); transform:translateY(-2px); }
+.scard.sel {
+  border-color:var(--leaf); background:var(--leaf-light);
+  box-shadow:0 5px 14px rgba(46,125,79,.25); transform:translateY(-3px);
+}
+.scard.sel .nm { color:var(--leaf-deep); }
+.card-stats { margin-top:14px; font-size:12px; line-height:2; }
+.card-stats .cs-chip {
+  display:inline-block; background:#fffdf8; border:1.5px solid #e8e2d4;
+  border-radius:10px; padding:3px 10px; margin:2px 4px 2px 0; font-weight:700; font-size:11px;
+}
 .member-card .streak { margin-top:8px; font-size:11px; font-weight:700; color:var(--leaf-deep); }
 .member-del { position:absolute; top:8px; right:10px; background:none; border:none; cursor:pointer; font-size:12px; opacity:.35; }
 .member-del:hover { opacity:1; }
@@ -175,8 +199,8 @@ textarea { resize:vertical; min-height:56px; }
     <h2>🌱 このラボの約束ごと</h2>
     <div class="concept-row">
       <div class="concept-card">
-        <div class="t">① 週に1回、報告する</div>
-        <div class="d">投稿本数と数字と、ひとことの学び。仲間の報告が来たら、自分もやりたくなる。それがこのラボの仕組みです。</div>
+        <div class="t">① 週に1回、宣言して報告する</div>
+        <div class="d">「来週はこれをやる」と宣言し、数字とひとことの学びで報告する。この約束のサイクルがあるから、止まらない。仲間の報告が来たら、自分もやりたくなる。</div>
       </div>
       <div class="concept-card">
         <div class="t">② 月に1回、集まる</div>
@@ -205,6 +229,7 @@ textarea { resize:vertical; min-height:56px; }
         <div><label>絵文字</label><input id="mEmoji" placeholder="例: 🐕"></div>
         <div><label>ジャンル</label><input id="mGenre" placeholder="例: 犬の栄養×飼い主マインド"></div>
         <div><label>今期の目標</label><input id="mGoal" placeholder="例: 長尺18本・LINE登録50人"></div>
+        <div class="full"><label>ストレングスTOP5（・区切り）</label><input id="mStr" placeholder="例: 活発性・運命思考・学習欲・着想・内省"></div>
       </div>
       <button class="btn ghost" onclick="addMember()">追加する</button>
     </details>
@@ -212,29 +237,53 @@ textarea { resize:vertical; min-height:56px; }
 
   <!-- Report form -->
   <div class="section green">
-    <h2>✍️ 今週の報告</h2>
+    <h2>🎯 今週の宣言と報告</h2>
     <div class="form-grid">
-      <div><label>だれ？</label><select id="rMember"></select></div>
+      <div><label>だれ？</label><select id="rMember" onchange="refreshPledge()"></select></div>
       <div><label>どの週？</label><input type="week" id="rWeek"></div>
+      <div class="full"><div class="pledge-box" id="pledgeBox">🌱 先週の宣言はまだありません。今週から始めよう！</div></div>
+      <div><label>先週の宣言、どうだった？</label>
+        <select id="rGoalDone">
+          <option value="">—</option>
+          <option value="did">🌸 やりきった！</option>
+          <option value="some">🌱 少し進んだ</option>
+          <option value="not">🌰 できなかった（それも大事なデータ）</option>
+        </select>
+      </div>
+      <div><label>🃏 先週切ったカードは働いた？</label>
+        <select id="rCardWorked">
+          <option value="">—</option>
+          <option value="fire">🔥 バッチリ働いた</option>
+          <option value="soso">🤔 まあまあ</option>
+          <option value="sleep">😴 出番がなかった</option>
+        </select>
+      </div>
       <div><label>長尺 投稿本数</label><input type="number" id="rLong" min="0" placeholder="0"></div>
       <div><label>ショート 投稿本数</label><input type="number" id="rShort" min="0" placeholder="0"></div>
       <div><label>今週の再生数（合計）</label><input type="number" id="rViews" min="0" placeholder="0"></div>
       <div><label>リスト登録数（LINE等）</label><input type="number" id="rSubs" min="0" placeholder="0"></div>
       <div class="full"><label>今週の学び・気づき</label><textarea id="rLearned" placeholder="うまくいったこと、いかなかったこと、発見したこと"></textarea></div>
-      <div class="full"><label>来週の一手</label><textarea id="rNext" placeholder="来週、これだけはやる！を1つ"></textarea></div>
+      <div class="full"><label>🎯 来週の宣言（これだけはやる！）</label><textarea id="rNext" placeholder="例: 長尺2本投稿して、動画内CMを入れる"></textarea></div>
+      <div class="full">
+        <label>🃏 この宣言に切る強みカード（1枚選ぶ）</label>
+        <div class="scard-row" id="cardRow"></div>
+        <input type="hidden" id="rNextStrength">
+      </div>
     </div>
-    <button class="btn" onclick="addReport()">🌱 報告をまく</button>
+    <button class="btn" onclick="addReport()">🌱 宣言と報告をまく</button>
   </div>
 
   <!-- KPI dashboard -->
   <div class="section blue">
     <h2>📊 みんなの畑（今期の累計）</h2>
     <table class="kpi-table">
-      <thead><tr><th>メンバー</th><th>長尺</th><th>ショート</th><th>再生数</th><th>リスト</th><th>報告リズム（週ごとの本数）</th></tr></thead>
+      <thead><tr><th>メンバー</th><th>長尺</th><th>ショート</th><th>再生数</th><th>リスト</th><th>宣言達成</th><th>報告リズム（週ごとの本数）</th></tr></thead>
       <tbody id="kpiBody"></tbody>
     </table>
+    <div class="card-stats" id="cardStats"></div>
     <p style="font-size:11px; color:var(--muted); margin-top:10px;">
-      🌱 一番大事な数字は「投稿本数」——再生は天気に左右されるけど、たねまきは自分で決められるから。
+      🌱 一番大事な数字は「投稿本数」——再生は天気に左右されるけど、たねまきは自分で決められるから。<br>
+      🃏 カードの成績は「どの強みが自分の勝ち筋か」を教えてくれます。3ヶ月後、あなたのエースカードが見つかる。
     </p>
   </div>
 
@@ -275,7 +324,7 @@ textarea { resize:vertical; min-height:56px; }
 </div>
 
 <script>
-const LS_KEY = 'minori-lab-v1';
+const LS_KEY = 'minori-lab-v3';
 const COHORT_START = new Date('2026-08-03T00:00:00+09:00');
 const COHORT_WEEKS = 13;
 
@@ -283,12 +332,15 @@ let state = { members: [], reports: [] };
 
 const seed = () => ({
   members: [
-    { id: 'm1', name: 'きいちゃん', emoji: '🐕', genre: '犬の栄養×飼い主マインド', goal: '長尺18本・第一期満席' },
-    { id: 'm2', name: 'メンバーB', emoji: '🌿', genre: '（募集中）', goal: '—' },
+    { id: 'm1', name: 'きいちゃん', emoji: '🐕', genre: '犬の栄養×飼い主マインド', goal: '長尺18本・第一期満席',
+      strengths: ['活発性','運命思考','学習欲','着想','内省'] },
+    { id: 'm2', name: 'メンバーB', emoji: '🌿', genre: '（募集中）', goal: '—', strengths: [] },
   ],
   reports: [
     { id: 'r1', memberId: 'm1', week: '2026-W32', long: 2, short: 3, views: 1800, subs: 4,
-      learned: 'ショートの1本が1日で1,000再生！TTPサムネの反応が良い。', next: '長尺に動画内CM（LINE案内）を入れて2本投稿する', reacts: [] },
+      goalDone: 'did', cardWorked: '',
+      learned: 'ショートの1本が1日で1,000再生！TTPサムネの反応が良い。',
+      next: '長尺に動画内CM（LINE案内）を入れて2本投稿する', nextStrength: '達成欲', reacts: [] },
   ],
 });
 
@@ -324,11 +376,50 @@ function renderMembers() {
       <div class="name">${esc(m.name)}</div>
       <div class="genre">${esc(m.genre || '')}</div>
       <div class="goal">🎯 ${esc(m.goal || '目標をきめよう')}</div>
+      ${(m.strengths || []).length ? `<div class="chips">${m.strengths.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>` : ''}
       <div class="streak">🌻 報告 ${weeks} 週分</div>
     </div>`;
   }).join('');
   const sel = document.getElementById('rMember');
   sel.innerHTML = state.members.map(m => `<option value="${m.id}">${esc(m.name)}</option>`).join('');
+  refreshPledge();
+}
+
+/* 宣言の引き継ぎ表示 & 強みセレクト */
+function refreshPledge() {
+  const memberId = document.getElementById('rMember').value;
+  const m = state.members.find(x => x.id === memberId);
+  const box = document.getElementById('pledgeBox');
+  const rs = state.reports.filter(r => r.memberId === memberId).sort((a,b) => a.week < b.week ? 1 : -1);
+  const last = rs.find(r => r.next);
+  box.innerHTML = last
+    ? `📌 <strong>先週の宣言</strong>：「${esc(last.next)}」${last.nextStrength ? `<span class="chip">💪 ${esc(last.nextStrength)}で攻める</span>` : ''}`
+    : '🌱 先週の宣言はまだありません。今週から始めよう！';
+  renderCardRow(m);
+}
+
+const CARD_ICONS = { '活発性':'⚡','運命思考':'🔗','学習欲':'📚','着想':'💡','内省':'🌙','最上志向':'👑','達成欲':'🏃','戦略性':'♟️','信念':'🕯️','未来志向':'🔭','自己確信':'🦁','ポジティブ':'☀️','個別化':'🎨','収集心':'🧺','自我':'⭐' };
+
+function renderCardRow(m) {
+  const row = document.getElementById('cardRow');
+  const strengths = (m && m.strengths) || [];
+  if (!strengths.length) {
+    row.innerHTML = '<span style="font-size:12px;color:var(--muted);">メンバーカードにストレングスを登録すると、ここに手札が並びます🃏</span>';
+    document.getElementById('rNextStrength').value = '';
+    return;
+  }
+  const sel = document.getElementById('rNextStrength').value;
+  row.innerHTML = strengths.map(s => `
+    <div class="scard ${sel === s ? 'sel' : ''}" onclick="pickCard('${esc(s)}')">
+      <div class="ic">${CARD_ICONS[s] || '🃏'}</div>
+      <div class="nm">${esc(s)}</div>
+    </div>`).join('');
+}
+function pickCard(s) {
+  const input = document.getElementById('rNextStrength');
+  input.value = (input.value === s) ? '' : s;
+  const m = state.members.find(x => x.id === document.getElementById('rMember').value);
+  renderCardRow(m);
 }
 function addMember() {
   const name = document.getElementById('mName').value.trim();
@@ -336,8 +427,9 @@ function addMember() {
   state.members.push({ id: gid(), name,
     emoji: document.getElementById('mEmoji').value.trim() || '🌱',
     genre: document.getElementById('mGenre').value.trim(),
-    goal: document.getElementById('mGoal').value.trim() });
-  ['mName','mEmoji','mGenre','mGoal'].forEach(i => document.getElementById(i).value = '');
+    goal: document.getElementById('mGoal').value.trim(),
+    strengths: document.getElementById('mStr').value.split(/[・,、\/\s]+/).filter(Boolean).slice(0, 5) });
+  ['mName','mEmoji','mGenre','mGoal','mStr'].forEach(i => document.getElementById(i).value = '');
   save(); renderAll();
 }
 function delMember(id) {
@@ -353,17 +445,21 @@ function addReport() {
   const week = document.getElementById('rWeek').value;
   if (!memberId) return alert('メンバーを選んでください');
   if (!week) return alert('週を選んでください');
+  if (!document.getElementById('rNext').value.trim()) return alert('🎯 来週の宣言を入れてください（このラボの心臓です！）');
   state.reports.push({
     id: gid(), memberId, week,
     long: +document.getElementById('rLong').value || 0,
     short: +document.getElementById('rShort').value || 0,
     views: +document.getElementById('rViews').value || 0,
     subs: +document.getElementById('rSubs').value || 0,
+    goalDone: document.getElementById('rGoalDone').value,
+    cardWorked: document.getElementById('rCardWorked').value,
     learned: document.getElementById('rLearned').value.trim(),
     next: document.getElementById('rNext').value.trim(),
+    nextStrength: document.getElementById('rNextStrength').value,
     reacts: [],
   });
-  ['rLong','rShort','rViews','rSubs','rLearned','rNext'].forEach(i => document.getElementById(i).value = '');
+  ['rLong','rShort','rViews','rSubs','rLearned','rNext','rGoalDone','rCardWorked','rNextStrength'].forEach(i => document.getElementById(i).value = '');
   save(); renderAll();
 }
 function react(id) {
@@ -398,8 +494,10 @@ function renderFeed() {
             </span>
           </div>
           <div class="body">
+            ${r.goalDone ? `<b>先週の宣言：</b>${{did:'🌸 やりきった！',some:'🌱 少し進んだ',not:'🌰 できなかった（大事なデータ）'}[r.goalDone] || ''}<br>` : ''}
+            ${r.cardWorked ? `<b>切ったカード：</b>${{fire:'🔥 バッチリ働いた',soso:'🤔 まあまあ',sleep:'😴 出番がなかった'}[r.cardWorked] || ''}<br>` : ''}
             ${r.learned ? `<b>学び：</b>${esc(r.learned)}<br>` : ''}
-            ${r.next ? `<b>来週の一手：</b>${esc(r.next)}` : ''}
+            ${r.next ? `<b>🎯 来週の宣言：</b>${esc(r.next)}${r.nextStrength ? ` <span class="chip">💪 ${esc(r.nextStrength)}で攻める</span>` : ''}` : ''}
           </div>
           <button class="react-btn ${r.reacts && r.reacts.length ? 'on' : ''}" onclick="react('${r.id}')">
             🌻 ナイスたねまき ${r.reacts && r.reacts.length ? '×' + r.reacts.length : ''}
@@ -419,10 +517,13 @@ function renderKpi() {
     const bars = weekly.length
       ? weekly.map(v => `<span style="height:${Math.round(v/max*100)}%" title="${v}本"></span>`).join('')
       : '<span style="height:2px"></span>';
+    const pledged = rs.filter(r => r.goalDone).length;
+    const done = rs.filter(r => r.goalDone === 'did').length;
     return `<tr>
       <td><strong>${m.emoji} ${esc(m.name)}</strong></td>
       <td>${sum('long')}本</td><td>${sum('short')}本</td>
       <td>${sum('views').toLocaleString()}</td><td>+${sum('subs')}</td>
+      <td>${pledged ? `🌸 ${done}/${pledged}` : '—'}</td>
       <td><div class="mini-bars">${bars}</div></td>
     </tr>`;
   }).join('');
@@ -430,7 +531,27 @@ function renderKpi() {
 
 function esc(s) { return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-function renderAll() { renderCohort(); renderMembers(); renderFeed(); renderKpi(); }
+/* 強みカードの成績：切った回数と「働いた🔥」回数 */
+function renderCardStats() {
+  const el = document.getElementById('cardStats');
+  const lines = state.members.filter(m => (m.strengths || []).length).map(m => {
+    const rs = state.reports.filter(r => r.memberId === m.id).sort((a,b) => a.week < b.week ? -1 : 1);
+    const plays = {}, fires = {};
+    rs.forEach((r, i) => {
+      if (!r.nextStrength) return;
+      plays[r.nextStrength] = (plays[r.nextStrength] || 0) + 1;
+      const nxt = rs[i + 1];
+      if (nxt && nxt.cardWorked === 'fire') fires[r.nextStrength] = (fires[r.nextStrength] || 0) + 1;
+    });
+    if (!Object.keys(plays).length) return '';
+    const chips = Object.keys(plays).map(s =>
+      `<span class="cs-chip">${CARD_ICONS[s] || '🃏'} ${esc(s)}　切×${plays[s]}${fires[s] ? `　🔥×${fires[s]}` : ''}</span>`).join('');
+    return `<div><strong>${m.emoji} ${esc(m.name)} のカード成績：</strong><br>${chips}</div>`;
+  }).filter(Boolean);
+  el.innerHTML = lines.length ? `<h3 style="font-size:13px;font-weight:900;margin-bottom:6px;">🃏 強みカードの成績</h3>` + lines.join('') : '';
+}
+
+function renderAll() { renderCohort(); renderMembers(); renderFeed(); renderKpi(); renderCardStats(); }
 
 load(); renderAll();
 
